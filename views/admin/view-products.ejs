@@ -1,0 +1,28 @@
+<section>
+ <div class="container  mt-5">
+        <a href="/admin/add-products" class="btn btn-success mb-5">Add Products</a>
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">No</th>
+            <th scope="col">Title</th>
+            <th scope="col">Category</th>
+            <th scope="col">Descriptio</th>
+            <th scope="col">Image</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.forEach(product => { %>
+          <tr>
+            <th scope="row">1</th>
+            <td><%=product.name%></td>
+            <td><%=product.category%></td>
+            <td><%=product.description%></td>
+            <td><img style="width: 50px;" src="<%=product.image%>" alt="" /></td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+ </div>
+</section>

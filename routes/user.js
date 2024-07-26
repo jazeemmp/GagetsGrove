@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
             image:"https://www.jiomart.com/images/product/original/493178757/poco-m5-128-gb-6-gb-ram-icy-blue-mobile-phone-digital-o493178757-p594861508-0-202210281109.jpeg?im=Resize=(420,420)"
         }
     ]
-    res.render('index', { title:"Admin", products, admin:true});
+    res.render('index', { title:"User", products, user:true});
 });
 
 module.exports = router;
