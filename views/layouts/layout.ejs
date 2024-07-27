@@ -15,10 +15,10 @@
   <body>
     <header>
       <!-- Include user or admin navigation based on route -->
-      <% if (typeof user !== 'undefined' && user) { %>
-        <%- include('../partials/user-header') %>
-    <% } else if (typeof admin !== 'undefined' && admin) { %>
+      <% if (typeof admin !== 'undefined' && admin) { %>
         <%- include('../partials/admin-header') %>
+    <% } else{ %>
+        <%- include('../partials/user-header') %>
     <% } %>
     
     </header>
