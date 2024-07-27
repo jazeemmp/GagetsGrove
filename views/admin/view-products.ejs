@@ -8,17 +8,19 @@
             <th scope="col">Title</th>
             <th scope="col">Category</th>
             <th scope="col">Descriptio</th>
+            <th scope="col">price</th>
             <th scope="col">Image</th>
           </tr>
         </thead>
         <tbody>
-          <% products.forEach(product => { %>
+          <% products.forEach((product,index) => { %>
           <tr>
-            <th scope="row">1</th>
+            <th scope="row"><%= index+1 %></th>
             <td><%=product.name%></td>
             <td><%=product.category%></td>
             <td><%=product.description%></td>
-            <td><img style="width: 50px;" src="<%=product.image%>" alt="" /></td>
+            <td><%=product.price%>₹</td>
+            <td><img width="50px" src="/uploads/<%= product.image %>" /></td>
           </tr>
           <% }); %>
         </tbody>
