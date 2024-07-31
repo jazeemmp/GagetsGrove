@@ -1,0 +1,14 @@
+<div class="container mt-5">
+    <div class="row">
+     <% products.forEach((product)=> { %>
+         <div class="card" style="width: 11rem;margin:15px">
+             <img src="/uploads/<%=product.image%>" class="card-img-top" alt="...">
+             <div class="card-body">
+               <h5 class="card-title"><%= product.name %></h5>
+               <p class="card-text"><%= product.description %></p>
+               <p class="card-price"><%= product.price %>₹</p>
+             </div>
+           </div>
+     <% }); %>
+    </div>
+  </div>

@@ -6,18 +6,23 @@ const ejsLayouts = require('express-ejs-layouts');
 const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin')
 const connectDB = require('./config/db')
+const session = require('express-session')
 
 // Load environment variables from .env file
 dotenv.config()
-
-
 // Connect to database
 connectDB();
-
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/layout');
-
+// Using Session
+app.use(session({
+    secret:'secret',
+    resave:false,
+    saveUninitialized:true,
+    cookie:{maxAge:6000000}
+}))
+//Basic  middlewares
 app.use(ejsLayouts)
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,8 +31,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Load routes
 app.use('/', userRouter);
 app.use('/admin',adminRouter)
-
-
 
 // Start the server
 const PORT = process.env.PORT || 3000;

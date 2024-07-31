@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const showProducts = require('../controller/showProducts')
-const userControll = require('../controller/userControler')
+const userControl = require('../controller/userControler')
+const middle = require('../middlewares/userMiddlewares')
+const cartControl = require('../controller/cartController')
 
 router.get('/',showProducts.getProducts);
-router.get('/signup',userControll.getSignup)
-router.get('/login',userControll.getLogin)
+router.get('/signup',userControl.getSignup)
+router.get('/login',userControl.getLogin)
+router.post('/signup',userControl.postSignup)
+router.post('/login',userControl.postLogin)
+router.get('/logout',userControl.getLogout)
+router.get('/cart',middle.isLogined,cartControl.getCart)
+router.get('/add-to-cart/:id',middle.isLogined,cartControl.addToCart)
+
+
 module.exports = router;

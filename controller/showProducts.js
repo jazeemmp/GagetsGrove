@@ -1,9 +1,10 @@
-const ProductDB = require("../model/addProducts");
+const ProductDB = require("../model/productModel");
 
 const getProducts = async(req,res)=>{
      try {
-        const products = await ProductDB.find()
-        res.render('user/index', { title:"User", products, user:true});
+       const user = req.session.user;
+       const products = await ProductDB.find()
+        res.render('user/index', { title:"User", products, user});
      } catch (error) {
         console.error(error);
      }

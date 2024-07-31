@@ -1,4 +1,4 @@
-const ProductDB = require("../model/addProducts");
+const ProductDB = require("../model/productModel");
 
 const getProducts = async (req, res) => {
   const products = await ProductDB.find();
@@ -34,8 +34,56 @@ const postAddProducts = async (req, res) => {
   }
 };
 
+const deleteProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ProductDB.deleteOne({ _id: id });
+    res.redirect("/admin");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await ProductDB.findOne({ _id: id });
+    res.render("admin/edit-product", {
+      admin: true,
+      product,
+      title: "Edit Product",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const postEditProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, category, price, description } = req.body;
+    await ProductDB.updateOne(
+      { _id: id },
+      {
+        $set: {
+          name: name,
+          category: category,
+          price: price,
+          description: description,
+          image: req.file ? req.file.filename : req.file,
+        },
+      }
+    );
+    res.redirect("/admin");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   getAddProducts,
   postAddProducts,
   getProducts,
+  deleteProduct,
+  editProduct,
+  postEditProduct,
 };

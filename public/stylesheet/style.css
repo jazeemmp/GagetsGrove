@@ -1,4 +1,5 @@
-
-p{
-    text-transform: capitalize;
+.fill-error{
+    display: none;
+    padding: 5px;
+    color: red;
 }
