@@ -7,7 +7,7 @@
                   <h5 class="card-title"><%= product.name %></h5>
                   <p class="card-text"><%= product.description %></p>
                   <p class="card-price"><%= product.price %>₹</p>
-                  <a href="/add-to-cart/<%= product._id %>" class="btn btn-primary">Add to Cart</a>
+                  <button class="btn btn-primary" onclick="addToCart('<%= product._id %>')">Add to cart</button>
                 </div>
               </div>
         <% }); %>

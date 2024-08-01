@@ -45,3 +45,12 @@ const loginForm = async()=>{
     }
   }
 }
+const addToCart = async(productId)=>{
+   const response = await fetch(`/add-to-cart/${productId}`)
+   if(!response.ok){
+    throw new Error
+   }
+}
+const deleteCartProduct = async(productId)=>{
+  await fetch(`/remove-cart-product/${productId}`)
+}
