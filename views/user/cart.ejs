@@ -2,7 +2,7 @@
   <div class="container h-100 py-5">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col-10">
-       <% if (cartItems) { %>
+       <% if (cartItems && cartItems.products && cartItems.products.length > 0) { %>
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-normal mb-0">Cart</h3>
         </div>
@@ -12,28 +12,24 @@
             <div class="row d-flex justify-content-between align-items-center">
               <div class="col-md-2 col-lg-2 col-xl-2">
                 <img
-                  src="/uploads/<%= product.image %>"
+                  src="/uploads/<%= product.productId.image %>"
                   class="img-fluid rounded-3"
                   alt="Cotton T-shirt"
                 />
               </div>
               <div class="col-md-3 col-lg-3 col-xl-3">
-                <p class="lead fw-normal mb-2"><%= product.name %></p>
-                <p>
-                  <span class="text-muted">Category: </span><%= product.category %> <br>
-                  <span class="text-muted">Description: </span><%= product.description %>
-                </p>
+                <p class="lead fw-normal mb-2"><%= product.productId.name %></p>
               </div>
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                <button class="btn btn-secondary">-</button>
-                 <span class="m-2">1</span>
-                <button class="btn btn-secondary">+</button>
+                <button onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>',-1)" class="btn btn-secondary">-</button>
+                 <span class="m-2"><%= product.quantity %></span>
+                <button onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>',1)" class="btn btn-secondary">+</button>
               </div>
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h5 class="mb-0">₹ <%= product.price %></h5>
+                <h5 class="mb-0">₹ <%= product.productId.price %></h5>
               </div>
               <div class="col-md-1 col-lg-1 col-xl-1"  style="margin-right:20px ;">
-                <button onclick="deleteCartProduct('<%= product._id %>')" class="btn btn-danger">Remove</button>
+                <button onclick="deleteCartProduct('<%= product.productId._id %>')" class="btn btn-danger">Remove</button>
               </div>
             </div>
           </div>
@@ -48,3 +44,4 @@
     </div>
   </div>
 </section>
+

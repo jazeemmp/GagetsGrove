@@ -1,3 +1,5 @@
+
+
 const fillError = document.querySelector(".fill-error");
 
   const signupForm =  async () => {
@@ -53,4 +55,21 @@ const addToCart = async(productId)=>{
 }
 const deleteCartProduct = async(productId)=>{
   await fetch(`/remove-cart-product/${productId}`)
+}
+const changeQuantity = async(cartId,productId,count)=>{
+  const response = await fetch('/change-product-quantiy',
+    {
+      method:"post",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({cartId,productId,count})
+    }
+  )
+  
+  if (!response.ok) {
+    const errorData = await response.json();
+    console.error('Error:', errorData.message);
+    throw new Error(`Request failed with status ${response.status}`);
+  }
 }
