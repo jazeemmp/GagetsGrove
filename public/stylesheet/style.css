@@ -3,3 +3,7 @@
     padding: 5px;
     color: red;
 }
+.container #not-found-img {
+    display: none;
+    background-color: red;
+  }

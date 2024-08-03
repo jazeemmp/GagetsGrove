@@ -11,9 +11,15 @@ const cartSchema = new mongoose.Schema({
         },
         quantity:{
           type:Number
+        },
+        priceByQuantity:{
+          type:Number
         }
-       }
-    ]
+       }],
+    total:{
+      type:Number,
+      default:0
+    }
 })
 
 const CartDB = mongoose.model('cart',cartSchema)

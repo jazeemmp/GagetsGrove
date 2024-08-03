@@ -18,3 +18,30 @@
             <button  type="submit" onclick="signupForm()" class="btn mt-3 btn-primary">Submit</button> 
     </div>
 </div>
+<script>
+  const signupForm = async () => {
+  const fillError = document.querySelector(".fill-error");
+  const userName = document.getElementById("userName").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (userName === "" || email === "" || password === "") {
+    alert("please fill all the fileds");
+  } else {
+    const response = await fetch("/signup", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userName, email, password }),
+    });
+    const data = await response.json();
+    if (data.success) {
+      window.location.href = "/";
+    } else {
+      fillError.style.display = "block";
+    }
+  }
+};
+
+</script>
