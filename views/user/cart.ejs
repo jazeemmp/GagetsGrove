@@ -7,7 +7,7 @@
             <h3 class="fw-normal mb-0">Cart</h3>
           </div>
           <% cartItems.products.forEach(product=> { %>
-            <div id="<%= product.productId._id %>" class="card rounded-3 mb-4">
+            <div id="<%= product._id %>" class="card rounded-3 mb-4">
               <div class="card-body p-4">
                 <div class="row d-flex justify-content-between align-items-center">
                   <div class="col-md-2 col-lg-2 col-xl-2">
@@ -21,20 +21,20 @@
                   </div>
                   <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                     <button
-                      onclick="changeQuantity('<%=cartItems._id%>','<%= product._id %>','<%= product.productId.price %>',-1)"
+                      onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',-1)"
                       class="btn btn-secondary">-</button>
-                    <span id="<%= product._id %>" class="m-2">
+                    <span id="<%= product.productId._id %>" class="m-2">
                       <%= product.quantity %>
                     </span>
                     <button
-                      onclick="changeQuantity('<%=cartItems._id%>','<%= product._id %>','<%= product.productId.price %>',1)"
+                      onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',1)"
                       class="btn btn-secondary">+</button>
                   </div>
                   <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                    <h5 class="mb-0">₹ <span id="<%= cartItems._id %>-price-<%= product._id %>"><%= product.priceByQuantity %></span></h5>
+                    <h5 class="mb-0">₹ <span class="price" id="<%= cartItems._id %>-price-<%= product.productId._id %>"> <%= product.priceByQuantity %> </span></h5>
                   </div>
                   <div class="col-md-1 col-lg-1 col-xl-1" style="margin-right:20px ;">
-                    <button onclick="deleteCartProduct('<%= product.productId._id %>')"
+                    <button onclick="deleteCartProduct('<%= product.productId._id %>','<%= product._id %>')"
                       class="btn btn-danger">Remove</button>
                   </div>
                 </div>
@@ -43,6 +43,11 @@
             <div>
             </div>
             <% }); %>
+            <div class="checkout">
+              <div class="child">
+                <h2 id="totalAmout">₹<%= cartItems.total %></h2>
+                <a class="btn btn-success" href="/">CHECKOUT</a>
+              </div>
               <% }else{ %>
                 <div class="container d-flex justify-content-center">
                   <img id="" src="https://i.pinimg.com/736x/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.jpg" alt="">
@@ -52,3 +57,4 @@
     </div>
   </div>
 </section>
+</div>

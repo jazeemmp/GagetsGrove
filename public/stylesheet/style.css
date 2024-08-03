@@ -7,3 +7,13 @@
     display: none;
     background-color: red;
   }
+.checkout .child{
+    height: 130px;
+    border: 1px solid #cbcaca;
+    background-color:#fff;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+}

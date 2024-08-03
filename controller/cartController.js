@@ -6,8 +6,6 @@ const getCart = async (req, res) => {
     const cartItems = await CartDB.findOne({
       user: req.session.user._id,
     }).populate("products.productId");
-    console.log(cartItems);
-
     res.render("user/cart", { user, title: "cart", cartItems });
   } catch (error) {
     console.log(error);
@@ -46,15 +44,9 @@ const addToCart = async (req, res) => {
         }
       );
     }
-    const cart = await CartDB.findOne({ "products.productId": productId });
-    const product = cart.products.find((p) => p._id.toString() === productId);
-    product.priceByQuantity = priceNum * product.quantity;
-    let total = 0;
-    cart.products.forEach((product) => {
-      total += product.priceByQuantity;
-    });
-    cart.total = total;
-    await cart.save();
+
+    await updateTotal(productId, priceNum, userId);
+
     res.json({
       success: true,
       message: "Product added to cart",
@@ -87,7 +79,7 @@ const removeProduct = async (req, res) => {
     if (isCartEmpty) {
       await CartDB.findOneAndUpdate({ user: userid }, { $set: { total: 0 } });
     }
-    res.json({ productremoved: true, cartEmpty: isCartEmpty });
+    res.json({ productremoved: true, cartEmpty: isCartEmpty, total });
   } catch (error) {
     console.log(error.message);
   }
@@ -95,31 +87,43 @@ const removeProduct = async (req, res) => {
 
 const changeProductQuantity = async (req, res) => {
   try {
+    const userId = req.session.user._id;
     const { cartId, productId, count, quantity, price } = req.body;
-    console.log(cartId, productId, count, quantity, price);
     if (count === -1 && quantity === 1) {
       return;
     } else {
       await CartDB.updateOne(
-        { _id: cartId, "products._id": productId },
+        { _id: cartId, "products.productId": productId },
         {
           $inc: { "products.$.quantity": count },
         }
       );
-      const cart = await CartDB.findOne({ "products._id": productId });
-      const product = cart.products.find((p) => p._id.toString() === productId);
-      product.priceByQuantity = price * product.quantity;
-      let total = 0;
-      cart.products.forEach((product) => {
-        total += product.priceByQuantity;
-      });
-      cart.total = total;
-      await cart.save();
-      res.json({ success: true });
+
+      const total = await updateTotal(productId, price, userId);
+
+      res.json({ success: true, total });
     }
   } catch (error) {
     console.log(error.message);
   }
+};
+
+const updateTotal = async (productId, priceNum, userId) => {
+  const cart = await CartDB.findOne({
+    user: userId,
+    "products.productId": productId,
+  });
+  const product = cart.products.find(
+    (p) => p.productId.toString() === productId
+  );
+  product.priceByQuantity = priceNum * product.quantity;
+  let total = 0;
+  cart.products.forEach((product) => {
+    total += product.priceByQuantity;
+  });
+  cart.total = total;
+  await cart.save();
+  return total;
 };
 
 module.exports = {

@@ -1,47 +1,57 @@
-<div class="container">
-    <div class="row">
-                <div class="form-group">
-                <label for="exampleInputPassword1">Full Name</label>
-                <input type="text" name="fullname" class="form-control" id="userName" placeholder="FullName">
-            </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" name="email" class="form-control" id="email"
-                    placeholder="Enter email">
-                <small class="fill-error" >This email alredy exists..!!</small>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" name="password" class="form-control" id="password">
-                <a href="/login">Alredy have an account??</a>
-            </div>
-            <button  type="submit" onclick="signupForm()" class="btn mt-3 btn-primary">Submit</button> 
-    </div>
+<div class="container d-flex justify-content-center align-items-center mt-5">
+  <div class="row">
+    <form id="signupForm">
+      <div class="form-group">
+        <h1 class="text-center">Signup</h1>
+        <label for="exampleInputPassword1">Full Name</label>
+        <input type="text" name="fullname" class="form-control" id="userName" placeholder="FullName" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" autocomplete="email">
+        <small class="fill-error">This email alredy exists..!!</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" placeholder="Password"autocomplete="current-password" name="password" class="form-control" id="password">
+      </div>
+     <div class="d-flex justify-content-between align-items-center">
+      <a href="/login" class="text-decoration-none mr-5 link-primary">Alredy have an account??</a>
+      <button type="submit" class="btn ml-5 btn-primary">Submit</button>
+     </div>
+    </form>
+  </div>
 </div>
 <script>
-  const signupForm = async () => {
-  const fillError = document.querySelector(".fill-error");
-  const userName = document.getElementById("userName").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+  const signupForm = document.getElementById('signupForm')
+  signupForm.addEventListener('submit', async (e) => {
+    try {
+      const fillError = document.querySelector(".fill-error");
+      const userName = document.getElementById("userName").value;
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-  if (userName === "" || email === "" || password === "") {
-    alert("please fill all the fileds");
-  } else {
-    const response = await fetch("/signup", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userName, email, password }),
-    });
-    const data = await response.json();
-    if (data.success) {
-      window.location.href = "/";
-    } else {
-      fillError.style.display = "block";
+      if (userName === "" || email === "" || password === "") {
+        alert("please fill all the fileds");
+      } else {
+        const response = await fetch("/signup", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userName, email, password }),
+        });
+        const data = await response.json();
+        if (data.success) {
+          window.location.href = "/";
+        } else {
+          fillError.style.display = "block";
+        }
+      }
+    } catch (error) {
+      console.log(error);
+
     }
-  }
-};
+  })
 
 </script>

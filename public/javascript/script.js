@@ -1,4 +1,5 @@
-
+const totalAmout = document.getElementById('totalAmout')
+const allPrice = document.querySelectorAll('.price')
 const addToCart = async (productId) => {
   try {
     const price = document.getElementById(productId).innerText;
@@ -11,36 +12,41 @@ const addToCart = async (productId) => {
       body: JSON.stringify({ productId, priceNum }),
     });
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
-    }
-    const data = await response.json();
-    if (data.success) {
-      alertUser(data.message, "success");
+      if (response.status === 401) {
+        window.location.href = "/login";
+      } else {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
     } else {
-      alertUser(data.message, "error");
+      const data = await response.json();
+      if (data.success) {
+        alertUser(data.message, "success");
+      } else {
+        alertUser(data.message, "error");
+      }
     }
   } catch (error) {
-    alertUser(data.message, "error");
+    console.log(error);
   }
 };
 
-const deleteCartProduct = async (productId) => {
-  const container = document.getElementById(productId);
+const deleteCartProduct = async (productId, compId) => {
+  const container = document.getElementById(compId);
   const response = await fetch(`/remove-cart-product/${productId}`);
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`);
   }
   const data = await response.json();
   if (data.productremoved) {
-    container.style.display = "none";
-    alertUser("Product Deleted Successfully");
+      container.remove()
   }
   if (data.cartEmpty) {
     location.reload();
   }
+  totalAmout.innerText = `₹ ${data.total}`
 };
 const changeQuantity = async (cartId, productId, priceString, count) => {
-  const priceFiled = document.getElementById(`${cartId}-price-${productId}`)
+  const priceFiled = document.getElementById(`${cartId}-price-${productId}`);
   const quantityString = document.getElementById(productId);
   const quantity = parseInt(quantityString.innerText);
   const price = parseInt(priceString);
@@ -61,7 +67,7 @@ const changeQuantity = async (cartId, productId, priceString, count) => {
     quantityString.textContent = newQuantity;
     priceFiled.textContent = newPrice;
   }
-
+   totalAmout.innerText = `₹ ${data.total}`
 };
 
 const alertUser = (title, state) => {

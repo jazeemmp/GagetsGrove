@@ -1,40 +1,33 @@
-<div class="container mt-5">
+<div class="container d-flex justify-content-center align-items-center mt-5">
   <div class="row">
-    <div class="alert alert-danger fill-error" role="alert">
-      email or password is wrong
-    </div>
-    <div class="form-group">
-      <label for="exampleInputEmail1">Email address</label>
-      <input
-        type="email"
-        name="email"
-        class="form-control"
-        id="email"
-        aria-describedby="emailHelp"
-        placeholder="Enter email"
-      />
-      <small id="emailHelp" class="form-text text-muted"
-        >We'll never share your email with anyone else.</small
-      >
-    </div>
-    <div class="form-group">
-      <label for="exampleInputPassword1">Password</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        class="form-control"
-        id="exampleInputPassword1"
-        placeholder="Password"
-      />
-    </div>
-    <button onclick="loginForm()" class="btn mt-3 btn-primary">Submit</button>
-    <a href="/signup" style="display: block">Dont Have an accout??</a>
-  </div>
+    <form id="loginForm">
+      <div class="alert alert-danger fill-error" role="alert">
+        email or password is wrong
+      </div>
+      <h1 class="text-center">Login</h1>
+      <div class="form-group">
+        <label for="exampleInputEmail1">Email address</label>
+        <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp"
+          placeholder="Enter email"  autocomplete="email" />
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        <input type="password" id="password" name="password" class="form-control" id="exampleInputPassword1"
+          placeholder="Password"  autocomplete="current-password"/>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="/signup" class="text-decoration-none mr-5 link-primary">Dont Have an accout??</a>
+        <button class="btn ml-5 btn-primary">Submit</button>
+      </div>
+  </form>
+</div>
 </div>
 <script>
-  const loginForm = async () => {
+  const loginForm = document.getElementById('loginForm')
+  loginForm.addEventListener('submit',async(e)=>{
     try {
+      e.preventDefault()
       const fillError = document.querySelector(".fill-error");
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
@@ -58,5 +51,6 @@
     } catch (error) {
       console.log(error);
     }
-  };
+  })
+
 </script>
