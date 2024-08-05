@@ -4,7 +4,7 @@ const getProducts = async(req,res)=>{
      try {
        const user = req.session.user;
        const products = await ProductDB.find()
-        res.render('user/index', { title:"User", products, user});
+        res.render('user/index', { title:"Gadgets Grove", products, user});
      } catch (error) {
         console.error(error);
      }
