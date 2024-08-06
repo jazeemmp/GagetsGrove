@@ -1,5 +1,10 @@
-const totalAmout = document.getElementById('totalAmout')
-const allPrice = document.querySelectorAll('.price')
+/*[ Global decelaration]
+    ===========================================================*/
+const totalAmout = document.getElementById("totalAmout");
+const allPrice = document.querySelectorAll(".price");
+
+/*[ Add to cart ]
+    ===========================================================*/
 const addToCart = async (productId) => {
   try {
     const price = document.getElementById(productId).innerText;
@@ -30,6 +35,8 @@ const addToCart = async (productId) => {
   }
 };
 
+/*[ delete cart product]
+    ===========================================================*/
 const deleteCartProduct = async (productId, compId) => {
   const container = document.getElementById(compId);
   const response = await fetch(`/remove-cart-product/${productId}`);
@@ -38,13 +45,16 @@ const deleteCartProduct = async (productId, compId) => {
   }
   const data = await response.json();
   if (data.productremoved) {
-      container.remove()
+    container.remove();
   }
   if (data.cartEmpty) {
     location.reload();
   }
-  totalAmout.innerText = `₹ ${data.total}`
+  totalAmout.innerText = `₹ ${data.total}`;
 };
+
+/*[ Change quantity]
+    ===========================================================*/
 const changeQuantity = async (cartId, productId, priceString, count) => {
   const priceFiled = document.getElementById(`${cartId}-price-${productId}`);
   const quantityString = document.getElementById(productId);
@@ -67,13 +77,15 @@ const changeQuantity = async (cartId, productId, priceString, count) => {
     quantityString.textContent = newQuantity;
     priceFiled.textContent = newPrice;
   }
-   totalAmout.innerText = `₹ ${data.total}`
+  totalAmout.innerText = `₹ ${data.total}`;
 };
 
+/*[ Fuction for alerting user ]
+    ===========================================================*/
 const alertUser = (title, state) => {
   const Toast = Swal.mixin({
     toast: true,
-    position: "top-end",
+    position: "bottom",
     showConfirmButton: false,
     timer: 3000,
     timerProgressBar: true,
@@ -87,3 +99,74 @@ const alertUser = (title, state) => {
     title: title,
   });
 };
+
+/*[ login hower function ]
+    ===========================================================*/
+const userIcon = document.querySelector(".user");
+const accountDiv = document.querySelector(".account");
+let isHovered = false;
+
+const showAccount = () => {
+  accountDiv.style.display = "flex";
+  isHovered = true;
+};
+
+const hideAccount = () => {
+  if (!isHovered) {
+    accountDiv.style.display = "none";
+  }
+};
+
+userIcon.addEventListener("mouseenter", showAccount);
+accountDiv.addEventListener("mouseenter", showAccount);
+
+userIcon.addEventListener("mouseleave", () => {
+  isHovered = false;
+  setTimeout(hideAccount, 100);
+});
+
+accountDiv.addEventListener("mouseleave", () => {
+  isHovered = false;
+  setTimeout(hideAccount, 100);
+});
+
+/*[function to change banner image src based on size]
+    ===========================================================*/
+function updateImageSources() {
+  const images = document.querySelectorAll(".swiper-slide .img");
+  const prev = document.querySelector('.swiper-button-prev')
+  const next = document.querySelector('.swiper-button-next')
+  const isMobile = window.matchMedia("(max-width: 600px)").matches;
+  images.forEach((img, index) => {
+    if (isMobile) {
+      img.style.width = "100%"
+      img.src = `/images/banner-mobile${index + 1}.webp`;
+      prev.remove()
+      next.remove()
+    } else {
+      img.src = `/images/banner${index + 1}.webp`;
+    }
+  });
+}
+updateImageSources();
+window.addEventListener("resize", updateImageSources);
+
+/*[banner swiper library function]
+    ===========================================================*/
+const swiper = new Swiper(".swiper", {
+  pagination: {
+    el: ".swiper-pagination",
+  },
+  autoplay: {
+    delay: 5000, 
+    disableOnInteraction: false,
+  },
+
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  scrollbar: {
+    el: ".swiper-scrollbar",
+  },
+});

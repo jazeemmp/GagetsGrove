@@ -1,22 +1,230 @@
-.fill-error{
-    display: none;
-    padding: 5px;
-    color: red;
+/*------------------------------------------------------------------
+[ Global Css ]*/
+:root {
+  --primcolor: #fff;
+  --secondcolor: #171717;
 }
-.container #not-found-img {
-    display: none;
-    background-color: red;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--secondcolor);
+  text-decoration: none;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+/*------------------------------------------------------------------
+[ User Header]*/
+.user-nav a:hover {
+  text-decoration: none;
+}
+.user-nav {
+  width: 100%;
+  z-index: 999999999;
+  display: flex;
+  flex-direction: row;
+  background-color: var(--primcolor);
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #c5c4c4;
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.left-section .logo-img {
+  width: 200px;
+  margin: 10px;
+}
+
+.left-section .fa-bars {
+  font-size: 25px;
+  display: none;
+}
+
+.fa-cart-shopping,
+.fa-user,
+.fa-heart {
+  font-size: 25px;
+  padding: 20px;
+}
+
+.fa-cart-shopping,
+.fa-heart {
+  position: relative;
+}
+
+.count {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: red;
+  color: white;
+  padding: 2px 5px;
+  font-size: 13px;
+  border-radius: 50%;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+/*------------------------------------------------------------------
+[User icon hower ]*/
+.account {
+  position: absolute;
+  right: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  border: 2px solid #000;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  display: none;
+}
+.account p {
+  font-size: 16px;
+  margin: 10px;
+  text-align: center;
+}
+
+.account .button {
+  background-color: #000;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  padding: 8px 60px;
+  font-weight: 700;
+  margin: 0 20px;
+}
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--primcolor); 
+}
+.img {
+  width: 100%;
+  margin-top: 60px;
+}
+
+/*------------------------------------------------------------------
+[ loading animation]*/
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  display: none;
+}
+
+.loader {
+  width: 120px;
+  height: 20px;
+  background: radial-gradient(circle 10px, #000 95%, #0000) right /
+      calc(200% + 20px) 100%,
+    linear-gradient(#000 0 0) center/100% 6px;
+  background-repeat: no-repeat;
+  -webkit-mask: radial-gradient(circle 4px, #0000 93%, #000)
+    right/calc(200% + 20px) 100%;
+  animation: l6 1s infinite linear;
+}
+@keyframes l6 {
+  100% {
+    background-position: left;
+    -webkit-mask-position: left;
   }
-.checkout .child{
-    height: 130px;
-    border: 1px solid #cbcaca;
-    background-color:#fff;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 5px;
 }
-.logo{
-    width: 200px;
+
+/*------------------------------------------------------------------
+[ Features Section]*/
+/* .features-container{
+  display: flex;
+  justify-content:space-evenly;
+  align-items: center;
 }
+.features-img-container img{
+  width: 110px;
+}
+.features-img-container{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: space-between;
+   text-align: center;
+}
+.features-container .text{
+  font-size: 18px;
+  font-weight: 300;
+}
+.features-container .text span{
+  font-weight: 600;
+} */
+/*------------------------------------------------------------------
+[ Error messages]*/
+.fill-error {
+  display: none;
+  padding: 5px;
+  color: red;
+}
+
+/*------------------------------------------------------------------
+[ Cart]*/
+.container #not-found-img {
+  display: none;
+  background-color: red;
+}
+.checkout .child {
+  height: 130px;
+  border: 1px solid #cbcaca;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+
+/*------------------------------------------------------------------
+[Media Query for 600px]*/
+@media only screen and (max-width: 600px) {
+  /* user header */
+  .fa-cart-shopping,
+  .fa-user,
+  .fa-heart {
+    font-size: 23px;
+    padding: 10px;
+  }
+
+  .count {
+    right: 5px;
+    top: 5px;
+  }
+
+  .left-section .logo-img {
+    width: 180px;
+    margin: 6px;
+  }
+  /* Features Section */
+  /* .features-img-container{
+     margin: 0px;
+  }
+  .features-img-container img{
+    width: 90px;
+  }
+  .features-container .text{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 14px;
+  }
+ .features-container .text span{
+  font-weight: 500;
+} */
+}
+
+

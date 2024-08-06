@@ -19,13 +19,18 @@
       <a href="/login" class="text-decoration-none mr-5 link-primary">Alredy have an account??</a>
       <button type="submit" class="btn ml-5 btn-primary">Submit</button>
      </div>
+     <div class="loading">
+      <div class="loader"></div>
+    </div>
     </form>
   </div>
 </div>
 <script>
+  const loading = document.querySelector('.loading')
   const signupForm = document.getElementById('signupForm')
   signupForm.addEventListener('submit', async (e) => {
     try {
+      e.preventDefault()
       const fillError = document.querySelector(".fill-error");
       const userName = document.getElementById("userName").value;
       const email = document.getElementById("email").value;
@@ -34,6 +39,7 @@
       if (userName === "" || email === "" || password === "") {
         alert("please fill all the fileds");
       } else {
+         loading.style.display = 'flex'
         const response = await fetch("/signup", {
           method: "post",
           headers: {
@@ -51,6 +57,8 @@
     } catch (error) {
       console.log(error);
 
+    }finally{
+       loading.style.display = 'none'
     }
   })
 

@@ -1,4 +1,5 @@
-<div class="container d-flex justify-content-center align-items-center mt-5">
+
+<div class="container d-flex justify-content-center align-items-center " style="margin-top: 160px;">
   <div class="row">
     <form id="loginForm">
       <div class="alert alert-danger fill-error" role="alert">
@@ -19,12 +20,19 @@
       <div class="d-flex justify-content-between align-items-center">
         <a href="/signup" class="text-decoration-none mr-5 link-primary">Dont Have an accout??</a>
         <button class="btn ml-5 btn-primary">Submit</button>
+        <div class="loading">
+          <div class="loader"></div>
+        </div>
       </div>
   </form>
 </div>
 </div>
+<style>
+  
+</style>
 <script>
   const loginForm = document.getElementById('loginForm')
+  const loading = document.querySelector('.loading')
   loginForm.addEventListener('submit',async(e)=>{
     try {
       e.preventDefault()
@@ -34,6 +42,7 @@
       if (email === "" || password === "") {
         alert("please fill all fileds");
       } else {
+        loading.style.display = 'flex'
         const response = await fetch("/login", {
           method: "post",
           headers: {
@@ -50,6 +59,8 @@
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      loading.style.display = 'none'
     }
   })
 

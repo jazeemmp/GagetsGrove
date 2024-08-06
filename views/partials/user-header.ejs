@@ -1,67 +1,36 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="/">
-        <img class="logo" src="/images/logo.png" alt="">
-      </a>
-    </nav>
-     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-           <li class="nav-item">
-            <i class="fa-solid fa-cart-shopping"></i>
-          </li>
-      </ul>
-      <div class="dropdown mr-5">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          <% if (typeof user !=='undifined' && user) { %>
-            <%= user.fullname %>
-              <% } else { %> Account <% } %>
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <% if (typeof user !=='undifined' && user) { %>
-            <a class="dropdown-item" href="/logout">Logout</a>
-            <% } else { %>
-              <a class="dropdown-item" href="/login">Login</a>
-              <% } %>
-        </div>
-      </div>
-    </div>
+<nav class="user-nav">
+  <div class="left-section">
+    <i class="fa-solid fa-bars"></i>
+    <a href="/">
+      <img class="logo-img" src="/images/logo.png" width="300" alt=""
+    /></a>
   </div>
-</nav>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
-
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+  <div class="right-section">
+    <a href="#"
+      ><i class="fa-regular fa-heart">
+        <!-- <span class="count">0</span> -->
+      </i></a
+    >
+    <a href="/cart"
+      ><i class="fa-solid fa-cart-shopping">
+        <% if (typeof cartCount !=='undefined' && cartCount) { %>
+        <span class="count"> <%= cartCount %> </span>
+        <% } %>
+      </i></a
+    >
+    <a class="user"><i class="fa-regular fa-user"></i></a>
+    <% if (typeof user !== 'undefined' && user) { %>
+    <div class="account">
+      <p>Do you want to log out ??</p>
+      <a class="button " href="/logout">Logout</a>
+    </div>
+    <% } else { %>
+    <div class="account">
+      <p>Dont Have An Account??</p>
+      <a class="button" href="/signup">Signup</a>
+      <p>Alredy Have An Account??</p>
+      <a class="button" href="/login">Login</a>
+    </div>
+    <% } %>
   </div>
 </nav>

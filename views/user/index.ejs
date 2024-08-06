@@ -1,15 +1,86 @@
- <div class="container d-grid mt-5">
-       <div class="row">
-        <% products.forEach((product)=> { %>
-            <div class="card" style="width: 18rem;margin:15px">
-                <img src="/uploads/<%=product.image%>" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= product.name %></h5>
-                  <p class="card-text"><%= product.description %></p>
-                  <p class="card-price"><span id="<%= product._id %>"><%= product.price %></span>₹</p>
-                  <button class="btn btn-primary" onclick="addToCart('<%= product._id %>')">Add to cart</button>
-                </div>
-              </div>
-        <% }); %>
-       </div>
- </div>
+<!--========================For Swiper librarary=================================================-->
+<div class="swiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <img class="img" src="/images/banner.webp" alt="" />
+    </div>
+    <div class="swiper-slide">
+      <img class="img" src="/images/banner3.webp" alt="" />
+    </div>
+    <div class="swiper-slide">
+      <img class="img" src="/images/bannner2.webp" alt="" />
+    </div>
+  </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+<!--===============================================================================================-->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-3 col-md-3 text-center mb-4">
+      <img src="/images/features3.svg" class="feature-img" alt="1 Year Warranty">
+      <p class="text"><span>1 Year </span>Warranty</p>
+    </div>
+    <div class="col-3 col-md-3 text-center mb-4">
+      <img src="/images/features1.svg" class="feature-img" alt="GST Billing">
+      <p class="text text-2"><span>GST</span> Billing</p>
+    </div>
+    <div class="col-3 col-md-3 text-center mb-4">
+      <img src="/images/features2.svg" class="feature-img" alt="Free Express Delivery">
+      <p class="text"><span>Free Express </span>Delivery*</p>
+    </div>
+    <div class="col-3 col-md-3 text-center mb-4">
+      <img src="/images/features4.svg" class="feature-img" alt="7-day Replacement">
+      <p class="text"><span>7-day </span>Replacement</p>
+    </div>
+  </div>
+</div>
+<style>
+  .feature-img{
+    width: 150px;
+  }
+  .text span {
+    font-weight: bold; /* Makes the span text bold */
+  }
+  .text {
+    font-size: 18px;
+  }
+  @media only screen and (max-width: 600px) {
+    .feature-img{
+      width: 80px;
+  }
+  .text {
+    font-size: 12px; 
+    font-weight: 600;
+  }
+  .text span {
+    font-weight: normal; /* Makes the span text bold */
+  }
+  .text-2{
+    width: 60px;
+  }
+}
+</style>
+<div class="container d-grid mt-5">
+  <div class="row">
+    <% products.forEach((product)=> { %>
+    <div class="card" style="width: 18rem; margin: 15px">
+      <img src="/uploads/<%=product.image%>" class="card-img-top" alt="..." />
+      <div class="card-body">
+        <h5 class="card-title"><%= product.name %></h5>
+        <p class="card-text"><%= product.description %></p>
+        <p class="card-price">
+          <span id="<%= product._id %>"><%= product.price %></span>₹
+        </p>
+        <button
+          class="btn btn-primary"
+          onclick="addToCart('<%= product._id %>')"
+        >
+          Add to cart
+        </button>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
