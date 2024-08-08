@@ -11,7 +11,7 @@ const getProducts = async(req,res)=>{
          
       } 
        const products = await ProductDB.find()
-        res.render('user/index', { title:"Gadgets Grove", products,cartCount,user:req.session.user});
+        res.render('user/home-page', { title:"Gadgets Grove", products,cartCount,user:req.session.user});
      } catch (error) {
         console.error(error);
      }

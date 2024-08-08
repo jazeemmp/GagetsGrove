@@ -17,5 +17,8 @@ router.post('/add-to-cart',middle.ajaxisLogined,cartControl.addToCart)
 router.get('/remove-cart-product/:id',middle.isLogined,cartControl.removeProduct)
 router.post('/change-product-quantiy',cartControl.changeProductQuantity)
 router.get('/place-order',middle.isLogined,orderControl.placeOrder)
+router.post('/place-order',orderControl.postPlaceOrder)
+
+
 
 module.exports = router;

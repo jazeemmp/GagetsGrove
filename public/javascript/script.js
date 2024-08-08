@@ -3,6 +3,28 @@
 const totalAmout = document.getElementById("totalAmout");
 const allPrice = document.querySelectorAll(".price");
 
+
+/*[Form validation by bootstarp]
+    ===========================================================*/
+(function () {
+  "use strict"; //strict mode
+  var forms = document.querySelectorAll(".needs-validation");
+  Array.prototype.slice.call(forms).forEach(function (form) {
+    form.addEventListener(
+      "submit",
+      function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})(); //Calling the Function
+
 /*[ Add to cart ]
     ===========================================================*/
 const addToCart = async (productId) => {
@@ -133,16 +155,14 @@ accountDiv.addEventListener("mouseleave", () => {
 /*[function to change banner image src based on size]
     ===========================================================*/
 function updateImageSources() {
-  const images = document.querySelectorAll(".swiper-slide .img");
-  const prev = document.querySelector('.swiper-button-prev')
-  const next = document.querySelector('.swiper-button-next')
+  const images = document.querySelectorAll(".carousel-item img");
+  console.log(images);
+
   const isMobile = window.matchMedia("(max-width: 600px)").matches;
   images.forEach((img, index) => {
     if (isMobile) {
-      img.style.width = "100%"
+      img.style.width = "100%";
       img.src = `/images/banner-mobile${index + 1}.webp`;
-      prev.remove()
-      next.remove()
     } else {
       img.src = `/images/banner${index + 1}.webp`;
     }
@@ -150,23 +170,3 @@ function updateImageSources() {
 }
 updateImageSources();
 window.addEventListener("resize", updateImageSources);
-
-/*[banner swiper library function]
-    ===========================================================*/
-const swiper = new Swiper(".swiper", {
-  pagination: {
-    el: ".swiper-pagination",
-  },
-  autoplay: {
-    delay: 5000, 
-    disableOnInteraction: false,
-  },
-
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  scrollbar: {
-    el: ".swiper-scrollbar",
-  },
-});

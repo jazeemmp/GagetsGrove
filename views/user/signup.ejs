@@ -4,33 +4,56 @@
       <div class="form-group">
         <h1 class="text-center">Signup</h1>
         <label for="exampleInputPassword1">Full Name</label>
-        <input type="text" name="fullname" class="form-control" id="userName" placeholder="FullName" autocomplete="username">
+        <input
+          type="text"
+          name="fullname"
+          class="form-control"
+          id="userName"
+          placeholder="FullName"
+          autocomplete="username"
+        />
       </div>
       <div class="form-group">
         <label for="exampleInputEmail1">Email address</label>
-        <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" autocomplete="email">
+        <input
+          type="email"
+          name="email"
+          class="form-control"
+          id="email"
+          placeholder="Enter email"
+          autocomplete="email"
+        />
         <small class="fill-error">This email alredy exists..!!</small>
       </div>
       <div class="form-group">
         <label for="exampleInputPassword1">Password</label>
-        <input type="password" placeholder="Password"autocomplete="current-password" name="password" class="form-control" id="password">
+        <input
+          type="password"
+          placeholder="Password"
+          autocomplete="current-password"
+          name="password"
+          class="form-control"
+          id="password"
+        />
       </div>
-     <div class="d-flex justify-content-between align-items-center">
-      <a href="/login" class="text-decoration-none mr-5 link-primary">Alredy have an account??</a>
-      <button type="submit" class="btn ml-5 btn-primary">Submit</button>
-     </div>
-     <div class="loading">
-      <div class="loader"></div>
-    </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="/login" class="text-decoration-none mr-5 link-primary"
+          >Alredy have an account??</a
+        >
+        <button type="submit" class="btn ml-5 btn-primary">Submit</button>
+      </div>
+      <div class="loading">
+        <div class="loader"></div>
+      </div>
     </form>
   </div>
 </div>
 <script>
-  const loading = document.querySelector('.loading')
-  const signupForm = document.getElementById('signupForm')
-  signupForm.addEventListener('submit', async (e) => {
+  const loading = document.querySelector(".loading");
+  const signupForm = document.getElementById("signupForm");
+  signupForm.addEventListener("submit", async (e) => {
     try {
-      e.preventDefault()
+      e.preventDefault();
       const fillError = document.querySelector(".fill-error");
       const userName = document.getElementById("userName").value;
       const email = document.getElementById("email").value;
@@ -39,7 +62,7 @@
       if (userName === "" || email === "" || password === "") {
         alert("please fill all the fileds");
       } else {
-         loading.style.display = 'flex'
+        loading.style.display = "flex";
         const response = await fetch("/signup", {
           method: "post",
           headers: {
@@ -56,10 +79,8 @@
       }
     } catch (error) {
       console.log(error);
-
-    }finally{
-       loading.style.display = 'none'
+    } finally {
+      loading.style.display = "none";
     }
-  })
-
+  });
 </script>
