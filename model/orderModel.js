@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema({
+    orderId :{
+        type:Number
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -20,13 +23,10 @@ const orderSchema = new mongoose.Schema({
             price: {
                 type: Number,
             },
-            priceByQuantity: {
-                type: Number,
-            },
         },
     ],
     totalAmount: {
-        type: Number,
+        type:Number,
     },
     paymentMethod: {
         type: String
@@ -34,7 +34,7 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String
     },
-    createdate: {
+    orderDate: {
         type: Date,
         default: Date.now()
     }

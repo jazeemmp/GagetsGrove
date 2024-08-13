@@ -13,9 +13,9 @@
     >
     <a href="/cart"
       ><i class="fa-solid fa-cart-shopping">
-        <% if (typeof cartCount !=='undefined' && cartCount) { %>
-        <span class="count"> <%= cartCount %> </span>
-        <% } %>
+        <% if (user &&typeof cartCount !== 'undefined') { %>
+          <span class="count"><%= cartCount %></span>
+        <% } %>        
       </i></a
     >
     <a class="user"><i class="fa-regular fa-user"></i></a>

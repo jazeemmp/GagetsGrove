@@ -14,7 +14,7 @@ const getCart = async (req, res) => {
 
 const addToCart = async (req, res) => {
   try {
-    const { productId, priceNum } = req.body;
+    const { productId, price } = req.body;
     const userId = req.session.user._id;
     const isExisting = await CartDB.findOne({
       user: userId,
@@ -35,7 +35,8 @@ const addToCart = async (req, res) => {
             products: {
               productId: productId,
               quantity: 1,
-              priceByQuantity: priceNum,
+              price:price,
+              priceByQuantity: price,
             },
           },
         },
@@ -45,7 +46,7 @@ const addToCart = async (req, res) => {
       );
     }
 
-    await updateTotal(productId, priceNum, userId);
+    await updateTotal(productId, price, userId);
 
     res.json({
       success: true,

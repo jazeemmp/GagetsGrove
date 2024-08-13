@@ -1,0 +1,70 @@
+<section class="container orders-container p-4">
+  <% if (hasOrders) { %>
+  <div class="col-lg-12 col-md-12 col-12">
+    <h1 class="mb-5 h2 fw-bold">Order History</h1>
+  </div>
+  <div class="row">
+    <div class="col-xxl-8 col-12">
+      <% orderdProducts.forEach(order => { %>
+      <div class="card mb-5">
+        <!-- card body-->
+        <div class="card-body">
+          <!-- row -->
+          <% order.products.forEach(product => { %>
+          <div class="row mb-5 justify-content-between align-items-center">
+            <div class="col-lg-8 col-12">
+              <div class="d-md-flex">
+                <div>
+                  <img src="/uploads/<%= product.productId.image %>" alt="" class="img-4by3-xl rounded" width="100" />
+                </div>
+                <div class="ms-md-4 mt-2 mt-lg-0">
+                  <!-- heading -->
+                  <h5 class="mb-1" style="text-transform: capitalize">
+                    <%= product.productId.name %>
+                  </h5>
+                  <!-- text -->
+                  Quantity:<span class="text-dark"><%= product.quantity %></span>
+                  <!-- text -->
+                  <div class="mt-3">
+                    <h4 class="price">
+                      ₹
+                      <span id="<%= product.productId._id %>"><%= product.productId.price %></span>
+                    </h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- button -->
+            <div class="col-lg-3 col-12 d-grid">
+              <button onclick="addToCart('<%= product.productId._id %>')" class="btn btn-dark mb-2">
+                Buy again
+              </button>
+              <a href="/" class="btn btn-secondary"> Shop similar</a>
+            </div>
+          </div>
+          <% }) %>
+          <div class="border-top mt-3 pt-3 d-lg-flex align-items-center justify-content-between">
+            <div class="align-items-center justify-content-between">
+              <h5 class="mb-2">
+                Order Id :
+                <small class="text-muted">#<%= order.orderId %></small>
+              </h5>
+              <span class="text-center">Orderd on : <%= new
+                Date(order.orderDate).toLocaleDateString('en-US', { year:
+                'numeric', month: 'long', day: 'numeric' }) %></span>
+            </div>
+            <!-- <span class="badge"><%= order.status %></span> -->
+            <a href="/orders/view-details/<%= order._id  %>" class="btn btn-dark my-3">View Details</a>
+          </div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+  <% }else{ %>
+  <div class="d-flex align-items-center justify-content-center mb-5">
+    <img src="/images/no-orders-found.jpg" width="500">
+    <h1 class="h1">No OrderS Found</h1>
+  </div>
+  <% } %>
+</section>

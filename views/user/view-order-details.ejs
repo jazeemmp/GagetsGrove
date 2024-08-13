@@ -1,0 +1,108 @@
+<section class="view-details-section">
+  <div class="container-fluid">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center py-3">
+        <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Order #<%= orderDetails.orderId %></h2>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="mb-3">
+                <div class=" d-flex justify-content-between align-items-center ">
+                  <span class="me-3">
+                    <%= new Date(orderDetails.orderDate).toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true // This will show the time in 12-hour format with AM/PM
+                        }) %>
+                  </span>
+                  <span class="me-3">#<%= orderDetails.orderId %></span>
+                  <span class="badge text-uppercase rounded-pill bg-info"><%= orderDetails.status %></span>
+                </div>
+              </div>
+              <table class="table table-borderless">
+                <tbody>
+                  <% orderDetails.products.forEach(product => { %>
+                  <tr>
+                    <td>
+                      <div class="d-flex mb-2">
+                        <div class="flex-shrink-0">
+                          <img src="/uploads/<%= product.productId.image %>" alt="" width="45" class="img-fluid">
+                        </div>
+                        <div class="flex-lg-grow-1 ms-3">
+                          <h6 class="small mb-0"><a href="#" class="text-reset text-capitalize"><%= product.productId.name %></a></h6>
+                          <span class="small">Color: Black</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td><%= product.quantity %></td>
+                    <td class="text-end"><span class="price">₹</span> <%= product.productId.price %></td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+                <tfoot>
+                  <!-- <tr>
+                        <td colspan="2">Subtotal</td>
+                        <td class="text-end">$159,98</td>
+                      </tr> -->
+                  <!-- <tr>
+                        <td colspan="2">Discount (Code: NEWYEAR)</td>
+                        <td class="text-danger text-end">-$10.00</td>
+                      </tr> -->
+                  <tr class="fw-bold">
+                    <td colspan="2">TOTAL</td>
+                    <td class="text-end"><span class="price">₹</span> <%= orderDetails.totalAmount %></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6">
+                  <h3 class="h6">Payment Method</h3>
+                  <% if (orderDetails.paymentMethod === 'cod') { %>
+                  <p>Cash on delivery<br>
+                    Total:<span class="price">₹</span> <%= orderDetails.totalAmount %> <span class="badge bg-warning rounded-pill"> PENDING</span></p>
+                  <% }else{ %>
+                  <p>Online Payment<br>
+                    Total:<span class="price">₹</span> <%= orderDetails.totalAmount %> <span class="badge bg-success rounded-pill">PAID</span></p>
+                  <% } %>
+                </div>
+                <div class="col-lg-6">
+                  <h3 class="h6">Billing address</h3>
+                  <address>
+                    <strong class="text-capitalize"><%= deliveryDetails.fullname %></strong><br>
+                    <%= deliveryDetails.address %><br>
+                    <%= deliveryDetails.city %>, <%= deliveryDetails.state %>, <%= deliveryDetails.pincode %><br>
+                    <span title="Phone">Ph :</span> <%= deliveryDetails.mobile %>
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h4 class="h4">Shipping Information</h4>
+              <hr>
+              <h3 class="h6">Address</h3>
+              <address>
+                <strong class="text-capitalize"><%= deliveryDetails.fullname %></strong><br>
+                <%= deliveryDetails.address %><br>
+                <%= deliveryDetails.city %>, <%= deliveryDetails.state %>, <%= deliveryDetails.pincode %><br>
+                <span title="Phone">Ph :</span> <%= deliveryDetails.mobile %>
+              </address>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,60 +1,117 @@
-<section class="h-100">
-  <div class="container h-100 py-5">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-10">
-        <% if (cartItems && cartItems.products && cartItems.products.length> 0) { %>
-          <div class="d-flex justify-content-between align-items-center mb-4">
-            <h3 class="fw-normal mb-0">Cart</h3>
-          </div>
-          <% cartItems.products.forEach(product=> { %>
-            <div id="<%= product._id %>" class="card rounded-3 mb-4">
-              <div class="card-body p-4">
-                <div class="row d-flex justify-content-between align-items-center">
-                  <div class="col-md-2 col-lg-2 col-xl-2">
-                    <img src="/uploads/<%= product.productId.image %>" class="img-fluid rounded-3"
-                      alt="Cotton T-shirt" />
-                  </div>
-                  <div class="col-md-3 col-lg-3 col-xl-3">
-                    <p class="lead fw-normal mb-2">
-                      <%= product.productId.name %>
-                    </p>
-                  </div>
-                  <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                    <button
-                      onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',-1)"
-                      class="btn btn-secondary">-</button>
-                    <span id="<%= product.productId._id %>" class="m-2">
-                      <%= product.quantity %>
-                    </span>
-                    <button
-                      onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',1)"
-                      class="btn btn-secondary">+</button>
-                  </div>
-                  <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                    <h5 class="mb-0">₹ <span class="price" id="<%= cartItems._id %>-price-<%= product.productId._id %>"> <%= product.priceByQuantity %> </span></h5>
-                  </div>
-                  <div class="col-md-1 col-lg-1 col-xl-1" style="margin-right:20px ;">
-                    <button onclick="deleteCartProduct('<%= product.productId._id %>','<%= product._id %>')"
-                      class="btn btn-danger">Remove</button>
-                  </div>
+<section class="cart-section">
+  <% if (cartItems && cartItems.products && cartItems.products.length> 0) { %>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-8">
+        <% cartItems.products.forEach(product => { %>
+        <div id="<%= product._id %>" class="card ">
+          <div class="card-body">
+            <div class="d-flex align-items-start border-bottom pb-3">
+              <div class="me-4">
+                <img src="/uploads/<%= product.productId.image %>" alt="" width="100" class="rounded">
+              </div>
+              <div class="flex-grow-1 align-self-center overflow-hidden">
+                <div>
+                  <h5 class="text-truncate text-capitalize font-size-18"><a href="#" class="text-capitalize"></a> <%= product.productId.name %></h5>
+                  <p class="mb-0 mt-1">Color : <span class="fw-medium">Gray</span></p>
                 </div>
+              </div>
+              <div class="flex-shrink-0 ms-2">
+                <ul class="list-inline mb-0 font-size-16">
+                  <li class="list-inline-item">
+                    <a class="text-muted px-1">
+                      <i onclick="deleteCartProduct('<%= product.productId._id %>','<%= product._id %>')" class="mdi mdi-trash-can-outline"></i>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
             <div>
-            </div>
-            <% }); %>
-            <div class="checkout">
-              <div class="child">
-                <h2 id="totalAmout">₹<%= cartItems.total %></h2>
-                <a class="btn btn-success" href="/place-order">CHECKOUT</a>
-              </div>
-              <% }else{ %>
-                <div class="container d-flex justify-content-center">
-                  <img id="" src="https://i.pinimg.com/736x/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.jpg" alt="">
+              <div class="row align-items-center">
+                <div class="col-md-4">
+                  <div class="mt-3 text-center text-md-start">
+                    <p class="text-muted mb-2">Price</p>
+                    <h5><span class="price">₹</span> <%= product.price %></h5>
+                  </div>
                 </div>
-            <% } %>
+                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                  <div class="text-center">
+                    <p class="text-muted mb-2">Quantity</p>
+                    <div class="d-inline-flex align-items-center">
+                      <button onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',-1)" class="btns"><i class="fa-solid fa-minus"></i></button>
+                      <span id="<%= product.productId._id %>" class="quantity mx-2"><%= product.quantity %></span>
+                      <button onclick="changeQuantity('<%=cartItems._id%>','<%= product.productId._id %>','<%= product.productId.price %>',1)" class="btns"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mt-3 text-center text-md-end">
+                    <p class="text-muted mb-2">Total</p>
+                    <h5><span class="price">₹ </span><span id="<%= cartItems._id %>-price-<%= product.productId._id %>"><%= product.priceByQuantity %></span></h5>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <% }) %>
+        <!-- end card -->
+        <div class="row my-4">
+          <div class="col-sm-6">
+            <a href="/" class="btn btn-link text-muted">
+              <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
+          </div>
+          <div class="col-sm-6">
+            <div class="text-sm-end mt-2 mt-sm-0">
+              <a href="/place-order" class="btn btn-success">
+                <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4">
+        <div class="mt-5 mt-lg-0">
+          <div class="card">
+            <div class="card-header bg-transparent  py-3 px-4">
+              <h5 class="font-size-16 mb-0">Order Summary </h5>
+            </div>
+            <div class="card-body p-4 pt-2">
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <tbody>
+                    <tr>
+                      <td>Sub Total :</td>
+                      <td class="text-end"><span class="price">₹</span> <%= cartItems.total %></td>
+                    </tr>
+                    <tr>
+                      <td>Discount : </td>
+                      <td class="text-end">- <span class="price">₹</span> 0</td>
+                    </tr>
+                    <tr>
+                      <td>Shipping Charge :</td>
+                      <td class="text-end">- <span class="price">₹</span> 0</td>
+                    </tr>
+                    <tr class="red">
+                      <th>Total :</th>
+                      <td class="text-end">
+                        <span class="fw-bold">
+                          <span class="price">₹</span><span id="totalAmout"> <%= cartItems.total %></span>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+  <% }else{ %>
+  <div class="container  d-flex align-items-center justify-content-center">
+    <img id="" src="https://i.pinimg.com/736x/2e/ac/fa/2eacfa305d7715bdcd86bb4956209038.jpg" alt="">
+  </div>
+  <% } %>
 </section>
-</div>

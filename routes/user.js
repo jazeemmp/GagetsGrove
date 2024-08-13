@@ -16,8 +16,11 @@ router.get('/cart',middle.isLogined,cartControl.getCart)
 router.post('/add-to-cart',middle.ajaxisLogined,cartControl.addToCart)
 router.get('/remove-cart-product/:id',middle.isLogined,cartControl.removeProduct)
 router.post('/change-product-quantiy',cartControl.changeProductQuantity)
-router.get('/place-order',middle.isLogined,orderControl.placeOrder)
+router.get('/place-order',middle.isLogined,orderControl.getPlaceOrder)
+router.post('/add-address',orderControl.addAddress)
 router.post('/place-order',orderControl.postPlaceOrder)
+router.get('/orders',middle.isLogined,orderControl.getOrders)
+router.get('/orders/view-details/:id',orderControl.getOrderDetails)
 
 
 

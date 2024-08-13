@@ -1,51 +1,53 @@
-<div class="container d-flex justify-content-center align-items-center mt-5">
-  <div class="row">
-    <form id="signupForm">
-      <div class="form-group">
-        <h1 class="text-center">Signup</h1>
-        <label for="exampleInputPassword1">Full Name</label>
-        <input
-          type="text"
-          name="fullname"
-          class="form-control"
-          id="userName"
-          placeholder="FullName"
-          autocomplete="username"
-        />
-      </div>
-      <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input
-          type="email"
-          name="email"
-          class="form-control"
-          id="email"
-          placeholder="Enter email"
-          autocomplete="email"
-        />
-        <small class="fill-error">This email alredy exists..!!</small>
-      </div>
-      <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          placeholder="Password"
-          autocomplete="current-password"
-          name="password"
-          class="form-control"
-          id="password"
-        />
-      </div>
-      <div class="d-flex justify-content-between align-items-center">
-        <a href="/login" class="text-decoration-none mr-5 link-primary"
-          >Alredy have an account??</a
-        >
-        <button type="submit" class="btn ml-5 btn-primary">Submit</button>
-      </div>
-      <div class="loading">
-        <div class="loader"></div>
-      </div>
-    </form>
+<section>
+  <div class="container d-flex justify-content-center align-items-center">
+    <div class="row">
+      <form id="signupForm">
+        <div class="form-group">
+          <h1 class="text-center mt-5">Signup</h1>
+          <label for="exampleInputPassword1">Full Name</label>
+          <input
+            type="text"
+            name="fullname"
+            class="form-control"
+            id="userName"
+            placeholder="FullName"
+            autocomplete="username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input
+            type="email"
+            name="email"
+            class="form-control"
+            id="email"
+            placeholder="Enter email"
+            autocomplete="email"
+          />
+          <small class="fill-error">This email alredy exists..!!</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            name="password"
+            class="form-control"
+            id="password"
+          />
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+          <a href="/login" class="text-decoration-none mr-5 link-primary"
+            >Alredy have an account??</a
+          >
+          <button type="submit" class="btn ml-5 btn-primary">Submit</button>
+        </div>
+        <div class="loading">
+          <div class="loader"></div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <script>
