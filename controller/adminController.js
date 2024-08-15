@@ -18,7 +18,7 @@ const postAddProducts = async (req, res) => {
     console.log("no body");
     return;
   }
-  try {
+  try { 
     const product = new ProductDB({
       name: req.body.name,
       category: req.body.category,

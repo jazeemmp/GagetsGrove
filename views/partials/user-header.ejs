@@ -16,21 +16,6 @@
         <% if (user &&typeof cartCount !== 'undefined') { %>
           <span class="count"><%= cartCount %></span>
         <% } %>        
-      </i></a
-    >
+      </i></a>
     <a class="user"><i class="fa-regular fa-user"></i></a>
-    <% if (typeof user !== 'undefined' && user) { %>
-    <div class="account">
-      <p>Do you want to log out ??</p>
-      <a class="button " href="/logout">Logout</a>
-    </div>
-    <% } else { %>
-    <div class="account">
-      <p>Dont Have An Account??</p>
-      <a class="button" href="/signup">Signup</a>
-      <p>Alredy Have An Account??</p>
-      <a class="button" href="/login">Login</a>
-    </div>
-    <% } %>
-  </div>
 </nav>

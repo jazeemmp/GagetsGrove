@@ -3,10 +3,11 @@
   <div class="container">
     <div class="row">
       <div class="col-xl-8">
-        <% cartItems.products.forEach(product => { %>
-        <div id="<%= product._id %>" class="card ">
-          <div class="card-body">
-            <div class="d-flex align-items-start border-bottom pb-3">
+        <div class="product-container">
+        <div  class="card ">
+          <% cartItems.products.forEach(product => { %>
+          <div id="<%= product._id %>" class="card-body">
+            <div class="d-flex align-items-start pb-3">
               <div class="me-4">
                 <img src="/uploads/<%= product.productId.image %>" alt="" width="100" class="rounded">
               </div>
@@ -26,7 +27,7 @@
                 </ul>
               </div>
             </div>
-            <div>
+            <div class=" border-bottom pb-3">
               <div class="row align-items-center">
                 <div class="col-md-4">
                   <div class="mt-3 text-center text-md-start">
@@ -51,30 +52,25 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
-        </div>
-        <% }) %>
-        <!-- end card -->
-        <div class="row my-4">
-          <div class="col-sm-6">
-            <a href="/" class="btn btn-link text-muted">
-              <i class="mdi mdi-arrow-left me-1"></i> Continue Shopping </a>
-          </div>
-          <div class="col-sm-6">
-            <div class="text-sm-end mt-2 mt-sm-0">
-              <a href="/place-order" class="btn btn-success">
-                <i class="mdi mdi-cart-outline me-1"></i> Checkout </a>
-            </div>
-          </div>
+          <% }) %>
         </div>
       </div>
+        <!-- end card -->
+        <div class="row d-flex border-top  align-items-center">
+          <div class="d-flex flex-column w-100">
+            <a href="/place-order" class="btn btn-dark mt-3">
+             Checkout
+            </a>
+          </div>
+        </div>        
+      </div>
       <div class="col-xl-4">
-        <div class="mt-5 mt-lg-0">
-          <div class="card">
-            <div class="card-header bg-transparent  py-3 px-4">
-              <h5 class="font-size-16 mb-0">Order Summary </h5>
+        <div class="sticky-wrapper">
+          <div class="card bg-white box-shadow">
+            <div class="card-header bg-secondary  py-3 px-4">
+              <h5 class="font-size-16 text-light mb-0">Order Summary</h5>
             </div>
             <div class="card-body p-4 pt-2">
               <div class="table-responsive">
@@ -85,7 +81,7 @@
                       <td class="text-end"><span class="price">₹</span> <%= cartItems.total %></td>
                     </tr>
                     <tr>
-                      <td>Discount : </td>
+                      <td>Discount :</td>
                       <td class="text-end">- <span class="price">₹</span> 0</td>
                     </tr>
                     <tr>
@@ -106,7 +102,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>      
     </div>
   </div>
   <% }else{ %>
@@ -115,3 +111,17 @@
   </div>
   <% } %>
 </section>
+<style>
+.product-container {
+  max-height: 450px;
+  overflow-y: auto; 
+  padding-right: 15px; 
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+
+</style>

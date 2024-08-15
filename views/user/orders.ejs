@@ -1,17 +1,18 @@
 <section class="container orders-container p-4">
   <% if (hasOrders) { %>
-  <div class="col-lg-12 col-md-12 col-12">
-    <h1 class="mb-5 h2 fw-bold">Order History</h1>
+  <div class="row mb-5">
+    <div class="col-12">
+      <h1 class="mb-5 h2 fw-bold text-center">Order History</h1>
+    </div>
   </div>
-  <div class="row">
-    <div class="col-xxl-8 col-12">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
       <% orderdProducts.forEach(order => { %>
       <div class="card mb-5">
-        <!-- card body-->
+        <!-- card body -->
         <div class="card-body">
-          <!-- row -->
           <% order.products.forEach(product => { %>
-          <div class="row mb-5 justify-content-between align-items-center">
+          <div class="row mb-5 align-items-center">
             <div class="col-lg-8 col-12">
               <div class="d-md-flex">
                 <div>
@@ -35,36 +36,33 @@
               </div>
             </div>
             <!-- button -->
-            <div class="col-lg-3 col-12 d-grid">
+            <!-- <div class="col-lg-3 col-12 d-grid">
               <button onclick="addToCart('<%= product.productId._id %>')" class="btn btn-dark mb-2">
                 Buy again
               </button>
-              <a href="/" class="btn btn-secondary"> Shop similar</a>
-            </div>
+              <a href="/" class="btn btn-secondary">Shop similar</a>
+            </div> -->
           </div>
           <% }) %>
           <div class="border-top mt-3 pt-3 d-lg-flex align-items-center justify-content-between">
-            <div class="align-items-center justify-content-between">
+            <div class="align-items-center">
               <h5 class="mb-2">
                 Order Id :
                 <small class="text-muted">#<%= order.orderId %></small>
               </h5>
-              <span class="text-center">Orderd on : <%= new
-                Date(order.orderDate).toLocaleDateString('en-US', { year:
-                'numeric', month: 'long', day: 'numeric' }) %></span>
+              <span>Ordered on : <%= new Date(order.orderDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) %></span>
             </div>
-            <!-- <span class="badge"><%= order.status %></span> -->
-            <a href="/orders/view-details/<%= order._id  %>" class="btn btn-dark my-3">View Details</a>
+            <a href="/orders/view-details/<%= order._id %>" class="btn btn-dark my-3">View Details</a>
           </div>
         </div>
       </div>
       <% }) %>
     </div>
   </div>
-  <% }else{ %>
+  <% } else { %>
   <div class="d-flex align-items-center justify-content-center mb-5">
     <img src="/images/no-orders-found.jpg" width="500">
-    <h1 class="h1">No OrderS Found</h1>
+    <h1 class="h1">No Orders Found</h1>
   </div>
   <% } %>
 </section>

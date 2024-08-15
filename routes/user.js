@@ -21,7 +21,7 @@ router.post('/add-address',orderControl.addAddress)
 router.post('/place-order',orderControl.postPlaceOrder)
 router.get('/orders',middle.isLogined,orderControl.getOrders)
 router.get('/orders/view-details/:id',orderControl.getOrderDetails)
-
-
+router.post('/get-otp',userControl.getOtp)
+router.post('/verify-otp',userControl.verifyOtp)
 
 module.exports = router;

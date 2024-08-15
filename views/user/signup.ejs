@@ -1,9 +1,39 @@
-<section>
-  <div class="container d-flex justify-content-center align-items-center">
+<!-- <style>
+  .container-fluid{
+    height: 100vh;
+    background: url('/images/background.jpg') no-repeat fixed center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #signupForm{
+    border: 1px solid #fff;
+    padding: 40px;
+    /* width: 470px; */
+    max-width: 95%;
+    border-radius: 10px;
+    background-color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(30px);
+    border: 2px solid rgb(255, 255, 255, 0.2);
+    overflow: hidden;
+    transition: height .8s ease;
+  }
+  form label{
+    color: #fff;
+  }
+  form h1{
+    color:#fff;
+  }
+  form input{
+    background: transparent;
+  }
+</style>
+  <div class="container-fluid d-flex justify-content-center align-items-center">
     <div class="row">
       <form id="signupForm">
         <div class="form-group">
-          <h1 class="text-center mt-5">Signup</h1>
+          <h1 class="text-center">Signup</h1>
           <label for="exampleInputPassword1">Full Name</label>
           <input
             type="text"
@@ -85,4 +115,141 @@
       loading.style.display = "none";
     }
   });
+</script> -->
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .signup-container {
+    height: 100vh;
+    background: url("/images/background.jpg") no-repeat fixed center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+  }
+  .get-otp {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100px;
+    color: #ffff;
+  }
+
+  #otp-msg {
+    position: absolute;
+    font-size: 13px;
+  }
+  form input{
+    border: 0;
+  }
+  .invalid-feedback {
+    margin-top: -3px;
+  }
+</style>
+<div class="signup-container">
+  <section>
+    <div class="container h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-12 col-xl-11">
+          <div class="card text-black" style="border-radius: 25px">
+            <div class="card-body p-md-5">
+              <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
+                  <p class="text-center h1 fw-bold mb-5 mx-md-4">
+                    Sign up
+                  </p>
+
+                  <form id="signupForm" style="width: 320px">
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                        <input type="text" id="nameField" name="name" class="form-control" required />
+                        <label class="form-label" for="nameField">Your Name</label>
+                        <div class="invalid-feedback">
+                          Please enter your name.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                      <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                        <input type="email" id="emailField" name="email" class="form-control" required />
+                        <label class="form-label" for="emailField">Your Email</label>
+                        <div class="invalid-feedback">
+                          Please enter a valid email address.
+                        </div>
+                        <p id="otp-msg"></p>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                      <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                        <input type="password" id="passwordField" name="password" class="form-control" required />
+                        <label class="form-label" for="passwordField">Password</label>
+                        <div class="invalid-feedback">
+                          Please enter a password.
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-key fa-lg me-3 fa-fw"></i>
+                      <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                        <input type="password" id="rePasswordField" class="form-control" required />
+                        <label class="form-label" for="rePasswordField">Repeat your password</label>
+                        <div class="invalid-feedback">
+                          Please repeat your password.
+                        </div>
+                        <p id="no-pass-match" style="position: absolute; font-size: 13px"></p>
+                      </div>
+                    </div>
+
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fa-solid fa-comment-sms fa-lg me-3 fa-fw"></i>
+                      <div data-mdb-input-init class="form-outline flex-fill mb-0">
+                        <input type="text" id="otpField" name="otp" class="form-control" required />
+                        <label class="form-label" for="otpField">Enter OTP</label>
+
+                          <button class="get-otp btn btn-warning p-0" type="button" id="getOtp">
+                            Get OTP
+                          </button>
+  
+                        <div class="invalid-feedback">
+                          Please enter a valid OTP.
+                        </div>
+                        <p id="otp-sucesss" style="position: absolute; font-size: 13px"></p>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                      <a href="/login" class="link-primary" style="font-size: 16px">Already have an account?</a>
+                      <div class="signup-btn-container">
+                        <button type="submit" id="signupSubmitBtn" class="btn btn-primary btn-lg" disabled>
+                          Register
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center  order-1 order-lg-2">
+                  <img src="/images/signup.jpg" class="img-fluid" id="signupImg" width="400" alt="Sample image" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+
 </script>

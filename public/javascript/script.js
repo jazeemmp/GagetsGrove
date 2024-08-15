@@ -2,6 +2,7 @@
     ===========================================================*/
 const totalAmout = document.getElementById("totalAmout");
 const allPrice = document.querySelectorAll(".price");
+console.log("Script loaded");
 
 /*[Form validation by bootstarp]
     ===========================================================*/
@@ -26,44 +27,54 @@ const allPrice = document.querySelectorAll(".price");
 
 /*[ Add to cart ]
     ===========================================================*/
-const addToCart = async (productId,priceString) => {
-  try {
-    const price = parseInt(priceString);
-    const cartCount = document.querySelector('.count')
-    const response = await fetch("/add-to-cart", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productId, price }),
-    });
-    if (!response.ok) {
-      if (response.status === 401) {
-        window.location.href = "/login";
-      } else {
-        throw new Error(`Request failed with status ${response.status}`);
+    const addToCart = async (productId, priceString) => {
+      const price = parseInt(priceString);
+      const cartCount = document.querySelector('.count');
+      
+      try {
+        const response = await sendCartRequest(productId, price);
+        await handleCartResponse(response, cartCount);
+      } catch (error) {
+        console.error('Error adding to cart:', error);
       }
-    } else {
+    };
+    
+    const sendCartRequest = (productId, price) => {
+      return fetch("/add-to-cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId, price }),
+      });
+    };
+    
+    const handleCartResponse = async (response, cartCount) => {
+      if (!response.ok) {
+        if (response.status === 401) {
+          window.location.href = "/login";
+        } else {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+      }
+      
       const data = await response.json();
       if (data.success) {
         alertUser(data.message, "success");
-        const existingCount = cartCount.innerText
-       const existingCountNum = parseInt(existingCount)
-       
-        cartCount.innerText = existingCountNum+1;
+        updateCartCount(cartCount);
       } else {
         alertUser(data.message, "error");
       }
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
+    };
+    
+    const updateCartCount = (cartCount) => {
+      const existingCountNum = parseInt(cartCount.innerText);
+      cartCount.innerText = existingCountNum + 1;
+    };
+    
 /*[ delete cart product]
     ===========================================================*/
 const deleteCartProduct = async (productId, compId) => {
-  const container = document.getElementById(compId);
+  try {
+    const container = document.getElementById(compId);
   const response = await fetch(`/remove-cart-product/${productId}`);
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`);
@@ -76,11 +87,15 @@ const deleteCartProduct = async (productId, compId) => {
     location.reload();
   }
   totalAmout.innerText = `₹ ${data.total}`;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /*[ Change quantity]
     ===========================================================*/
 const changeQuantity = async (cartId, productId, priceString, count) => {
+ try {
   const priceFiled = document.getElementById(`${cartId}-price-${productId}`);
   const quantityString = document.getElementById(productId);
   const quantity = parseInt(quantityString.innerText);
@@ -103,6 +118,10 @@ const changeQuantity = async (cartId, productId, priceString, count) => {
     priceFiled.textContent = newPrice;
   }
   totalAmout.innerText = data.total;
+ } catch (error) {
+  console.log(error);
+  
+ }
 };
 
 /*[ Fuction for alerting user ]
@@ -125,42 +144,41 @@ const alertUser = (title, state) => {
   });
 };
 
-/*[ login hower function ]
-    ===========================================================*/
-const userIcon = document.querySelector(".user");
-const accountDiv = document.querySelector(".account");
-let isHovered = false;
+// /*[ login hower function ]
+//     ===========================================================*/
+// const userIcon = document.querySelector(".user");
+// const accountDiv = document.querySelector(".account");
+// let isHovered = false;
 
-const showAccount = () => {
-  accountDiv.style.display = "flex";
-  isHovered = true;
-};
+// const showAccount = () => {
+//   accountDiv.style.display = "flex";
+//   isHovered = true;
+// };
 
-const hideAccount = () => {
-  if (!isHovered) {
-    accountDiv.style.display = "none";
-  }
-};
+// const hideAccount = () => {
+//   if (!isHovered) {
+//     accountDiv.style.display = "none";
+//   }
+// };
 
-userIcon.addEventListener("mouseenter", showAccount);
-accountDiv.addEventListener("mouseenter", showAccount);
+// userIcon.addEventListener("mouseenter", showAccount);
+// accountDiv.addEventListener("mouseenter", showAccount);
 
-userIcon.addEventListener("mouseleave", () => {
-  isHovered = false;
-  setTimeout(hideAccount, 100);
-});
+// userIcon.addEventListener("mouseleave", () => {
+//   isHovered = false;
+//   setTimeout(hideAccount, 100);
+// });
 
-accountDiv.addEventListener("mouseleave", () => {
-  isHovered = false;
-  setTimeout(hideAccount, 100);
-});
+// accountDiv.addEventListener("mouseleave", () => {
+//   isHovered = false;
+//   setTimeout(hideAccount, 100);
+// });
 
 /*[function to change banner image src based on size]
     ===========================================================*/
 function updateImageSources() {
+ try {
   const images = document.querySelectorAll(".carousel-item img");
-  console.log(images);
-
   const isMobile = window.matchMedia("(max-width: 600px)").matches;
   images.forEach((img, index) => {
     if (isMobile) {
@@ -170,24 +188,33 @@ function updateImageSources() {
       img.src = `/images/banner${index + 1}.webp`;
     }
   });
+ } catch (error) {
+  console.log(error);
+  
+ }
 }
 updateImageSources();
 window.addEventListener("resize", updateImageSources);
 
+
+/*[Add user address via ajax and update it dynamicaly]
+    ===========================================================*/
 const addressForm = document.getElementById("addressForm");
 const addAddress = document.getElementById("add-address");
 
-addAddress.addEventListener("click", () => {
-  addressForm.style.display = "block";
-});
+if(addAddress){
+  addAddress.addEventListener("click", () => {
+    addressForm.style.display = "block";
+  });
+}
 
 function hideForm() {
   addressForm.style.display = "none";
   addressForm.reset();
 }
-/*[Add user address via ajax and update it dynamicaly]
-    ===========================================================*/
-    addressForm.addEventListener("submit", async (event) => {
+
+if (addressForm) {
+      addressForm.addEventListener("submit", async (event) => {
       event.preventDefault();
     
       const formData = new FormData(event.target);
@@ -216,15 +243,14 @@ function hideForm() {
           }),
         });
     
-        const data = await response.json(); // Await and parse the JSON response
-        console.log(data); // Debugging: Check the response data
+        const data = await response.json();
+
     
         if (response.ok && data.saved) {
           hideForm();
           const addressList = document.getElementById("addressList");
     
           if (!addressList) {
-            // If addressList is not found, create and insert a new address list
             const newAddressContainer = `
               <div class="row" id="addressList">
                 <h5 class="font-size-16 mb-3">Select address:</h5>
@@ -271,69 +297,228 @@ function hideForm() {
         console.log(error);
       }
     });
+}
     
 /*[ajax for place order]
     ===========================================================*/
 const placeOrderForm = document.getElementById("placeOrderForm");
-placeOrderForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const addressRadioButtons = document.querySelectorAll(
-    'input[name="address"]'
-  );
-  let isChecked = false;
-  addressRadioButtons.forEach((radio) => {
-    if (radio.checked) {
-      isChecked = true;
+if (placeOrderForm) {
+  placeOrderForm.addEventListener("submit", async (e) => {
+    try {
+     e.preventDefault();
+     const addressRadioButtons = document.querySelectorAll(
+       'input[name="address"]'
+     );
+     let isChecked = false;
+     addressRadioButtons.forEach((radio) => {
+       if (radio.checked) {
+         isChecked = true;
+       }
+     });
+     if (!isChecked) {
+       Swal.fire({
+         title: "No Address Selected",
+         text: "Please select an address before placing your order.",
+         icon: "error",
+         confirmButtonText: "OK",
+         customClass: {
+           confirmButton: "btn-black",
+         },
+       });
+       return;
+     }
+   
+     const formData = new FormData(e.target);
+     const addressId = formData.get("address");
+     const paymentMethod = formData.get("paymentMethod");
+     const cartId = formData.get("cartId");
+     const totalPrice = formData.get("totalPrice");
+   
+     const response = await fetch("/place-order", {
+       method: "post",
+       headers: {
+         "Content-Type": "application/json",
+       },
+       body: JSON.stringify({
+         addressId,
+         paymentMethod,
+         cartId,
+         totalPrice,
+       }),
+     });
+     if (!response.ok) {
+       alert("please add address");
+     }
+     const data = await response.json();
+     if (data.success) {
+       Swal.fire({
+         title: "Order Placed Successfully!",
+         text: "Thank you for your purchase. Your order has been placed and is being processed.",
+         icon: "success",
+         confirmButtonText: "View Orders",
+         customClass: {
+           confirmButton: "btn-black",
+         },
+       }).then((result) => {
+         if (result.isConfirmed) {
+           window.location.href = "/orders";
+         }
+       });
+     }
+    } catch (error) {
+     console.log(error);
     }
-  });
-  if (!isChecked) {
-    Swal.fire({
-      title: "No Address Selected",
-      text: "Please select an address before placing your order.",
-      icon: "error",
-      confirmButtonText: "OK",
-      customClass: {
-        confirmButton: "btn-black",
-      },
-    });
+   });
+}
+
+
+/* [Signup Form] ========================================================== */
+const emailMsg = document.getElementById('otp-msg');
+const otpMsg = document.getElementById('otp-sucesss');
+const emailField = document.getElementById('emailField');
+const otpField = document.getElementById('otpField');
+const getOtpButton = document.getElementById('getOtp');
+const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+const rePasswordFiled = document.getElementById("rePasswordField");
+const noPassMatch = document.getElementById("no-pass-match");
+const signupBtnContainer = document.querySelector('.signup-btn-container')
+
+//Ajax for otp validation
+const clearMessage = () => {
+  otpMsg.textContent =""
+  emailMsg.textContent =""
+};
+
+const showMessage = (component,message, color) => {
+  component.style.color = color;
+  component.textContent = message;
+};
+
+const getOtp = async () => {
+  const email = emailField.value;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+  if (!email) {
+    showMessage(emailMsg,"Email can't be empty", "red");
     return;
   }
 
-  const formData = new FormData(e.target);
-  const addressId = formData.get("address");
-  const paymentMethod = formData.get("paymentMethod");
-  const cartId = formData.get("cartId");
-  const totalPrice = formData.get("totalPrice");
-
-  const response = await fetch("/place-order", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      addressId,
-      paymentMethod,
-      cartId,
-      totalPrice,
-    }),
-  });
-  if (!response.ok) {
-    alert("please add address");
+  if (!emailRegex.test(email)) {
+    showMessage(emailMsg,"Please provide a valid email", "red");
+    return;
   }
-  const data = await response.json();
-  if (data.success) {
-    Swal.fire({
-      title: "Order Placed Successfully!",
-      text: "Thank you for your purchase. Your order has been placed and is being processed.",
-      icon: "success",
-      confirmButtonText: "View Orders",
-      customClass: {
-        confirmButton: "btn-black",
-      },
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/orders";
-      }
+
+  clearMessage();
+  showMessage(otpMsg,"Loading...", "green");
+
+  try {
+    const response = await fetch('/get-otp', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
     });
+
+    const data = await response.json();
+
+    if (response.ok && data.otpSend) {
+      showMessage(otpMsg,"Check your email for the OTP!", "green");
+    } else {
+      showMessage(otpMsg,"Error while sending OTP", "red");
+    }
+  } catch {
+    showMessage(otpMsg,"Error while sending OTP", "red");
+  }
+};
+
+getOtpButton.addEventListener('click', getOtp);
+
+//ajax for veryfying otp
+let debounceTimer;
+const verifyOtp = async () => {
+  const email = emailField.value;
+  const otp = otpField.value;
+
+  try {
+    const response = await fetch('/verify-otp', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.otpVerified) {
+      showMessage(otpMsg,"OTP Validated", "green");
+      signupSubmitBtn.disabled = false;
+    } else {
+      showMessage(otpMsg,"Please Enter a Valid OTP to Submit", "red");
+      signupSubmitBtn.disabled = true;
+    }
+  } catch {
+    showMessage(otpMsg,"Error While validating OTP", "red");
+  }
+};
+
+otpField.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(verifyOtp, 1500);
+});
+
+//alerting user to enter valid otp to submit
+signupBtnContainer.addEventListener('click',(e)=>{
+  if(signupSubmitBtn.disabled){
+    showMessage(otpMsg,"Please provide valid otp to register","red")
+  }
+})
+
+//checking password && repassword matches
+rePasswordFiled.addEventListener("blur", () => {
+  const password = document.getElementById("passwordField").value;
+  const rePassword = document.getElementById("rePasswordField").value;
+  if (password !== rePassword) {
+    noPassMatch.style.color = "red";
+    noPassMatch.innerText = "Passwords do not match";
+  } else {
+    noPassMatch.innerText = "";
   }
 });
+
+//signupForm submition
+const signupForm = document.getElementById("signupForm");
+signupForm.addEventListener("submit", async (e) => {
+
+  try {
+    const userName = document.getElementById("nameField").value;
+    const email = document.getElementById("emailField").value;
+    const password = document.getElementById("passwordField").value;
+    const rePassword = document.getElementById("rePasswordField").value;
+    e.preventDefault();
+    if (password !== rePassword) {
+      noPassMatch.style.color = "red";
+      noPassMatch.innerText = "Passwords do not match";
+      return
+    }
+      const response = await fetch("/signup", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName,
+          email,
+          password,
+        }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        window.location.href = "/";
+      } else {
+        showMessage("Email Already exisits","red")
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.style.display = "none";
+  }
+});
+// ==============================================================
