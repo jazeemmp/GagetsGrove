@@ -50,10 +50,10 @@ const postLogin = async (req, res) => {
         req.session.user = user;
         res.json({success:true})
       } else {
-        res.json({success:false});
+        res.json({nopassword:true});
       }
     } else {
-      res.json({success:false});
+      res.json({nouser:true});
     }
   } catch (error) {
     console.error(error);

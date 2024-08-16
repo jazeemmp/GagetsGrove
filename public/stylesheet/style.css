@@ -18,7 +18,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: #fcfcfc;
+  background:#f9f9f9;
 }
 
 section {
@@ -343,8 +343,8 @@ section {
     position: -webkit-sticky;
     position: sticky;
     top: 20px;
-    max-height: calc(100vh - 40px); /* Keep some distance from the bottom */
-    margin-bottom: 20px; /* Space at the bottom when it stops being sticky */
+    max-height: calc(100vh - 40px); 
+    margin-bottom: 20px;
   }
   
   .table {
@@ -367,7 +367,10 @@ section {
   .mdi-trash-can-outline {
     font-size: 1.5em;
   }
-
+   
+  .table{
+    font-size: 1.1em;
+  }
   .table td,
   .table th {
     border: none;
@@ -409,8 +412,11 @@ section {
   .promise .myText p {
     font-weight: 500;
   }
-
+  .signup-container {
+    background-size: contain;
+    background-position: top;
+}
   #signupImg{
-    display: none;
+    /* display: none; */
   }
 }

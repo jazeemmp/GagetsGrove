@@ -1,121 +1,4 @@
-<!-- <style>
-  .container-fluid{
-    height: 100vh;
-    background: url('/images/background.jpg') no-repeat fixed center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #signupForm{
-    border: 1px solid #fff;
-    padding: 40px;
-    /* width: 470px; */
-    max-width: 95%;
-    border-radius: 10px;
-    background-color: #fff;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(30px);
-    border: 2px solid rgb(255, 255, 255, 0.2);
-    overflow: hidden;
-    transition: height .8s ease;
-  }
-  form label{
-    color: #fff;
-  }
-  form h1{
-    color:#fff;
-  }
-  form input{
-    background: transparent;
-  }
-</style>
-  <div class="container-fluid d-flex justify-content-center align-items-center">
-    <div class="row">
-      <form id="signupForm">
-        <div class="form-group">
-          <h1 class="text-center">Signup</h1>
-          <label for="exampleInputPassword1">Full Name</label>
-          <input
-            type="text"
-            name="fullname"
-            class="form-control"
-            id="userName"
-            placeholder="FullName"
-            autocomplete="username"
-          />
-        </div>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input
-            type="email"
-            name="email"
-            class="form-control"
-            id="email"
-            placeholder="Enter email"
-            autocomplete="email"
-          />
-          <small class="fill-error">This email alredy exists..!!</small>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            name="password"
-            class="form-control"
-            id="password"
-          />
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <a href="/login" class="text-decoration-none mr-5 link-primary"
-            >Alredy have an account??</a
-          >
-          <button type="submit" class="btn ml-5 btn-primary">Submit</button>
-        </div>
-        <div class="loading">
-          <div class="loader"></div>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-<script>
-  const loading = document.querySelector(".loading");
-  const signupForm = document.getElementById("signupForm");
-  signupForm.addEventListener("submit", async (e) => {
-    try {
-      e.preventDefault();
-      const fillError = document.querySelector(".fill-error");
-      const userName = document.getElementById("userName").value;
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
 
-      if (userName === "" || email === "" || password === "") {
-        alert("please fill all the fileds");
-      } else {
-        loading.style.display = "flex";
-        const response = await fetch("/signup", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ userName, email, password }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          window.location.href = "/";
-        } else {
-          fillError.style.display = "block";
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      loading.style.display = "none";
-    }
-  });
-</script> -->
 <style>
   * {
     margin: 0;
@@ -123,14 +6,18 @@
     box-sizing: border-box;
   }
 
-  .signup-container {
+.signup-container {
     height: 100vh;
     background: url("/images/background.jpg") no-repeat fixed center;
+    background-size: cover;
     display: flex;
     align-items: center;
     justify-content: center;
     font-family: "Poppins", sans-serif;
-  }
+    margin: 0; /* Ensure no margin on the container */
+    padding: 0; /* Ensure no padding on the container */
+}
+
   .get-otp {
     position: absolute;
     right: 0;
@@ -138,11 +25,6 @@
     height: 100%;
     width: 100px;
     color: #ffff;
-  }
-
-  #otp-msg {
-    position: absolute;
-    font-size: 13px;
   }
   form input{
     border: 0;
@@ -184,7 +66,7 @@
                         <div class="invalid-feedback">
                           Please enter a valid email address.
                         </div>
-                        <p id="otp-msg"></p>
+                        <p id="email-error" style="position: absolute; font-size: 13px;"></p>
                       </div>
                     </div>
 
@@ -202,7 +84,7 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                       <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <input type="password" id="rePasswordField" class="form-control" required />
+                        <input type="password" id="rePasswordField"  class="form-control" required />
                         <label class="form-label" for="rePasswordField">Repeat your password</label>
                         <div class="invalid-feedback">
                           Please repeat your password.
@@ -214,17 +96,17 @@
                     <div class="d-flex flex-row align-items-center mb-4">
                       <i class="fa-solid fa-comment-sms fa-lg me-3 fa-fw"></i>
                       <div data-mdb-input-init class="form-outline flex-fill mb-0">
-                        <input type="text" id="otpField" name="otp" class="form-control" required />
+                        <input type="text" id="otpField" name="otp"  class="form-control" required />
                         <label class="form-label" for="otpField">Enter OTP</label>
 
-                          <button class="get-otp btn btn-warning p-0" type="button" id="getOtp">
+                          <button class="get-otp btn btn-warning p-0"  type="button" id="getOtp">
                             Get OTP
                           </button>
   
                         <div class="invalid-feedback">
                           Please enter a valid OTP.
                         </div>
-                        <p id="otp-sucesss" style="position: absolute; font-size: 13px"></p>
+                        <p id="otp-error" style="position: absolute; font-size: 13px"></p>
                       </div>
                     </div>
 
@@ -239,7 +121,7 @@
                   </form>
                 </div>
                 <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center  order-1 order-lg-2">
-                  <img src="/images/signup.jpg" class="img-fluid" id="signupImg" width="400" alt="Sample image" />
+                  <img src="/images/signup.jpg"  class="img-fluid" id="signupImg" width="400" alt="Sample image" />
                 </div>
               </div>
             </div>
@@ -250,6 +132,3 @@
   </section>
 </div>
 
-<script>
-
-</script>

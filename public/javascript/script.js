@@ -25,6 +25,22 @@ console.log("Script loaded");
   });
 })(); //Calling the Function
 
+
+// AJAX Request Function
+const makeRequest = async (url, method, body) => {
+  try {
+    const response = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    return response.json();
+  } catch (error) {
+    console.error(error);
+    showMessage(otpMsg, "An error occurred. Please try again later.", "red");
+    return null;
+  }
+};
 /*[ Add to cart ]
     ===========================================================*/
     const addToCart = async (productId, priceString) => {
@@ -38,7 +54,6 @@ console.log("Script loaded");
         console.error('Error adding to cart:', error);
       }
     };
-    
     const sendCartRequest = (productId, price) => {
       return fetch("/add-to-cart", {
         method: "POST",
@@ -74,7 +89,7 @@ console.log("Script loaded");
     ===========================================================*/
 const deleteCartProduct = async (productId, compId) => {
   try {
-    const container = document.getElementById(compId);
+  const container = document.getElementById(compId);
   const response = await fetch(`/remove-cart-product/${productId}`);
   if (!response.ok) {
     throw new Error(`Request failed with status ${response.status}`);
@@ -102,17 +117,7 @@ const changeQuantity = async (cartId, productId, priceString, count) => {
   const price = parseInt(priceString);
   const newQuantity = quantity + count;
   const newPrice = newQuantity * price;
-  const response = await fetch("/change-product-quantiy", {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ cartId, productId, count, quantity, price }),
-  });
-  if (!response.ok) {
-    throw new Error(`Request failed with status ${response.status}`);
-  }
-  const data = await response.json();
+  const data = await makeRequest("/change-product-quantiy","post",{ cartId, productId, count, quantity, price })
   if (data.success) {
     quantityString.textContent = newQuantity;
     priceFiled.textContent = newPrice;
@@ -225,28 +230,18 @@ if (addressForm) {
       const pincode = formData.get("pincode");
       const city = formData.get("city");
       const state = formData.get("state");
-    
-      try {
-        const response = await fetch("/add-address", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            fullName,
-            mobile,
-            email,
-            address,
-            city,
-            state,
-            pincode,
-          }),
-        });
-    
-        const data = await response.json();
+      const data = await makeRequest("/add-address","post",{
+          fullName,
+          mobile,
+          email,
+          address,
+          city,
+          state,
+          pincode,
+        })
 
     
-        if (response.ok && data.saved) {
+        if (data.saved) {
           hideForm();
           const addressList = document.getElementById("addressList");
     
@@ -293,9 +288,6 @@ if (addressForm) {
         } else {
           console.log("Error while creating address");
         }
-      } catch (error) {
-        console.log(error);
-      }
     });
 }
     
@@ -346,11 +338,8 @@ if (placeOrderForm) {
          totalPrice,
        }),
      });
-     if (!response.ok) {
-       alert("please add address");
-     }
-     const data = await response.json();
-     if (data.success) {
+     const data = await response.json() 
+     if(data.success) {
        Swal.fire({
          title: "Order Placed Successfully!",
          text: "Thank you for your purchase. Your order has been placed and is being processed.",
@@ -370,155 +359,3 @@ if (placeOrderForm) {
     }
    });
 }
-
-
-/* [Signup Form] ========================================================== */
-const emailMsg = document.getElementById('otp-msg');
-const otpMsg = document.getElementById('otp-sucesss');
-const emailField = document.getElementById('emailField');
-const otpField = document.getElementById('otpField');
-const getOtpButton = document.getElementById('getOtp');
-const signupSubmitBtn = document.getElementById('signupSubmitBtn');
-const rePasswordFiled = document.getElementById("rePasswordField");
-const noPassMatch = document.getElementById("no-pass-match");
-const signupBtnContainer = document.querySelector('.signup-btn-container')
-
-//Ajax for otp validation
-const clearMessage = () => {
-  otpMsg.textContent =""
-  emailMsg.textContent =""
-};
-
-const showMessage = (component,message, color) => {
-  component.style.color = color;
-  component.textContent = message;
-};
-
-const getOtp = async () => {
-  const email = emailField.value;
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  if (!email) {
-    showMessage(emailMsg,"Email can't be empty", "red");
-    return;
-  }
-
-  if (!emailRegex.test(email)) {
-    showMessage(emailMsg,"Please provide a valid email", "red");
-    return;
-  }
-
-  clearMessage();
-  showMessage(otpMsg,"Loading...", "green");
-
-  try {
-    const response = await fetch('/get-otp', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.otpSend) {
-      showMessage(otpMsg,"Check your email for the OTP!", "green");
-    } else {
-      showMessage(otpMsg,"Error while sending OTP", "red");
-    }
-  } catch {
-    showMessage(otpMsg,"Error while sending OTP", "red");
-  }
-};
-
-getOtpButton.addEventListener('click', getOtp);
-
-//ajax for veryfying otp
-let debounceTimer;
-const verifyOtp = async () => {
-  const email = emailField.value;
-  const otp = otpField.value;
-
-  try {
-    const response = await fetch('/verify-otp', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, otp }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.otpVerified) {
-      showMessage(otpMsg,"OTP Validated", "green");
-      signupSubmitBtn.disabled = false;
-    } else {
-      showMessage(otpMsg,"Please Enter a Valid OTP to Submit", "red");
-      signupSubmitBtn.disabled = true;
-    }
-  } catch {
-    showMessage(otpMsg,"Error While validating OTP", "red");
-  }
-};
-
-otpField.addEventListener('input', () => {
-  clearTimeout(debounceTimer);
-  debounceTimer = setTimeout(verifyOtp, 1500);
-});
-
-//alerting user to enter valid otp to submit
-signupBtnContainer.addEventListener('click',(e)=>{
-  if(signupSubmitBtn.disabled){
-    showMessage(otpMsg,"Please provide valid otp to register","red")
-  }
-})
-
-//checking password && repassword matches
-rePasswordFiled.addEventListener("blur", () => {
-  const password = document.getElementById("passwordField").value;
-  const rePassword = document.getElementById("rePasswordField").value;
-  if (password !== rePassword) {
-    noPassMatch.style.color = "red";
-    noPassMatch.innerText = "Passwords do not match";
-  } else {
-    noPassMatch.innerText = "";
-  }
-});
-
-//signupForm submition
-const signupForm = document.getElementById("signupForm");
-signupForm.addEventListener("submit", async (e) => {
-
-  try {
-    const userName = document.getElementById("nameField").value;
-    const email = document.getElementById("emailField").value;
-    const password = document.getElementById("passwordField").value;
-    const rePassword = document.getElementById("rePasswordField").value;
-    e.preventDefault();
-    if (password !== rePassword) {
-      noPassMatch.style.color = "red";
-      noPassMatch.innerText = "Passwords do not match";
-      return
-    }
-      const response = await fetch("/signup", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName,
-          email,
-          password,
-        }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        window.location.href = "/";
-      } else {
-        showMessage("Email Already exisits","red")
-    }
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.style.display = "none";
-  }
-});
-// ==============================================================

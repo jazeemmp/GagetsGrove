@@ -4,10 +4,11 @@
     <div class="row">
       <div class="col-xl-8">
         <div class="product-container">
-        <div  class="card ">
+        
           <% cartItems.products.forEach(product => { %>
+        <div  class="card ">
           <div id="<%= product._id %>" class="card-body">
-            <div class="d-flex align-items-start pb-3">
+            <div class="d-flex align-items-start">
               <div class="me-4">
                 <img src="/uploads/<%= product.productId.image %>" alt="" width="100" class="rounded">
               </div>
@@ -27,7 +28,7 @@
                 </ul>
               </div>
             </div>
-            <div class=" border-bottom pb-3">
+            <div class=" pb-3">
               <div class="row align-items-center">
                 <div class="col-md-4">
                   <div class="mt-3 text-center text-md-start">
@@ -54,11 +55,11 @@
               </div>
             </div>
           </div>
-          <% }) %>
         </div>
+          <% }) %> 
       </div>
-        <!-- end card -->
-        <div class="row d-flex border-top  align-items-center">
+
+        <div class="row d-flex align-items-center">
           <div class="d-flex flex-column w-100">
             <a href="/place-order" class="btn btn-dark mt-3">
              Checkout
@@ -68,13 +69,13 @@
       </div>
       <div class="col-xl-4">
         <div class="sticky-wrapper">
-          <div class="card bg-white box-shadow">
-            <div class="card-header bg-secondary  py-3 px-4">
-              <h5 class="font-size-16 text-light mb-0">Order Summary</h5>
+          <div class="card">
+            <div class="card-header  py-3 px-4">
+              <h5 class="font-size-16 mb-0">Order Summary</h5>
             </div>
             <div class="card-body p-4 pt-2">
               <div class="table-responsive">
-                <table class="table mb-0">
+                <table class="table mb-0 ">
                   <tbody>
                     <tr>
                       <td>Sub Total :</td>
@@ -88,8 +89,8 @@
                       <td>Shipping Charge :</td>
                       <td class="text-end">- <span class="price">₹</span> 0</td>
                     </tr>
-                    <tr class="red">
-                      <th>Total :</th>
+                    <tr>
+                      <th class="fw-bold">Total :</th>
                       <td class="text-end">
                         <span class="fw-bold">
                           <span class="price">₹</span><span id="totalAmout"> <%= cartItems.total %></span>
@@ -111,17 +112,3 @@
   </div>
   <% } %>
 </section>
-<style>
-.product-container {
-  max-height: 450px;
-  overflow-y: auto; 
-  padding-right: 15px; 
-  scrollbar-width: none; 
-  -ms-overflow-style: none; 
-}
-
-.product-container::-webkit-scrollbar {
-  display: none;
-}
-
-</style>
