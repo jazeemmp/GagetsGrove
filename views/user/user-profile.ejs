@@ -1,0 +1,48 @@
+<section>
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="/images/user-profile.svg" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3 text-capitalize"><%= user.fullname %></h5>
+              <p class="text-muted mb-3"><%= user.email %></p>
+              <div class="d-flex justify-content-center mb-2">
+                <a href="/orders" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">My Orders</a>
+                <a href="/" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Home</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <p class="mb-2"><strong>Saved Addresses</strong></p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 text-center">
+                  <div>
+                    <% savedAddresses.forEach(address => { %>
+                        <div class="card mb-3 p-3 border shadow-none">  
+                         <address>
+                            <span class="text-capitalize"><%= address.fullname %></span><br>
+                            <%= address.address %>
+                            <%= address.city %>, <%= address.state %>, <%= address.pincode %><br>
+                            <span title="Phone">Ph :</span> <%= address.mobile %>
+                          </address>
+                        </div>
+                    <% }) %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

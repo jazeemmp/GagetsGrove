@@ -10,6 +10,7 @@ const session = require('express-session')
 
 // Load environment variables from .env file
 dotenv.config()
+
 // Connect to database
 connectDB();
 // Set view engine

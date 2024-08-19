@@ -1,0 +1,77 @@
+<section class="pro-details-container">
+  <div class="container">
+    <div class="row">
+      <!-- Images on the left -->
+      <div class="col-md-6  d-flex">
+        <div class="img-select d-flex flex-column">
+          <% productDetails.images.forEach((img,i) => { %>
+            <div class="img-item">
+              <a href="" data-id="<%= i+1 %>">
+                <img src="/uploads/<%=img%>" alt="shoe image" />
+              </a>
+            </div>
+          <% }) %>
+        </div>
+        <div class="img-display">
+          <div class="img-showcase">
+            <% productDetails.images.forEach((img,index) => { %>
+              <img src="/uploads/<%= img %>" alt="shoe image" />
+            <% }) %>
+          </div>
+        </div>
+      </div>
+      <!-- Product details on the right -->
+      <div class="col-md-6">
+        <div class="product-content">
+          <h4 class="text-capitalize"><%= productDetails.name %></h4>
+          <div class="d-flex align-items-center gap-2 my-3">
+            <h3 class="fw-bold"><span class="price">₹</span><%= productDetails.discountedPrice %></h3>
+            <p class="text-decoration-line-through text-muted mt-2" style="font-size: 13px;"><span class="price">₹</span><%= productDetails.price %></p>
+            <p class="fw-bold text-success mt-2"><%= productDetails.discount %>% off</p>
+          </div>
+
+          <div class="product-detail">
+            <h5 class="fw-bold mb-3">About This Item:</h5>
+            <p class="text-muted">
+              <%= productDetails.description %>
+            </p>
+            <ul class="list-unstyled">
+              <li>Color: <span class="fw-bold"><%= productDetails.color %></span></li>
+              <li>Available: <span class="fw-bold">In stock</span></li>
+              <li>Category: <span class="fw-bold"><%= productDetails.category %></span></li>
+              <li>Shipping Fee: <span class="fw-bold">Free</span></li>
+            </ul>
+          </div>
+
+          <div class="purchase-info my-4">
+            <input type="number" id="productCount" min="1" value="1" class="form-control d-inline-block me-2" />
+            <button type="button" onclick="addToCart('<%= productDetails._id %>','<%= productDetails.price %>')" class="btn btn-dark me-2">
+              Add to Cart  <i class="fas text-light fa-shopping-cart"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+const imgs = document.querySelectorAll(".img-select a");
+const imgBtns = [...imgs];
+let imgId = 1;
+
+imgBtns.forEach((imgItem) => {
+  imgItem.addEventListener("click", (event) => {
+    event.preventDefault();
+    imgId = imgItem.dataset.id;
+    slideImage();
+  });
+});
+
+function slideImage() {
+  const displayWidth = document.querySelector(".img-showcase img:first-child").clientWidth;
+  document.querySelector(".img-showcase").style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
+}
+
+window.addEventListener("resize", slideImage);
+
+</script>

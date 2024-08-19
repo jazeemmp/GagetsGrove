@@ -1,5 +1,14 @@
 const ProductDB = require("../model/productModel");
 
+function calculateDiscountedPrice(originalPrice, discountPercentage) {
+  console.log("1",originalPrice,discountPercentage);
+  const discountAmount = (originalPrice * discountPercentage) / 100;
+  const discountedPrice = originalPrice - discountAmount;
+  console.log("Disc",discountPercentage);
+  console.log(typeof discountedPrice);
+  return discountedPrice
+}
+
 const getProducts = async (req, res) => {
   const products = await ProductDB.find();
   res.render("admin/view-products", {
@@ -18,13 +27,18 @@ const postAddProducts = async (req, res) => {
     console.log("no body");
     return;
   }
+  console.log(req.files);
   try { 
+    const imageFiles = req.files.map(file => file.filename); 
     const product = new ProductDB({
       name: req.body.name,
       category: req.body.category,
       price: req.body.price,
+      discount:req.body.discout,
+      discountedPrice:calculateDiscountedPrice(req.body.price, req.body.discout),
+      color:req.body.color,
       description: req.body.description,
-      image: req.file ? req.file.filename : null,
+      images: imageFiles,
     });
     await product.save();
     res.status(201).redirect("/admin");
@@ -59,6 +73,7 @@ const editProduct = async (req, res) => {
 };
 const postEditProduct = async (req, res) => {
   try {
+    const imageFiles = req.files.lenght? req.files.map(file => file.filename):req.body.existingImages;
     const { id } = req.params;
     const { name, category, price, description } = req.body;
     await ProductDB.updateOne(
@@ -68,8 +83,11 @@ const postEditProduct = async (req, res) => {
           name: name,
           category: category,
           price: price,
+          discount:req.body.discout,
+          discountedPrice:calculateDiscountedPrice(req.body.price, req.body.discout),
+          color:req.body.color,
           description: description,
-          image: req.file ? req.file.filename : req.file,
+          images: imageFiles,
         },
       }
     );
@@ -78,6 +96,7 @@ const postEditProduct = async (req, res) => {
     console.log(error);
   }
 };
+
 
 module.exports = {
   getAddProducts,

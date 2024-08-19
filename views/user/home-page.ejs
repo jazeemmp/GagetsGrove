@@ -85,29 +85,36 @@
     </div>
   </div>
   <!-- ========================================Product Display================================================= -->
-<div class="product-card">
-  <div class="container-fluid d-flex justify-content-center align-items-center">
-    <div class="row d-flex justify-content-center align-items-center">
-      <% products.forEach(product => { %>
-      <div class="card m-3" style="width: 21rem">
-        <img class="card-img-top" src="/uploads/<%= product.image %>" style="width: 100%;"" alt=" Card image cap">
-        <div class="card-body">
-          <h5 class="card-title"><%= product.name %></h5>
-          <div class="d-flex align-items-center justify-content-between">
-            <div class="prices mt-2 d-flex">
-              <p class="card-price">₹
-                <span id="<%= product._id %>"><%= product.price %></span>
-              </p>
-              <p class="not-price text-muted">₹ 5000</p>
-              <p class="discout">50% off</p>
+  <div class="product-card">
+    <div class="container-fluid d-flex justify-content-center align-items-center">
+      <div class="row d-flex justify-content-center align-items-center">
+        <% products.forEach(product => { %>
+        <div class="card m-3" style="width: 21rem">
+          <a href="/product-details/<%= product._id %>" class="text-decoration-none text-dark">
+            <img src="/uploads/<%= product.images[0] %>" alt="<%= product.name %>" class="card-img-top">
+            <div class="card-body">
+              <p class=" text-truncate"><%= product.name %></p>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="prices mt-2 d-flex">
+                  <p class="card-price">₹
+                    <span id="<%= product._id %>"><%= product.discountedPrice %></span>
+                  </p>
+                  <p class="not-price text-muted">₹<%= product.price %></p>
+                  <p class="text-success fs-6"><%= product.discount %>% off</p>
+                </div>
+              </div>
             </div>
-            <button onclick="addToCart('<%= product._id %>','<%= product.price %>')" class="btn btn-dark">
-              <img src="/images/add-cart.svg" alt="" />
-            </button>
-          </div>
+          </a>
+          <button onclick="addToCart('<%= product._id %>','<%= product.discountedPrice %>')" class="btn btn-dark add-to-cart-btn">
+            <img src="/images/add-cart.svg" alt="Add to Cart" />
+          </button>
         </div>
+        <% }) %>
       </div>
-      <% }) %>
     </div>
   </div>
-</div>
+  <style>
+    .card{
+      font-family:  "Poppins", sans-serif;
+    }
+  </style>

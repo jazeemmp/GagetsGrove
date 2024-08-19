@@ -12,14 +12,21 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    discount:{
+        type:Number,
+    },
+    discountedPrice:{
+        type:Number,
+    },
+    color:{
+        type:String,
+        required:true
+    },
     description:{
         type:String,
         required:true
     },
-    image:{
-        type:String,
-        required:true
-    }
+    images: [String],
 })
 
 const ProductDB = mongoose.model('ProductDB',productSchema)

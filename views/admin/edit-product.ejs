@@ -10,13 +10,20 @@
                 <input type="text" name="category" value="<%= product.category %>" class="form-control" required>
                 <label for="">Price</label>
                 <input type="text" name="price" value="<%= product.price %>" class="form-control" required>
+                <label for="">Discout</label>
+                <input type="number" name="discout" value="<%= product.discount %>" class="form-control" required>
+                <label for="">Color</label>
+                <input type="text" name="color" value="<%= product.color %>" class="form-control" required>
                 <label for="">Description</label>
                 <input type="text" name="description" value="<%= product.description %>" class="form-control" required>
                 <label for="">Image in use</label>
                 <img src="/uploads/<%= product.image %>" id="imgView" style="width: 150px;display: block;" alt="">
                 <label for="">Upload new Image</label>
-                <input type="file" name="image" id="imgInput"  onchange="viewImage(event)" class="form-control" >
+                <input type="file" name="images" id="imgInput"  onchange="viewImage(event)" class="form-control" multiple>
                 <button type="submit" class="btn btn-success mt-4">Submit</button>
+                <% product.images.forEach(image => { %>
+                    <input type="hidden" name="existingImages" value="<%= image %>">
+                 <% }) %>
             </form>
         </div>
        </div>

@@ -20,8 +20,8 @@
             <td><%=product.category%></td>
             <td><%=product.description%></td>
             <td><%=product.price%>₹</td>
-            <td><img width="50px" src="/uploads/<%= product.image %>" /></td>
-            <td><a class="btn btn-primary" href="/admin/edit-product/<%= product._id %>">Edit</a>
+            <td><img width="50px" src="/uploads/<%= product.images[0] %>" /></td>
+            <td><a class="btn btn-primary mb-3" href="/admin/edit-product/<%= product._id %>">Edit</a>
             <a onclick="return confirm('Do you want to delete <%=product.name%>')"  class="btn btn-danger" href="/admin/delete-product/<%= product._id %>">Delete</a></td>
           </tr>
           <% }); %>

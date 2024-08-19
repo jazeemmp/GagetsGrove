@@ -17,6 +17,12 @@ const getProducts = async(req,res)=>{
      }
 }
 
+const getProductDetails = async(req,res)=>{
+   const {id} = req.params
+   const productDetails = await ProductDB.findOne({_id:id})
+   res.render('user/product-details',{productDetails,user:req.session.user})
+}
 module.exports = {
     getProducts,
+    getProductDetails
 }

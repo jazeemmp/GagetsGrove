@@ -1,4 +1,5 @@
 const UserDB = require("../model/userModel");
+const AddressDB = require("../model/addressModel")
 const bcrypt = require("bcrypt");
 const nodemailer = require('nodemailer')
 
@@ -106,6 +107,10 @@ const verifyOtp = (req,res)=>{
   res.json({ otpVerified: false })
 }
 
+const getMyProfile = async(req,res)=>{
+  const savedAddresses = await AddressDB.find({user:req.session.user._id})
+  res.render('user/user-profile',{user:req.session.user,savedAddresses})
+}
 module.exports = {
   getLogin,
   getSignup,
@@ -113,6 +118,7 @@ module.exports = {
   postLogin,
   getLogout,
   getOtp,
-  verifyOtp
+  verifyOtp,
+  getMyProfile
 
 };
