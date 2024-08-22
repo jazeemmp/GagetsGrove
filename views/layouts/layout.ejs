@@ -20,21 +20,16 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
-
-  <link rel="stylesheet" href="/stylesheet/style.css" />
   <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" />
+  <link rel="stylesheet" href="/stylesheet/style.css" />
 </head>
 
 <body>
   <header>
-    <% if (typeof admin !=='undefined' && admin) { %>
-      <%- include('../partials/admin-header') %>
-    <% } else{ %>
-      <%- include('../partials/user-header') %>
-    <% } %>
+      <%- include('../partials/user/user-header') %>
   </header>
 
   <main>

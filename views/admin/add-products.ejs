@@ -1,27 +1,105 @@
-<section>
-    <div class="container mt-4">
-       <div class="row">
-        <div class="col-md-6">
-            <h2 class="text-center">Add Products</h2>
-            <form action="/admin/add-product" method="post" enctype="multipart/form-data">
-                <label for="">Name</label>
-                <input type="text" name="name" class="form-control" required>
-                <label for="">Category</label>
-                <input type="text" name="category" class="form-control" required>
-                <label for="">Price</label>
-                <input type="text" name="price" class="form-control" required>
-                <label for="">Discout</label>
-                <input type="number" min="1" name="discout" class="form-control" required>
-                <label for="">Color</label>
-                <input type="text" name="color" class="form-control" required>
-                <label for="">Description</label>
-                <input type="text" name="description" class="form-control" required>
-                <label for="">Image</label>
-                <input type="file" name="images" class="form-control" multiple>
-                <button type="submit" class="btn btn-success mt-4">Submit</button>
-            </form>
+<main class="main-wrap">
+    <section class="content-main">
+        <div class="row">
+            <div class="col-9">
+                <div class="content-header">
+                    <h2 class="content-title">Add New Product</h2>
+                </div>
+            </div>
         </div>
-       </div>
-    </div>
-</section>
-  
+        <form action="/admin/add-product" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Basic</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Product title</label>
+                                <input type="text" placeholder="Type here" name="name" class="form-control"
+                                    id="product_name" required />
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Full description</label>
+                                <textarea placeholder="Type here" name="description" class="form-control"
+                                    rows="4"></textarea>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label class="form-label">Regular price</label>
+                                        <div class="row gx-2">
+                                            <input placeholder="₹" min="1" type="number" name="price"
+                                                class="form-control" required />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label class="form-label">Discount</label>
+                                        <input placeholder="₹" type="number" min="1" name="discount" class="form-control"
+                                            required />
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-4">
+                                        <label class="form-label">Color</label>
+                                        <input type="text" name="color" class="form-control" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Medias</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="input-upload">
+                                <img src="/images/upload.svg" alt="" />
+                                <input class="form-control" type="file" name="images" multiple />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- card end// -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Organization</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- <div class="row gx-2">
+                                <div class="col-sm-12 mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select">
+                                        <option>Automobiles</option>
+                                        <option>Home items</option>
+                                        <option>Electronics</option>
+                                        <option>Smartphones</option>
+                                        <option>Sport items</option>
+                                        <option>Baby and Toys</option>
+                                    </select>
+                                </div>
+                            </div> -->
+                            <div class="col-lg-12">
+                                <div class="mb-4">
+                                    <label class="form-label">Category</label>
+                                    <input type="text" name="category" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-md rounded font-sm hover-up">
+                                Publish
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+</main>

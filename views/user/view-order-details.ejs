@@ -2,60 +2,92 @@
   <div class="container-fluid">
     <div class="container">
       <div class="d-flex justify-content-between align-items-center py-3">
-        <h2 class="h5 mb-0"><a href="#" class="text-muted"></a> Order #<%= orderDetails.orderId %></h2>
+        <h2 class="h5 mb-0">
+          <a href="#" class="text-muted"></a> Order #<%= orderDetails.orderId %>
+        </h2>
       </div>
       <div class="row">
         <div class="col-lg-8">
           <div class="card mb-4">
             <div class="card-body">
               <div class="mb-3">
-                <div class=" d-flex justify-content-between align-items-center ">
+                <div class="d-flex justify-content-between align-items-center">
                   <span class="me-3">
-                    <%= new Date(orderDetails.orderDate).toLocaleString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric',
-                            hour12: true
-                        }) %>
+                    <%= new Date(orderDetails.orderDate).toLocaleString('en-US',
+                    { year: 'numeric', month: 'long', day: 'numeric', hour:
+                    'numeric', minute: 'numeric', hour12: true }) %>
                   </span>
                   <span class="me-3">#<%= orderDetails.orderId %></span>
-                  <span class="badge text-uppercase rounded-pill bg-info"><%= orderDetails.status %></span>
+                  <span
+                    id="orderStatusSpan"
+                    class="badge text-uppercase badge-pill <%= orderDetails.status === 'Cancelled'?'badge-danger':'badge-info' %>"
+                  >
+                    <%= orderDetails.status %>
+                  </span>
                 </div>
               </div>
-              <table class="table table-borderless">
+              <table class="table table-borderless m-0">
                 <tbody>
                   <% orderDetails.products.forEach(product => { %>
                   <tr>
                     <td>
                       <div class="d-flex mb-2">
                         <div class="flex-shrink-0">
-                          <img src="/uploads/<%= product.productId.image %>" alt="" width="45" class="img-fluid">
+                          <img
+                            src="/uploads/<%= product.productId.images[0] %>"
+                            alt=""
+                            width="45"
+                            class="img-fluid"
+                          />
                         </div>
                         <div class="flex-lg-grow-1 ms-3">
-                          <h6 class="small mb-0"><a href="#" class="text-reset text-capitalize"><%= product.productId.name %></a></h6>
-                          <span class="small">Color: Black</span>
+                          <h6 class="small mb-0">
+                            <a href="#" class="text-reset text-capitalize"
+                              ><%= product.productId.name %></a
+                            >
+                          </h6>
+                          <span class="small"
+                            >Color: <%= product.productId.color %></span
+                          >
                         </div>
                       </div>
                     </td>
                     <td><%= product.quantity %></td>
-                    <td class="text-end"><span class="price">₹</span> <%= product.productId.price %></td>
+                    <td class="text-end">
+                      <span class="price">₹</span> <%=
+                      product.productId.discountedPrice %>
+                    </td>
                   </tr>
                   <% }) %>
                 </tbody>
                 <tfoot>
                   <!-- <tr>
                         <td colspan="2">Subtotal</td>
-                        <td class="text-end">$159,98</td>
-                      </tr> -->
-                  <!-- <tr>
+                        <td class="text-end">$159.98</td>
+                      </tr>
+                  <tr>
                         <td colspan="2">Discount (Code: NEWYEAR)</td>
                         <td class="text-danger text-end">-$10.00</td>
                       </tr> -->
                   <tr class="fw-bold">
                     <td colspan="2">TOTAL</td>
-                    <td class="text-end"><span class="price">₹</span> <%= orderDetails.totalAmount %></td>
+                    <td class="text-end">
+                      <span class="price">₹</span> <%= orderDetails.totalAmount
+                      %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="3" class="text-end p-0">
+                      <% if (orderDetails.status !== 'Cancelled') { %>
+                        <button
+                        type="button"
+                        class="btn btn-danger m-0"
+                        id="cancelOrderButton"
+                      >
+                        Cancel Order
+                      </button>
+                      <% } %>
+                    </td>
                   </tr>
                 </tfoot>
               </table>
@@ -67,22 +99,58 @@
                 <div class="col-lg-6">
                   <h3 class="h6">Payment Method</h3>
                   <% if (orderDetails.paymentMethod === 'cod') { %>
-                  <p>Cash on delivery<br>
-                    Total:<span class="price">₹</span> <%= orderDetails.totalAmount %> <span class="badge bg-warning rounded-pill"> PENDING</span></p>
-                  <% }else{ %>
-                  <p>Online Payment<br>
-                    Total:<span class="price">₹</span> <%= orderDetails.totalAmount %> <span class="badge bg-success rounded-pill">PAID</span></p>
+                  <p>
+                    Cash on delivery<br />
+                    Total: <span class="price">₹</span> <%=
+                    orderDetails.totalAmount %>
+                    <span
+                      class="badge badge-pill <%= orderDetails.paymentStatus === 'pending' ? 'badge-warning' : '' %> <%= orderDetails.paymentStatus === 'paid' ? 'badge-success' : '' %>"
+                    >
+                      <%= orderDetails.paymentStatus %>
+                    </span>
+                  </p>
+                  <% } else { %>
+                  <p>
+                    Online Payment<br />
+                    Total: <span class="price">₹</span> <%=
+                    orderDetails.totalAmount %>
+                    <span
+                      class="badge badge-pill <%= orderDetails.paymentStatus === 'pending' ? 'badge-warning' : '' %> <%= orderDetails.paymentStatus === 'paid' ? 'badge-success' : '' %>"
+                    >
+                      <%= orderDetails.paymentStatus %>
+                    </span>
+                  </p>
                   <% } %>
                 </div>
-                <div class="col-lg-6">
-                  <h3 class="h6">Billing address</h3>
-                  <address>
-                    <strong class="text-capitalize"><%= deliveryDetails.fullname %></strong><br>
-                    <%= deliveryDetails.address %><br>
-                    <%= deliveryDetails.city %>, <%= deliveryDetails.state %>, <%= deliveryDetails.pincode %><br>
-                    <span title="Phone">Ph :</span> <%= deliveryDetails.mobile %>
-                  </address>
-                </div>
+                <div class="col-12">
+                  <div class="row">
+                
+                    <!-- Ordered -->
+                    <div class="order-tracking <%= orderDetails.status === 'Ordered' || orderDetails.status === 'Shipped' || orderDetails.status === 'Out for Delivery' || orderDetails.status === 'Delivered' ? 'completed' : '' %> <%= orderDetails.status === 'Cancelled' ? 'cancelled' : '' %>">
+                      <span class="is-complete"></span>
+                      <p>Ordered</p>
+                    </div>
+                
+                    <!-- Shipped -->
+                    <div class="order-tracking <%= orderDetails.status === 'Shipped' || orderDetails.status === 'Out for Delivery' || orderDetails.status === 'Delivered' ? 'completed' : '' %> <%= orderDetails.status === 'Cancelled' ? 'cancelled' : '' %>">
+                      <span class="is-complete"></span>
+                      <p>Shipped<br /></p>
+                    </div>
+                
+                    <!-- Out for Delivery -->
+                    <div class="order-tracking <%= orderDetails.status === 'Out for Delivery' || orderDetails.status === 'Delivered' ? 'completed' : '' %> <%= orderDetails.status === 'Cancelled' ? 'cancelled' : '' %>">
+                      <span class="is-complete"></span>
+                      <p>Out for Delivery</p>
+                    </div>
+                
+                    <!-- Delivered -->
+                    <div class="order-tracking <%= orderDetails.status === 'Delivered' ? 'completed' : '' %> <%= orderDetails.status === 'Cancelled' ? 'cancelled' : '' %>">
+                      <span class="is-complete"></span>
+                      <p>Delivered</p>
+                    </div>
+                
+                  </div>
+                </div>                 
               </div>
             </div>
           </div>
@@ -91,12 +159,15 @@
           <div class="card mb-4">
             <div class="card-body">
               <h4 class="h4">Shipping Information</h4>
-              <hr>
+              <hr />
               <h3 class="h6">Address</h3>
               <address>
-                <strong class="text-capitalize"><%= deliveryDetails.fullname %></strong><br>
-                <%= deliveryDetails.address %><br>
-                <%= deliveryDetails.city %>, <%= deliveryDetails.state %>, <%= deliveryDetails.pincode %><br>
+                <strong class="text-capitalize"
+                  ><%= deliveryDetails.fullname %></strong
+                ><br />
+                <%= deliveryDetails.address %><br />
+                <%= deliveryDetails.city %>, <%= deliveryDetails.state %>, <%=
+                deliveryDetails.pincode %><br />
                 <span title="Phone">Ph :</span> <%= deliveryDetails.mobile %>
               </address>
             </div>
@@ -106,3 +177,128 @@
     </div>
   </div>
 </section>
+<style>
+  .order-tracking {
+    text-align: center;
+    width: 25%;
+    position: relative;
+    display: block;
+  }
+  .order-tracking .is-complete {
+    display: block;
+    position: relative;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    border: 0px solid #afafaf;
+    background-color: #f7be16;
+    margin: 0 auto;
+    transition: background 0.25s linear;
+    -webkit-transition: background 0.25s linear;
+    z-index: 2;
+  }
+  .order-tracking .is-complete:after {
+    display: block;
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 7px;
+    top: -2px;
+    bottom: 0;
+    left: 5px;
+    margin: auto 0;
+    border: 0px solid #afafaf;
+    border-width: 0px 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+  }
+  .order-tracking.completed .is-complete {
+    border-color: #27aa80;
+    border-width: 0px;
+    background-color: #27aa80;
+  }
+  .order-tracking.completed .is-complete:after {
+    border-color: #fff;
+    border-width: 0px 3px 3px 0;
+    width: 7px;
+    left: 11px;
+    opacity: 1;
+  }
+  .order-tracking p {
+    color: #a4a4a4;
+    font-size: 16px;
+    margin-top: 8px;
+    margin-bottom: 0;
+    line-height: 20px;
+  }
+  .order-tracking p span {
+    font-size: 14px;
+  }
+  .order-tracking.completed p {
+    color: #000;
+  }
+  .order-tracking::before {
+    content: "";
+    display: block;
+    height: 3px;
+    width: calc(100% - 40px);
+    background-color: #f7be16;
+    top: 13px;
+    position: absolute;
+    left: calc(-50% + 20px);
+    z-index: 0;
+  }
+  .order-tracking:first-child:before {
+    display: none;
+  }
+  .order-tracking.completed:before {
+    background-color: #27aa80;
+  }
+  .order-tracking.cancelled .is-complete {
+    border-color: red;
+    background-color: red;
+}
+
+.order-tracking.cancelled p {
+    color: red;
+}
+
+.order-tracking.cancelled:before {
+    background-color: red;
+}
+
+</style>
+<script>
+  const orderStatusSpan = document.getElementById("orderStatusSpan");
+  const cancelOrderButton = document.getElementById("cancelOrderButton");
+  cancelOrderButton.addEventListener("click", async () => {
+    const orderId = "<%= orderDetails._id %>";
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "Do you want to cancel this order?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#000",
+      confirmButtonText: "Yes, cancel it!",
+      cancelButtonText: "No, keep it",
+    });
+    if (result.isConfirmed) {
+      console.log("ck");
+
+      const response = await fetch(`/cancel-order/${orderId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.success) {
+        location.reload()
+        // orderStatusSpan.textContent = "canceled";
+        // orderStatusSpan.classList.remove("badge-info");
+        // orderStatusSpan.classList.add("badge-danger");
+      }
+    }
+  });
+</script>

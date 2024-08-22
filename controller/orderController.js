@@ -63,7 +63,7 @@ const addAddress = async (req, res) => {
 const postPlaceOrder = async (req, res) => {
   try {
     const { addressId, paymentMethod, cartId, totalPrice } = req.body;
-    let status = paymentMethod === "cod" ? "placed" : "pending";
+    let status = paymentMethod === "cod" ? "Ordered" : "pending";
     const userId = req.session.user._id;
     const userAddress = await AddressDB.findOne({ _id: addressId });
     const cartData = await CartDB.findOne({ _id: cartId }).populate(
@@ -85,6 +85,7 @@ const postPlaceOrder = async (req, res) => {
       products: orderdProducts,
       totalAmount: totalPrice,
       paymentMethod: paymentMethod,
+      paymentStatus:"pending",
       status: status,
       orderDate: new Date(),
     });
@@ -122,7 +123,7 @@ const verifyPayment = async(req,res)=>{
   if (generated_signature === razorpay_signature) {
     res.json({ success: true, message: "Payment verified successfully!" });
     await CartDB.deleteOne({ _id: cartId });
-    await OrderDB.updateOne({_id:orderId},{$set:{status:"placed"}})
+    await OrderDB.updateOne({_id:orderId},{$set:{status:"placed",paymentStatus:"paid"}})
   } else {
     res.json({ success: false, message: "Payment verification failed!" });
   }
@@ -160,11 +161,24 @@ const getOrderDetails = async (req, res) => {
     console.log(error);
   }
 };
+
+const cancelOrder = async(req,res)=>{
+  const { id } = req.params;
+  console.log(id)
+  try {
+   await OrderDB.updateOne({_id: id }, { $set: { status: "Cancelled" } });
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   getPlaceOrder,
   postPlaceOrder,
   addAddress,
   getOrders,
+  cancelOrder,
   getOrderDetails,
   verifyPayment,
 };

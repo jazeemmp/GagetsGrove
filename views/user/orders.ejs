@@ -11,6 +11,7 @@
       <div class="card mb-5">
         <!-- card body -->
         <div class="card-body">
+          
           <% order.products.forEach(product => { %>
           <div class="row mb-5 align-items-center">
             <div class="col-lg-8 col-12">
@@ -29,7 +30,7 @@
                   <div class="mt-3">
                     <h4 class="price">
                       ₹
-                      <span id="<%= product.productId._id %>"><%= product.productId.price %></span>
+                      <span id="<%= product.productId._id %>"><%= product.productId.discountedPrice %></span>
                     </h4>
                   </div>
                 </div>

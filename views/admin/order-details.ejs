@@ -1,0 +1,172 @@
+<main class="main-wrap">
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Order detail</h2>
+                <p>Details for Order ID: <%= orderDetails.orderId %></p>
+            </div>
+        </div>
+        <div class="card">
+            <header class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6 mb-lg-0 mb-15">
+                        <span>
+                            <i class="material-icons md-calendar_today"></i> <b><%= new Date(orderDetails.orderDate).toLocaleString('en-US', {
+                                weekday: 'short',   // 'Wed'
+                                year: 'numeric',    // '2022'
+                                month: 'short',     // 'Aug'
+                                day: 'numeric',     // '13'
+                                hour: 'numeric',    // '4'
+                                minute: 'numeric',  // '34'
+                                hour12: true        // 'PM' format
+                            }) %>
+                            </b>
+                        </span> <br>
+                        <small class="text-muted">Order ID: <%= orderDetails.orderId %></small>
+                    </div>
+                    <div class="col-lg-6 col-md-6 ms-auto text-md-end">
+                        <select class="form-select d-inline-block mb-lg-0 mb-15 mw-200" id="orderStatus">
+                            <option value="">Change status</option>
+                            <option value="Shipped">Shipped</option>
+                            <option value="Out for Delivery">Out for Delivery</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>                        
+                        <button type="button" class="btn btn-primary" id="saveStatus">Save</button>
+                    </div>
+          </div>
+            </header> <!-- card-header end// -->
+            <div class="card-body">
+                <div class="row mb-50 mt-20 order-info-wrap">
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-person"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Customer</h6>
+                                <p class="mb-1">
+                                   <%= orderDetails.deliveryDetails.fullname %><br>  <%= orderDetails.deliveryDetails.email %> <br>  <%= orderDetails.deliveryDetails.mobile %>
+                                </p>
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-local_shipping"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Order info</h6>
+                                <p class="mb-1">
+                                    Shipping: Fargo express <br> Pay method:   <%= orderDetails.paymentMethod %> <br> <p id="statusContainer">Status:  <%= orderDetails.status %></p>
+                                </p>
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                    <div class="col-md-4">
+                        <article class="icontext align-items-start">
+                            <span class="icon icon-sm rounded-circle bg-primary-light">
+                                <i class="text-primary material-icons md-place"></i>
+                            </span>
+                            <div class="text">
+                                <h6 class="mb-1">Deliver to</h6>
+                                <p class="mb-1">
+                                    City:   <%= orderDetails.deliveryDetails.city %> <br>  <%= orderDetails.deliveryDetails.address %> <br>   <%= orderDetails.deliveryDetails.pincode %>
+                                </p>
+                            </div>
+                        </article>
+                    </div> <!-- col// -->
+                </div> <!-- row // -->
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="40%">Product</th>
+                                        <th width="20%">Unit Price</th>
+                                        <th width="20%">Quantity</th>
+                                        <th width="20%" class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   <% orderDetails.products.forEach(product => { %>
+                                    <tr>
+                                        <td>
+                                            <a class="itemside" href="#">
+                                                <div class="left">
+                                                    <img src="/uploads/<%= product.productId.images[0] %>" width="40" height="40" class="img-xs" alt="Item">
+                                                </div>
+                                                <div class="info"> <%= product.productId.name %> </div>
+                                            </a>
+                                        </td>
+                                        <td>₹ <%= product.productId.discountedPrice %> </td>
+                                        <td> <%= product.quantity %> </td>
+                                        <td class="text-end">₹ <%= product.productId.discountedPrice*product.quantity  %> </td>
+                                    </tr>
+                                   <% }) %>
+                                </tbody>
+                            </table>
+                        </div> 
+                    </div>
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-4">
+                        <div class="box shadow-sm bg-light">
+                            <h6 class="mb-15">Payment info</h6>
+                            <p>
+                              <%= orderDetails.paymentMethod %>
+                            </p>
+                        </div>
+                    </div> 
+                </div>
+            </div> 
+        </div> 
+    </section> 
+</main>
+<script>
+document.getElementById('saveStatus').addEventListener('click', async () => {
+    const selectedStatus = document.getElementById('orderStatus').value;
+    const statusContainer = document.getElementById('statusContainer');
+    const saveButton = document.getElementById('saveStatus');
+    const orderId = '<%= orderDetails._id %>'; 
+
+    console.log(selectedStatus, orderId);
+
+    if (!selectedStatus) {
+        alert('Please select a status');
+        return;
+    }
+
+    try {
+        saveButton.disabled = true;
+
+        const response = await fetch(`/admin/change-status/${orderId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ orderStatus: selectedStatus })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update order status');
+        }
+
+        const data = await response.json();
+        console.log(data);
+
+        if (data.success) {
+            statusContainer.textContent = selectedStatus;
+            alert('Status updated successfully');
+        } else {
+            alert('Failed to update status');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again later.');
+    } finally {
+        saveButton.disabled = false;
+    }
+});
+
+</script>

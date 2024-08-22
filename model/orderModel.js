@@ -5,7 +5,7 @@ const orderSchema = new mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "UserDB",
     },
     deliveryDetails: {
         type: Object,
@@ -31,13 +31,27 @@ const orderSchema = new mongoose.Schema({
     paymentMethod: {
         type: String
     },
+    paymentStatus:{
+        type:String,
+    },
     status: {
         type: String
+    },
+    statusUpdatedDate: {  
+        type: Date,
     },
     orderDate: {
         type: Date,
         default: Date.now()
     }
+});
+
+// Pre-save middleware to update `statusUpdatedDate` if `status` changes
+orderSchema.pre("save", function (next) {
+    if (this.isModified("status")) {  
+        this.statusUpdatedDate = new Date();
+    }
+    next();
 });
 
 const OrderDB = mongoose.model("order", orderSchema);

@@ -1,0 +1,176 @@
+    <main class="main-wrap">
+      <section class="content-main">
+        <div class="content-header">
+          <div>
+            <h2 class="content-title card-title">Dashboard</h2>
+            <p>Whole data about your business here</p>
+          </div>
+          <div>
+            <a href="#" class="btn btn-danger">Logout</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle  bg-primary-light"><i class="fa-solid fa-dollar-sign"></i></i></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Revenue</h6>
+                  <span>₹<%= totalSum %></span>
+                  <span class="text-sm"> Shipping fees are not included </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-light"><i class="fa-solid fa-truck"></i></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Orders</h6>
+                  <span><%= totalOrders %></span>
+                  <span class="text-sm"> Excluding orders in transit </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-warning"><i class="fa-solid fa-qrcode"></i></i></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Products</h6>
+                  <span><%= totalProducts %></span>
+                  <span class="text-sm"> In 19 Categories </span>
+                </div>
+              </article>
+            </div>
+          </div>
+          <!-- <div class="col-lg-3">
+            <div class="card card-body mb-4">
+              <article class="icontext">
+                <span class="icon icon-sm rounded-circle bg-info"><i class="fa-solid fa-basket-shopping"></i></span>
+                <div class="text">
+                  <h6 class="mb-1 card-title">Monthly Earning</h6>
+                  <span>$6,982</span>
+                  <span class="text-sm"> Based in your local time. </span>
+                </div>
+              </article>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-lg-12">
+            <div class="card mb-4">
+              <article class="card-body">
+                <h5 class="card-title">Sale statistics</h5>
+                <canvas id="myChart" height="120px"></canvas>
+              </article>
+            </div>
+          </div>
+        </div>
+        <div class="card mb-4">
+          <header class="card-header">
+            <h4 class="card-title">Latest orders</h4>
+            <div class="row align-items-center">
+              <div class="col-md-3 col-12 me-auto mb-md-0 mb-3">
+                <div class="custom_select">
+                  <select class="form-select select-nice">
+                    <option selected="">All Categories</option>
+                    <option>Women's Clothing</option>
+                    <option>Men's Clothing</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2 col-6">
+                <input type="date" value="02.05.2022" class="form-control" />
+              </div>
+              <div class="col-md-2 col-6">
+                <div class="custom_select">
+                  <select class="form-select select-nice">
+                    <option selected="">Status</option>
+                    <option>All</option>
+                    <option>Paid</option>
+                    <option>Chargeback</option>
+                    <option>Refund</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </header>
+          <div class="card-body">
+            <div class="table-responsive">
+              <div class="table-responsive">
+                <table class="table align-middle table-nowrap mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th class="align-middle" scope="col">Order ID</th>
+                      <th class="align-middle" scope="col">Billing Name</th>
+                      <th class="align-middle" scope="col">Date</th>
+                      <th class="align-middle" scope="col">Total</th>
+                      <th class="align-middle" scope="col">Payment Status</th>
+                      <th class="align-middle" scope="col">Payment Method</th>
+                      <th class="align-middle" scope="col">View Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%  latestOrders.forEach(order => { %>
+                    <tr>
+                      <td><a href="#" class="fw-bold">#<%= order.orderId %></a></td>
+                      <td><%= order.deliveryDetails.fullname %></td>
+                      <td><%= new Date(order.orderDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) %>
+                      </td>
+                      <td>₹ <%= order.totalAmount %></td>
+                      <td>
+                        <span class="badge badge-pill 
+                         <%= order.paymentStatus === 'pending' ? 'badge-soft-warning' : '' %>
+                         <%= order.paymentStatus === 'paid' ? 'badge-soft-success' : '' %>">
+                          <%= order.paymentStatus %>
+                        </span>
+                      </td>
+                      <td>
+                        <% if (order.paymentMethod==='cod') { %>
+                        <i class="fa-solid fa-money-bill font-xxl  text-muted mr-5"></i>
+                        <% }else{%>
+                        <i class="material-icons md-payment font-xxl text-muted mr-5"></i>
+                        <% } %>
+                        <%= order.paymentMethod %>
+                      </td>
+                      <td>
+                        <a href="/admin/order-details/<%= order._id %>"  class="btn btn-xs"> View details</a>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- table-responsive end// -->
+          </div>
+        </div>
+        <!-- Pagination Controls -->
+        <div class="pagination-area mt-30 mb-50">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-start">
+              <% if (currentPage > 1) { %>
+              <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage - 1 %>"><</a>
+              </li>
+              <% } %>
+
+              <% for (let i = 1; i <= totalPages; i++) { %>
+              <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+              </li>
+              <% } %>
+
+              <% if (currentPage < totalPages) { %>
+              <li class="page-item">
+                <a class="page-link" href="?page=<%= currentPage + 1 %>">></a>
+              </li>
+              <% } %>
+            </ul>
+          </nav>
+        </div>
+      </section>
+    </main>

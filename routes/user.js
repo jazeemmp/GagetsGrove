@@ -26,4 +26,6 @@ router.post('/get-otp',userControl.getOtp)
 router.post('/verify-otp',userControl.verifyOtp)
 router.get('/my-profile',middle.isLogined,userControl.getMyProfile)
 router.post('/verify-payment',orderControl.verifyPayment)
+router.post('/cancel-order/:id',orderControl.cancelOrder)
+
 module.exports = router;
