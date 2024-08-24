@@ -1,0 +1,58 @@
+<section>
+    <div class="container product-card">
+        <div class="row g-4 py-5">
+          <% relatedProducts.forEach(product => { %>
+          <div class="col-md-3">
+            <div class="product-single-card">
+              <div class="product-top-area">
+                <div class="product-discount text-success">
+                  <%= product.discount %>% off
+                </div>
+      
+                <a href="/product-details/<%= product._id %>">
+                  <div class="product-img">
+                    <div class="first-view">
+                      <img src="/uploads/<%= product.images[0] %>" alt="logo" class="img-fluid" onerror="this.src='https://i.ibb.co/qpB9ZCZ/placeholder.png'" />
+                    </div>
+                    <div class="hover-view">
+                      <img src="/uploads/<%= product.images[0] %>" alt="logo" class="img-fluid" onerror="this.src='https://i.ibb.co/qpB9ZCZ/placeholder.png'" />
+                    </div>
+                  </div>
+                </a>
+                <div class="sideicons">
+                  <button onclick="addToCart('<%= product._id %>','<%= product.discountedPrice %>')" class="sideicons-btn">
+                    <i class="fa-solid fa-cart-plus"></i>
+                  </button>
+                  <a href="/product-details/<%= product._id %>" class="sideicons-btn">
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                  <button class="sideicons-btn">
+                    <i class="fa-solid fa-heart"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="product-info">
+                <!-- <h6 class="product-category"><a href="#"><%= product.category.name %></a></h6> -->
+                <h6 class="product-title text-truncate">
+                  <a href="#"><%= product.name %></a>
+                </h6>
+                <div class="d-flex flex-wrap align-items-center justify-content-between py-2">
+                  <div class="d-flex flex-wrap align-items-center">
+                    <div class="new-price fw-bold fs-5 price">
+                      ₹<%= product.discountedPrice %>
+                    </div>
+                    <div class="old-price m-2 price" style="font-size: 14px">
+                      ₹<%= product.price %>
+                    </div>
+                  </div>
+                  <button onclick="addToCart('<%= product._id %>','<%= product.discountedPrice %>')" class="btn btn-dark">
+                    <img src="/images/add-cart.svg" alt="Add to Cart" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+</section>

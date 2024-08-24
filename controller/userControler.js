@@ -29,6 +29,7 @@ const postSignup = async (req, res) => {
         fullname:userName,
         email:email,
         password: HashedPassword,
+        registered:Date.now()
       });
       await user.save();
       req.session.logedIn =true;

@@ -1,0 +1,68 @@
+<main class="main-wrap">
+    <section class="content-main">
+        <div class="content-header">
+            <h2 class="content-title">Sellers list</h2>
+        </div>
+        <div class="card mb-4">
+            <header class="card-header">
+                <div class="row gx-3">
+                    <div class="col-lg-4 col-md-6 me-auto">
+                        <input type="text" placeholder="Search..." class="form-control">
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <select class="form-select">
+                            <option>Status</option>
+                            <option>Active</option>
+                            <option>Disabled</option>
+                            <option>Show all</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-2 col-md-3 col-6">
+                        <select class="form-select">
+                            <option>Show 20</option>
+                            <option>Show 30</option>
+                            <option>Show 40</option>
+                        </select>
+                    </div>
+                </div>
+            </header> <!-- card-header end// -->
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Registered</th>
+                                <!-- <th class="text-end"> Action </th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <% userList.forEach(user => { %>
+                            <tr>
+                                <td width="40%">
+                                    <a href="#" class="itemside">
+                                        <div class="info pl-3">
+                                            <h6 class="mb-0 title"><%= user.fullname %></h6>
+                                        </div>
+                                    </a>
+                                </td>
+                                <td><%= user.email %></td>
+                                <td><span class="badge rounded-pill badge-soft-info">Active</span></td>
+                                <td><%= ('0' + user.registered.getDate()).slice(-2) %>.
+                                    <%= ('0' + (user.registered.getMonth() + 1)).slice(-2) %>.
+                                    <%= user.registered.getFullYear() %></td>
+                                <!-- <td class="text-end">
+                                    <a href="#" class="btn btn-sm btn-brand rounded font-sm mt-15">View details</a>
+                                </td> -->
+                            </tr>
+                           <% }) %>
+                        </tbody>
+                    </table> <!-- table-responsive.// -->
+                </div>
+            </div> <!-- card-body end// -->
+        </div> <!-- card end// -->
+        <%- include('../partials/admin/pagination') %>
+    </section> 
+</main>

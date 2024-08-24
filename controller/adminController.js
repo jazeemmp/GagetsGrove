@@ -1,5 +1,8 @@
 const ProductDB = require("../model/productModel");
 const OrderDB = require("../model/orderModel");
+const UserDB = require("../model/userModel")
+const CategoryDB = require('../model/categoryModel')
+
 
 function calculateDiscountedPrice(originalPrice, discountPercentage) {
   const discountAmount = (originalPrice * discountPercentage) / 100;
@@ -51,21 +54,27 @@ const getAllProducts = async (req, res) => {
     .limit(pageSize);
 
   const totalProducts = await ProductDB.countDocuments();
-
+  const categories = await CategoryDB.find()
   res.render("admin/all-products", {
     layout: "layouts/admin-layout",
     page: "all-products",
     products,
+    categories,
     currentPage: page,
     totalPages: Math.ceil(totalProducts / pageSize),
   });
 };
-const getAddProducts = (req, res) => {
+
+const getAddProducts = async(req, res) => {
+  const categories = await CategoryDB.find()
+
   res.render("admin/add-products", {
     layout: "layouts/admin-layout",
     page: "add-product",
+    categories
   });
 };
+
 const postAddProducts = async (req, res) => {
   if (!req.body) {
     console.log("No body data received");
@@ -97,10 +106,13 @@ const postAddProducts = async (req, res) => {
 const editProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const product = await ProductDB.findOne({ _id: id });
+    const categories = await CategoryDB.find()
+    const product = await ProductDB.findOne({ _id: id }).populate('category')
+    console.log(product);
     res.render("admin/edit-product", {
       page: "all-products",
       product,
+      categories,
       layout: "layouts/admin-layout",
       title: "Edit Product",
     });
@@ -197,15 +209,75 @@ const postOrderStatus = async (req, res) => {
     console.log(error);
   }
 };
+const getUserList = async(req,res)=>{
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = 10;
 
+  const userList = await UserDB.find()
+  .skip((page - 1) * pageSize)
+  .limit(pageSize);
+  const totalUsers = await UserDB.countDocuments();
+  res.render("admin/user-list",{
+    layout: "layouts/admin-layout",
+    page: "user-list",
+    userList,
+    currentPage: page,
+    totalPages: Math.ceil(totalUsers/pageSize)
+  })
+}
+
+const getCategories = async (req,res)=>{
+  const categories = await CategoryDB.find()
+  res.render("admin/all-categories",{
+    layout: "layouts/admin-layout",
+    page: "category-list",
+    categories
+  })
+}
+
+const slugify = (text) => {
+  return text.toString().toLowerCase().trim()
+    .replace(/\s+/g, '-')    
+    .replace(/[^\w\-]+/g, '')    
+    .replace(/\-\-+/g, '-');     
+};
+
+const postCategory = async (req, res) => {
+  const { categoryName, description } = req.body;
+  const slugifiedCategoryName = slugify(categoryName);
+
+  const existingCategory = await CategoryDB.findOne({ slug: slugifiedCategoryName });
+  if (existingCategory) {
+    return res.status(400).send("Category already exists");
+  }
+console.log(req.body.filename);
+  const newCategory = new CategoryDB({
+    name: categoryName,
+    slug: slugifiedCategoryName,
+    description: description,
+    image: req.file ? req.file.filename : null,
+  });
+
+  await newCategory.save();
+  res.redirect("/admin/categories");
+};
+const deleteCategory = async (req,res)=>{
+  const {id} = req.params
+  await CategoryDB.deleteOne({_id:id})
+  res.redirect('/admin/categories')
+}
 module.exports = {
   getAllProducts,
   getOrderList,
   getOrderDetails,
   getAddProducts,
   postAddProducts,
+  getUserList,
   postOrderStatus,
   getHome,
+  deleteCategory,
+  postCategory,
+  getCategories,
   deleteProduct,
   editProduct,
   postEditProduct,

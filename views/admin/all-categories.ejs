@@ -1,0 +1,62 @@
+<main class="main-wrap">
+    <section class="content-main">
+        <div class="content-header">
+            <div>
+                <h2 class="content-title card-title">Categories </h2>
+                <p>Add, or delete a category</p>
+            </div>
+            <div>
+                <input type="text" placeholder="Search Categories" class="form-control bg-white">
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <form method="post" action="/admin/post-category" enctype="multipart/form-data">
+                            <div class="mb-4">
+                                <label for="product_name" class="form-label">Name</label>
+                                <input type="text" placeholder="Type here" name="categoryName" class="form-control" id="product_name" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Description</label>
+                                <input type="text" placeholder="Type here" name="description" class="form-control" required>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">image</label>
+                                <input type="file"  name="image" class="form-control" required>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Create category</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Slug</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% categories.forEach(category => { %>
+                                        <tr>
+                                            <td><b><%= category.name %></b></td>
+                                            <td><%= category.description %></td>
+                                            <td>/<%= category.slug %></td>
+                                            <td><a onclick="return confirm('Do you want to delete <%= category.name%>')" class="btn btn-danger" href="/admin/delete-category/<%= category._id %>">Delete</a></td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </section> 
+</main>

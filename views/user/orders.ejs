@@ -9,9 +9,14 @@
     <div class="col-12 col-md-10 col-lg-8">
       <% orderdProducts.forEach(order => { %>
       <div class="card mb-5">
+        <div class="d-flex  justify-content-end m-3">
+          <span class="badge badge-pill
+          <%= order.status === 'Cancelled'? 'badge-danger':'badge-info' %>
+          <%= order.status === 'Delivered'? 'badge-danger':'' %>
+          "><%= order.status %></span>
+        </div>
         <!-- card body -->
         <div class="card-body">
-          
           <% order.products.forEach(product => { %>
           <div class="row mb-5 align-items-center">
             <div class="col-lg-8 col-12">
