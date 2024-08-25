@@ -35,7 +35,7 @@
                   <div class="mt-3">
                     <h4 class="price">
                       ₹
-                      <span id="<%= product.productId._id %>"><%= product.productId.discountedPrice %></span>
+                      <span id="<%= product.productId._id %>"><%= product.productId.discountedPrice*product.quantity%></span>
                     </h4>
                   </div>
                 </div>

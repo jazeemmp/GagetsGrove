@@ -102,6 +102,7 @@ const signupSubmit = async (e) => {
   const email = emailField.value;
   const password = passwordField.value;
   const rePassword = rePasswordField.value;
+  const otp = otpField.value
 
   if (password !== rePassword) {
     noPassMatch.style.color = "red";
@@ -112,11 +113,15 @@ const signupSubmit = async (e) => {
     userName,
     email,
     password,
+    otp,
   });
   if (data && data.success) {
     window.location.href = "/";
   } else {
     showMessage(emailMsg, "Email Already exists", "red");
+  }
+  if(data.otpFaild){
+    showMessage(otpMsg,"Enter Valid Otp","red")
   }
 };
 

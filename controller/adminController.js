@@ -2,6 +2,8 @@ const ProductDB = require("../model/productModel");
 const OrderDB = require("../model/orderModel");
 const UserDB = require("../model/userModel")
 const CategoryDB = require('../model/categoryModel')
+const AdminDB = require('../model/adminModel')
+const bcrypt = require('bcrypt')
 
 
 function calculateDiscountedPrice(originalPrice, discountPercentage) {
@@ -44,7 +46,31 @@ const getHome = async (req, res) => {
     totalPages: Math.ceil(totalOrders / pageSize),
   });
 };
-
+const getLogin = (req,res)=>{
+ res.render('admin/login',{
+  layout:"layouts/admin-layout",
+  page:null
+ })
+}
+const postLogin = async(req,res)=>{
+  const {email,password}= req.body;
+  try {
+    const admin = await AdminDB.findOne({ email });
+    if (!admin) {
+      return res.status(401).send('Admin not found');
+    }
+    const match = await bcrypt.compare(password, admin.password);
+    if (match) {
+      req.session.admin = admin
+      req.session.adminLogedIn = true
+      res.redirect('/admin')
+    } else {
+      res.status(401).send('Invalid credentials');
+    }
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+}
 const getAllProducts = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const pageSize = 10;
@@ -266,7 +292,30 @@ const deleteCategory = async (req,res)=>{
   await CategoryDB.deleteOne({_id:id})
   res.redirect('/admin/categories')
 }
+
+// [registering new admin uncomment if needed]
+
+// const createAdmin = async (req,res)=>{
+//   const email = ""
+//   const password = ""
+
+//   try {
+//     const hasedPassword = await bcrypt.hash(password,10);
+//     const newAdmin = new AdminDB({
+//       email:email,
+//       password:hasedPassword
+//     })
+//     await newAdmin.save()
+//     console.log('Admin created successfully.');
+//   } catch (error) {
+//     console.error('Error creating admin:', error); 
+//   }
+// }
+// createAdmin()
+
 module.exports = {
+  getLogin,
+  postLogin,
   getAllProducts,
   getOrderList,
   getOrderDetails,

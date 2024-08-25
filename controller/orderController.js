@@ -123,7 +123,7 @@ const verifyPayment = async(req,res)=>{
   if (generated_signature === razorpay_signature) {
     res.json({ success: true, message: "Payment verified successfully!" });
     await CartDB.deleteOne({ _id: cartId });
-    await OrderDB.updateOne({_id:orderId},{$set:{status:"placed",paymentStatus:"paid"}})
+    await OrderDB.updateOne({_id:orderId},{$set:{status:"Ordered",paymentStatus:"paid"}})
   } else {
     res.json({ success: false, message: "Payment verification failed!" });
   }

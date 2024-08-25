@@ -28,7 +28,7 @@ const getCategory = async (req,res)=>{
    const {categoryName} = req.params
    const category = await CategoryDB.findOne({slug:categoryName})
    const relatedProducts = await ProductDB.find({category:category._id})
-   res.render('user/category-products',{relatedProducts,user:req.session.user})
+   res.render('user/category-products',{relatedProducts,category:category.name,user:req.session.user})
 }
 module.exports = {
     getProducts,

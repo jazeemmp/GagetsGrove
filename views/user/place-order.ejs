@@ -12,7 +12,7 @@
           <% cartItems.products.forEach(product=> { %>
           <li class="list-group-item d-flex justify-content-between lh-condensed">
             <div>
-              <img src="/uploads/<%= product.productId.image %>" width="70" alt="" />
+              <img src="/uploads/<%= product.productId.images[0] %>" width="70" alt="" />
               <h6 class="my-0">
                 <%= product.productId.name %>
               </h6>

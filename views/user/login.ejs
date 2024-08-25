@@ -1,71 +1,3 @@
-<!-- <section>
-  <div class="container d-flex justify-content-center align-items-center">
-    <div class="row">
-      <form id="loginForm" class="needs-validation" novalidate>
-        <div class="alert alert-danger fill-error" role="alert">
-          email or password is wrong
-        </div>
-        <h1 class="text-center">Login</h1>
-        <div class="form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp"
-            placeholder="Enter email" autocomplete="email" required />
-          <div class="invalid-feedback">Please provide a valid email.</div>
-        </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input type="password" id="password" name="password" class="form-control" id="exampleInputPassword1"
-            placeholder="Password" autocomplete="current-password" required />
-        </div>
-        <div class="d-flex justify-content-between align-items-center">
-          <a href="/signup" class="text-decoration-none mr-5 link-primary">Dont Have an accout??</a>
-          <button class="btn ml-5 btn-primary">Submit</button>
-          <div class="loading">
-            <div class="loader"></div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-<script>
-  const loginForm = document.getElementById("loginForm");
-  const loading = document.querySelector(".loading");
-  loginForm.addEventListener("submit", async (e) => {
-    try {
-      e.preventDefault();
-      const fillError = document.querySelector(".fill-error");
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      const passwordRegex = /^(?=.*\d)(?=.*[@$!%*?&=#])[A-Za-z\d@$!%*?&=#]{8,}$/;
-      if (email === "" || password === "") {
-        return
-      } else if (!emailRegex.test(email)) {
-        return
-      } else {
-        loading.style.display = "flex";
-        const response = await fetch("/login", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
-        const data = await response.json();
-        if (data.success) {
-          window.location.href = "/";
-        } else {
-          fillError.style.display = "block";
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      loading.style.display = "none";
-    }
-  });
-</script> -->
 <style>
 * {
     margin: 0;
@@ -145,6 +77,3 @@
     </div>
   </section>
 </div>
-
-<script>
-</script>

@@ -36,7 +36,9 @@
 
   </head>
   <body>
-    <aside><%- include('../partials/admin/admin-sidenav') %></aside>
+    <% if (typeof admin !== 'undefined' && admin) { %>
+      <aside><%- include('../partials/admin/admin-sidenav') %></aside>
+    <% } %>
     <main><%- body %>
     </main>
 

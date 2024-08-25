@@ -2,71 +2,6 @@ const UserDB = require("../model/userModel");
 const AddressDB = require("../model/addressModel")
 const bcrypt = require("bcrypt");
 const nodemailer = require('nodemailer')
-
-const getSignup = (req, res) => {
-    const user = req.session.user
-    res.render("user/signup",{user,title:"Signup"});
-};
-
-const getLogin = (req, res) => {
-   const user = req.session.user
-    if(req.session.logedIn){
-      res.redirect('/')
-    }else{
-      res.render("user/login",{title:"Login",user })
-    }
-};
-
-const postSignup = async (req, res) => {
-  try {
-    const {userName,email,password} = req.body;
-    const isExisting = await UserDB.findOne({email:email})
-    if(isExisting){
-       return res.json({success:false})
-    }else{
-      const HashedPassword = await bcrypt.hash(password, 10);
-      const user = new UserDB({
-        fullname:userName,
-        email:email,
-        password: HashedPassword,
-        registered:Date.now()
-      });
-      await user.save();
-      req.session.logedIn =true;
-      req.session.user = user;
-      return res.json({success:true})
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const postLogin = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await UserDB.findOne({ email: email });
-    if (user) {
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      if (passwordMatch) {
-        req.session.logedIn =true;
-        req.session.user = user;
-        res.json({success:true})
-      } else {
-        res.json({nopassword:true});
-      }
-    } else {
-      res.json({nouser:true});
-    }
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-const getLogout = (req,res)=>{
-    req.session.destroy()
-    res.redirect('/')
-}
-
 let otpStore = {};
 
 const getOtp = async (req, res) => {
@@ -99,14 +34,83 @@ const getOtp = async (req, res) => {
     res.json({ otpSend: false });
   }
 };
+
 const verifyOtp = (req,res)=>{
   const { email, otp } = req.body;
-  console.log(otpStore);
   if (otpStore[email] && otpStore[email] == otp) {
     return res.json({ otpVerified: true })
   }
   res.json({ otpVerified: false })
 }
+const getSignup = (req, res) => {
+    res.render("user/signup",{title:"Signup"});
+};
+
+
+const postSignup = async (req, res) => {
+  try {
+    const {userName,email,password,otp} = req.body;
+    const isExisting = await UserDB.findOne({email:email})
+    if (otpStore[email]&& otpStore[email]!==otp) {
+      res.json({otpFaild:true})
+      return
+    }
+    if(isExisting){
+       return res.json({success:false})
+    }else{
+      const HashedPassword = await bcrypt.hash(password, 10);
+      const user = new UserDB({
+        fullname:userName,
+        email:email,
+        password: HashedPassword,
+        registered:Date.now()
+      });
+      await user.save();
+      req.session.userlogedIn =true;
+      req.session.user = user;
+      return res.json({success:true})
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+const getLogin = (req, res) => {
+  const user = req.session.user
+   if(req.session.userLogedIn){
+     res.redirect('/')
+   }else{
+     res.render("user/login",{title:"Login",user })
+   }
+};
+const postLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await UserDB.findOne({ email: email });
+    if (user) {
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (passwordMatch) {
+        req.session.userLogedIn =true;
+        req.session.user = user;
+        res.json({success:true})
+      } else {
+        res.json({nopassword:true});
+      }
+    } else {
+      res.json({nouser:true});
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getLogout = (req,res)=>{
+    req.session.userLogedIn = false
+    req.session.user = null
+    res.redirect('/')
+}
+
+
+
 
 const getMyProfile = async(req,res)=>{
   const savedAddresses = await AddressDB.find({user:req.session.user._id})
