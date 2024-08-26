@@ -1,21 +1,60 @@
-<nav class="user-nav">
-  <div class="left-section">
-    <i class="fa-solid fa-bars"></i>
-    <a href="/">
-      <img class="logo-img" src="/images/logo.png" width="300" alt=""/>
-    </a>
+ <header class="header">
+  <img class="logo-img" src="/images/logo.png" width="180" alt=""/>
+  <nav class="nav">
+    
+            <a href="/">home</a>  
+            <a href="#features">features</a>  
+            <a href="#products">products</a>  
+            <a href="#categories">categories</a>  
+      
+  </nav>
+
+  <div class="icons">
+    <div class="fas fa-bars" id="menu-btn"></div>
+    <div class="fas fa-search" id="search-btn"></div>
+    <div class="fas fa-shopping-cart" id="cart-btn"></div>
+    <div class="fas fa-user" id="login-btn"></div>
+</div>
+
+  <form action="/search" method="get" class="search-form">
+      <input type="search" id="search-box" placeholder="search here...">
+      <label for="search-box" class="fas fa-search"></label>
+  </form>
+
+  <div class="shopping-cart">
+      <div class="box">
+          <i class="fas fa-trash"></i>
+          <img src="/uploads/1724067650507-macbook-pro-13-silver.png" alt="">
+          <div class="content">
+              <h3>watermelon</h3>
+              <span class="price">$4.99/-</span>
+              <span class="quantity">qty : 1</span>
+          </div>
+      </div>
+
+      <div class="box">
+          <i class="fas fa-trash"></i>
+          <img src="/uploads/1724067650507-macbook-pro-13-silver.png" alt="">
+          <div class="content">
+              <h3>onion</h3>
+              <span class="price">$4.99/-</span>
+              <span class="quantity">qty : 1</span>
+          </div>
+      </div>
+
+      <div class="box">
+          <i class="fas fa-trash"></i>
+          <img src="/uploads/1724067650507-macbook-pro-13-silver.png" alt="">
+          <div class="content">
+              <h3>chicken</h3>
+              <span class="price">$4.99/-</span>
+              <span class="quantity">qty : 1</span>
+          </div>
+      </div>
+      <div class="total">total : $19.69/-</div>
+      <a href="#" class="btn">checkout</a>
   </div>
-  <div class="right-section">
-    <a href="#"><i class="fa-regular fa-heart"></i></a>
-    <a href="/cart">
-      <i class="fa-solid fa-cart-shopping">
-        <% if (user && typeof cartCount !== 'undefined') { %>
-          <span class="count"><%= cartCount %></span>
-        <% } %>
-      </i>
-    </a>
-    <i class="profile fa-regular fa-user"></i>
-  </div>
+
   <% if (typeof user !== 'undefined' && user) { %>
     <div class="action">
       <div class="menu">
@@ -36,28 +75,58 @@
         </ul>
       </div>
     </div>
-    <% }else{ %>
-      <div class="action">
-        <div class="menu">
-          <ul>
-            <li>
-              <i class="fa-solid fa-user-plus"></i>
-              <a href="/signup">Sign Up</a>
-            </li>
-            <li>
-              <i class="fas fa-sign-in"></i>
-              <a href="/login">Login</a>
-            </li>
-          </ul>
-        </div>
+  <% } else { %>
+    <div class="action">
+      <div class="menu">
+        <ul>
+          <li>
+            <i class="fa-solid fa-user-plus"></i>
+            <a href="/signup">Sign Up</a>
+          </li>
+          <li>
+            <i class="fas fa-sign-in"></i>
+            <a href="/login">Login</a>
+          </li>
+        </ul>
       </div>
-      <% } %>
-</nav>
+    </div>
+  <% } %>
+</header>
 <script>
-const tap = document.querySelector('.profile');
-  tap.addEventListener('click', function(){
-       const toggleMenu = document.querySelector('.menu');
-  toggleMenu.classList.toggle('active');
-});
+let searchForm = document.querySelector('.search-form');
 
+document.querySelector('#search-btn').onclick = ()=>{
+    searchForm.classList.toggle('active');
+    shoppingCart.classList.remove('active');
+    loginForm.classList.remove('active');
+    navbar.classList.remove('active');
+
+}
+
+let shoppingCart = document.querySelector('.shopping-cart');
+
+document.querySelector('#cart-btn').onclick = () =>{
+    shoppingCart.classList.toggle('active');
+    searchForm.classList.remove('active');
+    loginForm.classList.remove('active');
+    navbar.classList.remove('active');
+}
+
+let account = document.querySelector('.menu');
+
+document.querySelector('#login-btn').onclick = () =>{
+    account.classList.toggle('active');
+    searchForm.classList.remove('active');
+    shoppingCart.classList.remove('active');
+    navbar.classList.remove('active');
+}
+
+let navbar = document.querySelector('.nav');
+
+document.querySelector('#menu-btn').onclick = () =>{
+    navbar.classList.toggle('active');
+    searchForm.classList.remove('active');
+    shoppingCart.classList.remove('active');
+    loginForm.classList.remove('active');
+}
 </script>

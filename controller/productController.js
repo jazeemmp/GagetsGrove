@@ -30,8 +30,15 @@ const getCategory = async (req,res)=>{
    const relatedProducts = await ProductDB.find({category:category._id})
    res.render('user/category-products',{relatedProducts,category:category.name,user:req.session.user})
 }
+
+const getSearch = async(req,res)=>{
+   // const query = req.query.query;
+   // const results = await ProductDB.find({ name: { $regex: query, $options: 'i' } });
+   res.render('user/search-results',); 
+}
 module.exports = {
     getProducts,
     getProductDetails,
-    getCategory
+    getCategory,
+    getSearch,
 }

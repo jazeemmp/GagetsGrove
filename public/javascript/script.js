@@ -5,6 +5,14 @@ const totalAmout = document.getElementById("totalAmout");
 const allPrice = document.querySelectorAll(".price");
 console.log("Script loaded");
 
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    // The page was restored from the cache
+    window.location.reload();
+  }
+});
+
+
 /*[Form validation by bootstarp]
     ===========================================================*/
 (function () {

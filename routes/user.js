@@ -5,6 +5,7 @@ const userControl = require('../controller/userControler')
 const middle = require('../middlewares/userMiddlewares')
 const cartControl = require('../controller/cartController')
 const orderControl = require('../controller/orderController')
+const wishListController = require('../controller/wishListController')
 
 router.get('/',productController.getProducts);
 router.get('/signup',userControl.getSignup)
@@ -28,5 +29,7 @@ router.get('/my-profile',middle.isLogined,userControl.getMyProfile)
 router.post('/verify-payment',orderControl.verifyPayment)
 router.post('/cancel-order/:id',orderControl.cancelOrder)
 router.get('/category/:categoryName',productController.getCategory)
+router.get('/wish-list',wishListController.getWishList)
+router.get('/search',productController.getSearch)
 
 module.exports = router;
