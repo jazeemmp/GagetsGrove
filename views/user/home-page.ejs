@@ -89,6 +89,7 @@
 <!-- ========================================Product Display================================================= -->
 <div class="container product-card">
   <div class="row g-4 py-5">
+    <h2>New arrivals</h2>
     <% products.forEach(product => { %>
     <div class="col-md-3">
       <div class="product-single-card">
@@ -145,25 +146,25 @@
 </div>
 <!-- ========================================================================================= -->
 
-<div class="container">
-  <h2 class="h2 my-5">Shop by <span>Categories</span></h2>
-  <div class="d-flex flex-nowrap flex-md-nowrap overflow-auto custom-category-row">
-    <% categories.forEach(category => { %>
-      <div class="col-6 col-md-2 d-flex flex-column align-items-center mb-4 category-item">
-        <a href="/category/<%= category.slug %>" class="text-decoration-none d-flex flex-column align-items-center">
-          <img src="/uploads/<%= category.image %>" width="100" alt="<%= category.name %>" />
-          <p class="w-75 text-center mt-3 fw-bold text-dark"><%= category.name %></p>
-        </a>
-      </div>
-    <% }) %>
+<section id="categories" style="scroll-margin-top: 150px;margin-top: 60px;">
+  <div class="container mt-5 " >
+    <h2 class="h2 my-5">Shop by <span>Categories</span></h2>
+    <div class="d-flex flex-nowrap flex-md-nowrap overflow-auto custom-category-row">
+      <% categories.forEach(category => { %>
+        <div class="col-6 col-md-2 d-flex flex-column align-items-center mb-4 category-item">
+          <a href="/category/<%= category.slug %>" class="text-decoration-none d-flex flex-column align-items-center">
+            <img src="/uploads/<%= category.image %>" width="100" alt="<%= category.name %>" />
+            <p class="w-75 text-center mt-3 fw-bold text-dark"><%= category.name %></p>
+          </a>
+        </div>
+      <% }) %>
+    </div>
   </div>
-</div>
+</section>
 
 
 <!-- ================================================================================================== -->
-<div class="container my-5 text-center">
-  <img src="/images/ad-banner.webp" alt="" class="img-fluid rounded-3" />
-</div>
+
 <!-- =========================================================================================================== -->
 <div class="container product-card">
   <div class="row g-4 py-5">
@@ -221,7 +222,10 @@
     <% }) %>
   </div>
 </div>
-
+<!-- =========================================================================================================== -->
+<div class="container my-5 text-center">
+  <img src="/images/ad-banner.webp" alt="" class="img-fluid rounded-3" />
+</div>
 <!-- Additional CSS to hide scrollbar -->
 <style>
   .overflow-auto {

@@ -31,11 +31,22 @@ const getCategory = async (req,res)=>{
    res.render('user/category-products',{relatedProducts,category:category.name,user:req.session.user})
 }
 
-const getSearch = async(req,res)=>{
-   // const query = req.query.query;
-   // const results = await ProductDB.find({ name: { $regex: query, $options: 'i' } });
-   res.render('user/search-results',); 
+const getSearch = async (req, res) => {
+    const query = req.query.query;
+    if(query === ""){
+      res.status(500).send("An error occurred while searching");
+    }
+    try {
+        const results = await ProductDB.find({ name: { $regex: query, $options: 'i' } }); // Case-insensitive search
+        console.log(results);
+        
+        res.render('user/search-results', { results, query });
+    } catch (error) {
+        console.error("Error during search:", error);
+        res.status(500).send("An error occurred while searching");
+    }
 }
+;
 module.exports = {
     getProducts,
     getProductDetails,

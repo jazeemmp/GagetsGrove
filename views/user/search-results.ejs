@@ -1,89 +1,51 @@
 <section>
-    <div class="container-fluid">
-      <div class="row">
-        <!-- Product Card 1 -->
-        <div class="card shadow  m-0">
-          <div class="row align-items-center ">
-            <aside class="col-md-3">
-              <a href="#">
-                <img src="/uploads/1724067650510-mack3.webp" width="300" alt="Apple Watch Series 3">
-              </a>
-            </aside>
-            <div class="col-md-6">
-              <div class="info-main">
-                <a href="#" class="h5 title">Apple Watch Series 3</a>
-                <div class="d-flex my-3">
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning"></span>
-                  <span class="badge badge-pill badge-gray ms-2">4.7</span>
-                  <span class="small text-success ms-3">
-                    <span class="fas fa-shopping-cart me-1"></span>150 orders
-                  </span>
-                </div>
-                <p>Monitor your health, track your workouts, and stay connected with Apple Watch Series 3.</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="d-flex align-items-center">
-                <span class="h5 mb-0 text-gray text-through me-2">$299.00</span>
-                <span class="h6 mb-0 text-danger">$199.00</span>
-              </div>
-              <span class="text-success small">
-                <span class="fas fa-shipping-fast me-1"></span>Free shipping
-              </span>
-              <div class="d-grid gap-2 mt-4">
-                <a class="btn btn-primary btn-sm" href="#">Details</a>
-                <a class="btn btn-outline-secondary btn-sm" href="#">
-                  <span class="fa fa-heart me-1"></span> Wishlist
-                </a>
-              </div>
+
+  <div class="card shadow-none p-4">
+    <% if (results.length > 0) { %>
+      <h1 class="h2 mb-5">Search Results for "<%= query %>"</h1>
+      <% results.forEach(product => { %>
+        <div class="row align-items-center">
+          <aside class="col-md-3 align-items-center d-flex justify-content-center">
+            <a href="/product-details/<%= product._id %>">
+              <img src="/uploads/<%= product.images[0] %>" width="200" alt="premium watch">
+            </a>
+          </aside> <!-- col.// -->
+          <div class="col-md-6">
+            <div class="info-main">
+              <a href="/product-details/<%= product._id %>" class="h5  title"> <%= product.name %></a>
+              <p class="mt-4"><%= product.description %></p>
             </div>
           </div>
-          <hr>
-          <div class="row align-items-center">
-            <aside class="col-md-3">
-              <a href="#">
-                <img src="/uploads/1724067650510-mack3.webp" width="300" alt="Apple Watch Series 3">
-              </a>
-            </aside>
-            <div class="col-md-6">
-              <div class="info-main">
-                <a href="#" class="h5 title">Apple Watch Series 3</a>
-                <div class="d-flex my-3">
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning me-1"></span>
-                  <span class="star fas fa-star text-warning"></span>
-                  <span class="badge badge-pill badge-gray ms-2">4.7</span>
-                  <span class="small text-success ms-3">
-                    <span class="fas fa-shopping-cart me-1"></span>150 orders
-                  </span>
-                </div>
-                <p>Monitor your health, track your workouts, and stay connected with Apple Watch Series 3.</p>
-              </div>
-            </div>
-            <div class="col-12 col-md-3">
-              <div class="d-flex align-items-center">
-                <span class="h5 mb-0 text-gray text-through me-2">$299.00</span>
-                <span class="h6 mb-0 text-danger">$199.00</span>
-              </div>
-              <span class="text-success small">
-                <span class="fas fa-shipping-fast me-1"></span>Free shipping
+          <div class="col-12 col-md-3">
+            <div class="d-flex align-items-center">
+              <span class="h4 mb-0 text-gray text-through me-2 fw-bod ">
+                <span class="price">₹</span><%= product.discountedPrice %>
               </span>
-              <div class="d-grid gap-2 mt-4">
-                <a class="btn btn-primary btn-sm" href="#">Details</a>
-                <a class="btn btn-outline-secondary btn-sm" href="#">
-                  <span class="fa fa-heart me-1"></span> Wishlist
-                </a>
-              </div>
+              <span class="h6 mb-0 text-decoration-line-through price">₹<%= product.price %></span>
+            </div> <!-- info-price-detail // -->
+            <span class="text-success small"><span class="fas fa-shipping-fast me-1"></span>Free shipping</span>
+            <div class="d-grid gap-2 mt-4">
+              <a class="btn btn-dark" href="/product-details/<%= product._id %>">
+                Details
+              </a>
+              <a href="#" class="btn btn-dark "><span class="fa fa-heart me-1"></span>
+                Wishlist
+              </a>
             </div>
           </div>
         </div>
+        <hr>
+        <% }) %>
+    <% } else { %>
+      <div class="container d-flex flex-column flex-column flex-sm-row">
+        <h1 class="h2 mb-5">No Results for "<%= query %>"</h1>
+        <img src="/images/not-found.jpg" width="500" class="img-fluid" alt="">
       </div>
-    </div>
-  </section>
-  
+      <% } %>
+  </div>
+</section>
+<style>
+  section {
+    margin-top: 80px;
+  }
+</style>

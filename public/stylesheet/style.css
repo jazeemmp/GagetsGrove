@@ -3,13 +3,11 @@
 :root {
   --primcolor: #fff;
   --secondcolor: #171717;
-  /* --box-shadow:rgba(0, 0, 0, 0.24) 0px 3px 8px; */
-  --box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
-    rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
     --orange:#151515;
     --black:#130f40;
     --light-color:#666;
-    --box-shadow:0 .5rem 1.5rem rgba(0,0,0,.1);
+    --box-shadow:rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     --border:.2rem solid rgba(0,0,0,.1);
     --outline:.1rem solid rgba(0,0,0,.1);
     --outline-hover:.2rem solid var(--black);
@@ -28,7 +26,7 @@
 
 body {
   font-family: "Poppins", sans-serif;
-  background: #fafafa;
+  background: #ffffff;
 }
 section {
   margin-top: 120px;
@@ -45,7 +43,9 @@ i{
   color: white !important;
   border: none !important;
 }
-
+html{
+  scroll-behavior: smooth;
+}
 
 
 .header{
@@ -77,8 +77,8 @@ i{
   color: var(--orange);
 }
 .header .icons div{
-  height: 2.8125rem; /* Previously 4.5rem, now 45px */
-  width: 2.8125rem; /* Previously 4.5rem, now 45px */
+  height: 2.8125rem;
+  width: 2.8125rem; 
   line-height: 2.8125rem;
   border-radius: .5rem;
   background: #eee;
@@ -122,55 +122,15 @@ i{
   color: var(--black);
   padding: 0 1.5rem;
 }
-.header .search-form label{
-  font-size: 2.2rem;
+.header .search-form button{
+  background-color: #fff;
+  font-size: 1.8rem;
   padding-right: 1.5rem;
   color:var(--black);
   cursor: pointer;
 }
 .header .search-form label:hover{
   color:var(--orange);
-}
-.header .shopping-cart{
-  background: #fff;
-  padding: 1rem;
-  border-radius: .5rem;
-  box-shadow: var(--box-shadow);
-  width: 21.25rem; 
-  top: 110%;
-  right: -110%;
-  position: absolute; 
-  
-}
-.header .shopping-cart.active{
-  right: 2rem;
-  transition: .4s linear;
-}
-.header .shopping-cart .box{
-  display: flex;
-  position: relative;
-  align-items: center;
-  gap: 1rem;
-  margin: 1rem 0;
-  height: 5.25rem;
-}
-.header .shopping-cart .box img{
-  height: 5rem;
-}
-.header .shopping-cart .box .fa-trash{
-  font-size: 1rem;
-  position: absolute;
-  top: 50%; right: 2rem;
-  color: var(--light-color);
-  transform: translateY(-50%);
-}
-.header .shopping-cart .box .fa-trash:hover{
-  color: var(--orange);
-}
-.header .shopping-cart .box .content h3{
-  color: var(--black);
-  font-size: 1.2rem;
-  /* padding-bottom: 0.5rem; */
 }
 .header .shopping-cart .box .content span{
   color: var(--light-color);
@@ -189,7 +149,7 @@ i{
   display: block;
   text-align: center;
   margin: 1rem;
-}
+} */
 .header .btn{
   margin-top: 0.5rem;
   display: inline-block;
@@ -426,6 +386,7 @@ i{
   .product-single-card .product-top-area .product-img {
     aspect-ratio: 1/1.05;
     overflow: hidden;
+    background-color: rgb(240, 240, 240);
   }
 
   .product-single-card .product-top-area .product-img .first-view {
@@ -751,7 +712,7 @@ i{
       padding: 2rem;
   }
 
-  section {
+  .header section {
       padding: 2rem;
   }
 
