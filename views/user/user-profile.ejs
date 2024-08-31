@@ -27,24 +27,31 @@
               <div class="col-sm-12">
                 <table class="table table-borderless">
                   <tbody>
-                    <% savedAddresses.forEach(address => { %>
+                    <% if (savedAddresses && savedAddresses.length > 0) { %>
+                      <% savedAddresses.forEach(address => { %>
+                        <tr>
+                          <td class="text-capitalize"><%= address.fullname %></td>
+                        </tr>
+                        <tr>
+                          <td><%= address.address %></td>
+                        </tr>
+                        <tr>
+                          <td><%= address.city %>, <%= address.state %>, <%= address.pincode %></td>
+                        </tr>
+                        <tr>
+                          <td>Ph: <%= address.mobile %></td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td> 
+                        </tr>
+                      <% }) %>
+                    <% } else { %>
                       <tr>
-                        <td class="text-capitalize"><%= address.fullname %></td>
+                        <td colspan="6"><h4 class="text-center text-warning">No saved address found</h4></td>
                       </tr>
-                      <tr>
-                        <td><%= address.address %></td>
-                      </tr>
-                      <tr>
-                        <td><%= address.city %>, <%= address.state %>, <%= address.pincode %></td>
-                      </tr>
-                      <tr>
-                        <td>Ph: <%= address.mobile %></td>
-                      </tr>
-                      <tr>
-                        <td>&nbsp;</td> 
-                      </tr>
-                    <% }) %>
+                    <% } %>
                   </tbody>
+                  
                 </table>
               </div>
             </div>

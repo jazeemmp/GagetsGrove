@@ -32,58 +32,45 @@
           <span class="plus-icon">+</span>Add New Adress
         </button>
         <div class="row">
-          <form class="needs-validation" id="addressForm" novalidate="">
+          <form  id="addressForm" >
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">Full name</label>
                 <input type="text" class="form-control" id="firstName" name="fullname" required="" />
-                <div class="invalid-feedback">Valid Full name is required.</div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Mobile</label>
                 <input type="number" class="form-control" id="lastName" name="mobile" required="" />
-                <div class="invalid-feedback">Valid last name is required.</div>
               </div>
             </div>
             <div class="mb-3">
               <label for="email">Email <span class="text-muted">(Optional)</span></label>
               <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" />
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
             </div>
             <div class="mb-3">
               <label for="address">Address</label>
               <textarea type="text" class="form-control" name="address" id="address" placeholder="1234 Main St" required=""></textarea>
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">City/District/Town</label>
                 <input type="text" class="form-control" id="firstName" name="city" required="" />
-                <div class="invalid-feedback">
-                  Valid City/District/Town is required.
-                </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">State</label>
                 <input type="text" class="form-control" id="lastName" name="state" required="" />
-                <div class="invalid-feedback">Valid state is required.</div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-3 mb-3">
                 <label for="zip">Pincode</label>
                 <input type="text" class="form-control" name="pincode" id="pincode" placeholder="" required="" />
-                <div class="invalid-feedback">Pin is code required.</div>
               </div>
             </div>
             <div class="d-block my-3">
               <div class="d-flex mt-4 mb-5">
-                <button class="btn btn-dark" type="submit">Save</button>
-                <span style="cursor: pointer" class="text-primary ml-5 mt-2" onclick="hideForm()">CANCEL</span>
+                <button class="btn btn-dark me-5" type="submit">Save</button>
+                <span style="cursor: pointer" class="text-primary mt-2" onclick="hideForm()">CANCEL</span>
               </div>
             </div>
           </form>
