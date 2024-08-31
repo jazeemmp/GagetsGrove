@@ -52,7 +52,8 @@ const postSignup = async (req, res) => {
     const {userName,email,password,otp} = req.body;
     const isExisting = await UserDB.findOne({email:email})
     if(isExisting){
-       return res.json({userExists:true})
+       res.json({userExists:true})
+       return
     }else{
       const HashedPassword = await bcrypt.hash(password, 10);
       const user = new UserDB({

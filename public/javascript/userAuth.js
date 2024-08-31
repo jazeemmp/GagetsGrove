@@ -114,11 +114,12 @@ const signupSubmit = async (e) => {
     password,
     otp,
   });
-  if (data && data.success) {
-    window.location.href = "/";
-  } else if(data & data.userExists){
+  if(data.userExists){
     showMessage(emailMsg, "Email Already exists", "red");
   }
+  if (data && data.success) {
+    window.location.href = "/";
+  } 
   // if(data.otpFaild){
   //   showMessage(otpMsg,"Enter Valid Otp","red")
   // }

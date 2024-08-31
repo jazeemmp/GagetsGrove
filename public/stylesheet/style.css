@@ -55,14 +55,7 @@ html{
   box-shadow: var(--box-shadow);
   text-transform: capitalize;
 }
-.header .logo{
-  font-size: 1.5625rem;
-  font-weight: bolder;
-  color: var(--black);
-}
-.header .logo i{
-  color: var(--orange);
-}
+
 .header .nav a{
   font-size: 1.0625rem;
   margin: 0 1rem;
@@ -127,24 +120,6 @@ html{
 .header .search-form label:hover{
   color:var(--orange);
 }
-.header .shopping-cart .box .content span{
-  color: var(--light-color);
-  font-size: 1rem;
-}
-.header .shopping-cart .box .content .quantity{
-  padding-left: 1rem;
-}
-.header .shopping-cart .total{
-  font-size: 1.4rem;
-  padding: 1rem 0;
-  text-align: center;
-  color: var(--black);
-}
-.header .shopping-cart .btn{
-  display: block;
-  text-align: center;
-  margin: 1rem;
-} 
 .header .btn{
   margin-top: 0.5rem;
   display: inline-block;
@@ -277,57 +252,6 @@ html{
 
   .menu ul li:hover i {
     opacity: 1;
-  }
-}
-/*------------------------------------------------------------------
-[ loading animation]*/
-.loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  display: none;
-}
-
-.loader {
-  width: 50px;
-  aspect-ratio: 1;
-  display: grid;
-  border: 4px solid #0000;
-  border-radius: 50%;
-  border-color: #ccc #0000;
-  animation: l16 1s infinite linear;
-}
-
-.loader::before,
-.loader::after {
-  content: "";
-  grid-area: 1/1;
-  margin: 2px;
-  border: inherit;
-  border-radius: 50%;
-}
-
-.loader::before {
-  border-color: #000000 #0000;
-  animation: inherit;
-  animation-duration: 0.5s;
-  animation-direction: reverse;
-}
-
-.loader::after {
-  margin: 8px;
-}
-
-@keyframes l16 {
-  100% {
-    transform: rotate(1turn);
   }
 }
 
@@ -725,7 +649,7 @@ html{
       position: absolute;
       top: 110%;
       right: -110%;
-      width: 13rem;
+      width: 12rem;
       box-shadow: var(--box-shadow);
       border-radius: .5rem;
       background: #fff;
@@ -743,26 +667,29 @@ html{
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 500px) {
   .heading {
-      font-size: 2.5rem;
+    font-size: 2.5rem; 
   }
 
   .footer {
-      text-align: center;
+    text-align: center; 
+    padding: 1rem; 
   }
 
   .footer .box-container .box .payment-img {
-      margin: 2rem auto;
+    margin: 2rem auto;
   }
 
   .action {
-      right: 10px; 
+    right: 10px; 
   }
-}
 
-@media (max-width: 380px) {
-  html {
-      font-size: 70%; 
+  .header .icons div {
+    height: 1.9rem;
+    width: 1.9rem;
+    line-height: 1.9rem;
+    border-radius: 0.2rem;
+    font-size: 1rem; 
   }
 }
