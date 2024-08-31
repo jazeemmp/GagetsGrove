@@ -5,17 +5,17 @@
       <div class="col-md-6  d-flex">
         <div class="img-select d-flex flex-column">
           <% productDetails.images.forEach((img,i) => { %>
-            <div class="img-item">
-              <a href="" data-id="<%= i+1 %>">
-                <img src="/uploads/<%=img%>" alt="shoe image" />
-              </a>
-            </div>
+          <div class="img-item">
+            <a href="" data-id="<%= i+1 %>">
+              <img src="/uploads/<%=img%>" alt="shoe image" />
+            </a>
+          </div>
           <% }) %>
         </div>
         <div class="img-display">
           <div class="img-showcase">
             <% productDetails.images.forEach((img,index) => { %>
-              <img src="/uploads/<%= img %>" alt="shoe image" />
+            <img src="/uploads/<%= img %>" alt="shoe image" />
             <% }) %>
           </div>
         </div>
@@ -43,36 +43,38 @@
             </ul>
           </div>
 
-          <div class="purchase-info my-4">
-            <input type="number" id="productCount" min="1"  max="5" value="1" class="form-control d-inline-block me-2" />
-            <button type="button" onclick="addToCart('<%= productDetails._id %>','<%= productDetails.price %>')" class="btn btn-dark me-2">
-              Add to Cart  <i class="fas text-light fa-shopping-cart"></i>
+          <div class="purchase-info my-4 d-flex flex-column flex-sm-row align-items-center">
+            <input type="number" id="productCount" min="1" max="5" value="1" class="form-control mb-2 mb-sm-0 me-sm-2 w-100 w-sm-auto" />
+            <button type="button" onclick="addToCart('<%= productDetails._id %>','<%= productDetails.price %>')" class="btn btn-dark mb-2 mb-sm-0 me-sm-2 w-100 w-sm-auto">
+              Add to Cart <i class="fas text-light fa-shopping-cart"></i>
             </button>
-            <button onclick="addToWishlist('<%= productDetails._id %>')" class="btn btn-danger">Add To Wishlist <i class="fa-solid fa-heart"></i></button>
+            <button onclick="addToWishlist('<%= productDetails._id %>')" class="btn btn-danger w-100 w-sm-auto">
+              Add To Wishlist <i class="fa-solid fa-heart"></i>
+            </button>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </section>
 <script>
-const imgs = document.querySelectorAll(".img-select a");
-const imgBtns = [...imgs];
-let imgId = 1;
+  const imgs = document.querySelectorAll(".img-select a");
+  const imgBtns = [...imgs];
+  let imgId = 1;
 
-imgBtns.forEach((imgItem) => {
-  imgItem.addEventListener("click", (event) => {
-    event.preventDefault();
-    imgId = imgItem.dataset.id;
-    slideImage();
+  imgBtns.forEach((imgItem) => {
+    imgItem.addEventListener("click", (event) => {
+      event.preventDefault();
+      imgId = imgItem.dataset.id;
+      slideImage();
+    });
   });
-});
 
-function slideImage() {
-  const displayWidth = document.querySelector(".img-showcase img:first-child").clientWidth;
-  document.querySelector(".img-showcase").style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
-}
+  function slideImage() {
+    const displayWidth = document.querySelector(".img-showcase img:first-child").clientWidth;
+    document.querySelector(".img-showcase").style.transform = `translateX(${-(imgId - 1) * displayWidth}px)`;
+  }
 
-window.addEventListener("resize", slideImage);
-
+  window.addEventListener("resize", slideImage);
 </script>

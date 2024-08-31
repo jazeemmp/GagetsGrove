@@ -166,36 +166,6 @@ const alertUser = (title, state) => {
   });
 };
 
-// /*[ login hower function ]
-//     ===========================================================*/
-// const userIcon = document.querySelector(".user");
-// const accountDiv = document.querySelector(".account");
-// let isHovered = false;
-
-// const showAccount = () => {
-//   accountDiv.style.display = "flex";
-//   isHovered = true;
-// };
-
-// const hideAccount = () => {
-//   if (!isHovered) {
-//     accountDiv.style.display = "none";
-//   }
-// };
-
-// userIcon.addEventListener("mouseenter", showAccount);
-// accountDiv.addEventListener("mouseenter", showAccount);
-
-// userIcon.addEventListener("mouseleave", () => {
-//   isHovered = false;
-//   setTimeout(hideAccount, 100);
-// });
-
-// accountDiv.addEventListener("mouseleave", () => {
-//   isHovered = false;
-//   setTimeout(hideAccount, 100);
-// });
-
 /*[function to change banner image src based on size]
     ===========================================================*/
 function updateImageSources() {
@@ -219,103 +189,57 @@ window.addEventListener("resize", updateImageSources);
 
 /*[Add user address via ajax and update it dynamicaly]
     ===========================================================*/
-const addressForm = document.getElementById("addressForm");
-const addAddress = document.getElementById("add-address");
-
-if (addAddress) {
-  addAddress.addEventListener("click", () => {
-    addressForm.style.display = "block";
-  });
-}
-
-function hideForm() {
-  addressForm.style.display = "none";
-  addressForm.reset();
-}
-
-if (addressForm) {
-  addressForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-
-    const formData = new FormData(event.target);
-    const fullName = formData.get("fullname");
-    const mobile = formData.get("mobile");
-    const email = formData.get("email");
-    const address = formData.get("address");
-    const pincode = formData.get("pincode");
-    const city = formData.get("city");
-    const state = formData.get("state");
-    const data = await makeRequest("/add-address", "post", {
-      fullName,
-      mobile,
-      email,
-      address,
-      city,
-      state,
-      pincode,
-    });
-
-    if (data.saved) {
-      hideForm();
-      const addressList = document.getElementById("addressList");
-
-      if (!addressList) {
-        const newAddressContainer = `
-              <div class="row" id="addressList">
-                <h5 class="font-size-16 mb-3">Select address:</h5>
-                <div class="col-lg-4 col-sm-6 mb-3">
-                  <div data-bs-toggle="collapse">
-                    <label class="card-radio-label address mb-0">
-                      <input type="radio" value="${data.address._id}" name="address" id="addressRadioButtons" class="card-radio-input">
-                      <div class="card-radio text-truncate p-3">
-                        <span class="fs-14 mb-2 d-block">Address 1</span>
-                        <b class="fs-14 mb-2 d-block">${data.address.fullname}</b>
-                        <span class="text-muted fw-normal text-wrap mb-1 d-block">${data.address.address}, ${data.address.city}, ${data.address.state}, ${data.address.pincode}</span>
-                        <span class="text-muted fw-normal d-block">Mo. ${data.address.mobile}</span>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>`;
-
-        document.querySelector(".alert-user").remove(); // Remove the warning alert
-        document
-          .querySelector("form")
-          .insertAdjacentHTML("afterend", newAddressContainer); // Insert new address list
-      } else {
-        // Append the new address to the existing address list
-        const newAddressItem = `
-              <div class="col-lg-4 col-sm-6 mb-3">
-                <div data-bs-toggle="collapse">
-                  <label class="card-radio-label address mb-0">
-                    <input type="radio" value="${
-                      data.address._id
-                    }" name="address" id="addressRadioButtons" class="card-radio-input">
-                    <div class="card-radio text-truncate p-3">
-                      <span class="fs-14 mb-2 d-block">Address ${
-                        addressList.children.length + 1
-                      }</span>
-                      <b class="fs-14 mb-2 d-block">${data.address.fullname}</b>
-                      <span class="text-muted fw-normal text-wrap mb-1 d-block">${
-                        data.address.address
-                      }, ${data.address.city}, ${data.address.state}, ${
-          data.address.pincode
-        }</span>
-                      <span class="text-muted fw-normal d-block">Mo. ${
-                        data.address.mobile
-                      }</span>
-                    </div>
-                  </label>
-                </div>
-              </div>`;
-
-        addressList.insertAdjacentHTML("beforeend", newAddressItem);
-      }
-    } else {
-      console.log("Error while creating address");
+    const addressForm = document.getElementById("addressForm");
+    const addAddress = document.getElementById("add-address");
+    
+    if (addAddress) {
+      addAddress.addEventListener("click", () => {
+        addressForm.style.display = "block";
+      });
     }
-  });
-}
+    
+    function hideForm() {
+      addressForm.style.display = "none";
+      addressForm.reset();
+    }
+    
+    if (addressForm) {
+      addressForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+    
+        const formData = new FormData(event.target);
+        const fullName = formData.get("fullname");
+        const mobile = formData.get("mobile");
+        const email = formData.get("email");
+        const address = formData.get("address");
+        const pincode = formData.get("pincode");
+        const city = formData.get("city");
+        const state = formData.get("state");
+    
+        try {
+          const data = await makeRequest("/add-address", "post", {
+            fullName,
+            mobile,
+            email,
+            address,
+            city,
+            state,
+            pincode,
+          });
+    
+          if (data.saved) {
+            hideForm();
+            // Refresh the page to show the updated address list
+            window.location.reload();
+          } else {
+            console.error("Error while creating address");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      });
+    }
+    
 
 /*[ajax for place order]
     ===========================================================*/

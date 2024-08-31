@@ -29,18 +29,22 @@
         <%= user.fullname %> <br /><span class="text-muted text-lowercase"><%= user.email %></span>
       </h3>
       <ul>
-        <li>
-          <i class="far fa-user-circle"></i>
-          <a href="/my-profile">My Profile</a>
-        </li>
+        <a href="/my-profile">
+          <li>
+            <i class="far fa-user-circle"></i>
+            <a href="/my-profile">My Profile</a>
+          </li>
+        </a>
         <li>
           <i class="far fa-question-circle"></i>
           <a href="#">Help</a>
         </li>
-        <li>
-          <i class="far text-danger fa-envelope"></i>
-          <a href="/logout" class="text-danger">Logout</a>
-        </li>
+        <a href="/logout">
+          <li>
+            <i class="far text-danger fa-envelope"></i>
+            <a href="/logout" class="text-danger">Logout</a>
+          </li>
+        </a>
       </ul>
     </div>
   </div>
@@ -48,42 +52,65 @@
   <div class="action">
     <div class="menu">
       <ul>
-        <li>
-          <i class="fa-solid fa-user-plus"></i>
-          <a href="/signup">Sign Up</a>
-        </li>
+        <a href="/signup">
+          <li>
+            <i class="fa-solid fa-user-plus"></i>
+            <a href="/signup">Sign Up</a>
+          </li>
+        </a>
+       <a href="/login">
         <li>
           <i class="fas fa-sign-in"></i>
           <a href="/login">Login</a>
         </li>
+       </a>
       </ul>
     </div>
   </div>
   <% } %>
 </header>
 <script>
-  let searchForm = document.querySelector(".search-form");
+// Select the elements
+let searchForm = document.querySelector(".search-form");
+let account = document.querySelector(".menu");
+let navbar = document.querySelector(".nav");
 
-  document.querySelector("#search-btn").onclick = () => {
-    searchForm.classList.toggle("active");
-    loginForm.classList.remove("active");
-    navbar.classList.remove("active");
-  };
+// Toggle active class for search form
+document.querySelector("#search-btn").onclick = () => {
+  searchForm.classList.toggle("active");
+  account.classList.remove("active");
+  navbar.classList.remove("active");
+};
 
+// Toggle active class for account menu
+document.querySelector("#login-btn").onclick = () => {
+  account.classList.toggle("active");
+  searchForm.classList.remove("active");
+  navbar.classList.remove("active");
+};
 
-  let account = document.querySelector(".menu");
+// Toggle active class for navbar
+document.querySelector("#menu-btn").onclick = () => {
+  navbar.classList.toggle("active");
+  searchForm.classList.remove("active");
+  account.classList.remove("active");
+};
 
-  document.querySelector("#login-btn").onclick = () => {
-    account.classList.toggle("active");
+// Remove active class when clicking outside the elements
+document.addEventListener("click", (event) => {
+  // Check if the click was outside the searchForm, account, or navbar
+  if (
+    !searchForm.contains(event.target) &&
+    !account.contains(event.target) &&
+    !navbar.contains(event.target) &&
+    !document.querySelector("#search-btn").contains(event.target) &&
+    !document.querySelector("#login-btn").contains(event.target) &&
+    !document.querySelector("#menu-btn").contains(event.target)
+  ) {
     searchForm.classList.remove("active");
+    account.classList.remove("active");
     navbar.classList.remove("active");
-  };
+  }
+});
 
-  let navbar = document.querySelector(".nav");
-
-  document.querySelector("#menu-btn").onclick = () => {
-    navbar.classList.toggle("active");
-    searchForm.classList.remove("active");
-    loginForm.classList.remove("active");
-  };
 </script>

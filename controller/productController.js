@@ -4,7 +4,7 @@ const CategoryDB = require("../model/categoryModel");
 const WishlistDB = require('../model/wishlistModel')
 
 const getProducts = async (req, res) => {
-  try {
+  try { 
     let cartCount = 0;
     if (req.session && req.session.user && req.session.user._id) {
       const userId = req.session.user._id;
