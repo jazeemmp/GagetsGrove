@@ -7,6 +7,7 @@ const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin')
 const connectDB = require('./config/db')
 const session = require('express-session')
+const MongoStore = require('connect-mongo');
 
 // Load environment variables from .env file
 dotenv.config()
@@ -23,6 +24,14 @@ app.use(session({
     saveUninitialized:true,
     cookie:{maxAge:6000000}
 }))
+//mongo
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 6000000 },
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
+  }));
 //Basic  middlewares
 app.use(ejsLayouts)
 app.use(express.json());
