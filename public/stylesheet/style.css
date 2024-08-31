@@ -699,10 +699,6 @@ html{
 }
 
 @media (max-width: 991px) {
-  html {
-      font-size: 87.5%; 
-  }
-
   .header {
       padding: 2rem;
   }
@@ -748,10 +744,6 @@ html{
 }
 
 @media (max-width: 450px) {
-  html {
-      font-size: 75%;
-  }
-
   .heading {
       font-size: 2.5rem;
   }
@@ -771,6 +763,6 @@ html{
 
 @media (max-width: 380px) {
   html {
-      font-size: 70%; 
+      font-size: 80%; 
   }
 }

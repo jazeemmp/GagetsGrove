@@ -701,7 +701,7 @@ b {
 }
 
 .btn.btn-primary:hover {
-  background-color: #046963;
+  background-color: #1b1b1b;
 }
 
 .btn.btn-secondary {
@@ -853,7 +853,7 @@ b {
 }
 
 .btn-brand:hover {
-  background-color: #046963;
+  background-color: #1b1b1b;
   color: #fff;
 }
 
@@ -1821,7 +1821,7 @@ textarea.form-control {
 }
 
 .order-tracking .steps .step.completed .step-icon:hover {
-  background-color: #046963;
+  background-color: #1e1e1e;
 }
 
 @media (max-width: 576px) {

@@ -116,7 +116,7 @@ const signupSubmit = async (e) => {
   });
   if (data && data.success) {
     window.location.href = "/";
-  } else {
+  } else if(userExists){
     showMessage(emailMsg, "Email Already exists", "red");
   }
   if(data.otpFaild){

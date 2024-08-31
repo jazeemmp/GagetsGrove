@@ -412,7 +412,7 @@ const razorpayPayment = (data) => {
     key: "rzp_test_YMQUcOIb3QmAVR", // Enter the Key ID generated from the Dashboard
     amount: data.order.amount, // Amount is in currency subunits
     currency: "INR",
-    name: "Your Company Name",
+    name: "Gadgest Grove",
     description: "Test Transaction",
     order_id: data.order.id, // This is the order ID returned from your server
     handler: function (response) {
