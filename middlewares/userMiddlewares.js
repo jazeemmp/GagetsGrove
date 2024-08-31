@@ -9,13 +9,15 @@ const ajaxisLogined = (req, res, next) => {
     }
   }
 };
-const isLogined = (req,res,next)=>{
+const isLogined = (req, res, next) => {
   if (req.session.user) {
     next();
   } else {
-      res.redirect('/login');
+    req.session.redirectTo = req.originalUrl;
+    res.redirect('/login');
   }
-}
+};
+
 module.exports = {
     isLogined,
     ajaxisLogined

@@ -59,7 +59,6 @@ const addToCart = async (productId, priceString) => {
   if (quantityDiv) {
      quantity = Number(quantityDiv.value)
   }
-  console.log(quantity);
   try {
     const response = await sendCartRequest(productId, price,quantity);
     await handleCartResponse(response, cartCount);
@@ -445,4 +444,39 @@ const verifyPayment = async(response,order)=>{
   }else{
     orderFailed()
   }
+}
+
+const addToWishlist = async(productId)=>{
+  const response = await fetch("/add-to-wishlist", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ productId }),
+  });
+    if (response.status === 401) {
+      window.location.href = "/login";
+    }
+  const data = await response.json()
+  if(data.productRemove){
+    alertUser("product removed from wishlist","warning")
+  }
+  if(data.success){
+    alertUser("product added to wishlist","success")
+  }
+}
+const deleteWishProduct = async(produtId,containerId)=>{
+ const container = document.getElementById(containerId);
+ const response = await fetch(`/delete-wish-product/${produtId}`)
+ if(!response.ok){
+  alertUser("An error occured while deleting product","error")
+ }
+ const data = await response.json()
+ if (data.wishEmpty) {
+  location.reload();
+}
+ if(data.success){
+  container.remove()
+  alertUser("product deleted from wishlist","success")
+ }else{
+  alertUser("An error occured while deleting product","error")
+ }
 }

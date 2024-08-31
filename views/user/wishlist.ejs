@@ -1,0 +1,51 @@
+<section>
+    <div class="container-fluid py-5">
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-12 col-xl-10">
+               
+                <% if (wishlist && wishlist.products && wishlist.products.length> 0) { %>
+                    <div class="card shadow-0 border rounded-3">
+                    <% wishlist.products.forEach(product => { %>
+                        <div id="<%= product._id %>" class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-2 col-xl-2 mb-4 mb-lg-0">
+                                    <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                                        <img src="/uploads/<%= product.productId.images[0] %>"
+                                            class="w-100" />
+                                        <a href="#!">
+                                            <div class="hover-overlay">
+                                                <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 align-self-center col-lg-6 col-xl-7">
+                                    <a href="/product-details/<%= product.productId._id %>" class="h5"> 
+                                        <%=product.productId.name %>
+                                      </a>
+                                    <p class="text-truncate mb-4 mb-md-0">
+                                        <%= product.productId.description %>
+                                    </p>
+                                </div>
+                                <div class="col-md-6 col-lg-3 col-xl-3 d-flex justify-content-end align-items-center">
+                                    <!-- Add to Cart Button -->
+                                    <button class="btn btn-dark" onclick="addToCart('<%= product.productId._id %>')">Add to Cart</button>
+                                    <!-- Trash Icon with Space -->
+                                    <a class="text-muted ms-5">
+                                        <i onclick="deleteWishProduct('<%= product.productId._id %>', '<%= product._id %>')" class="fas fa-trash-alt h3"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                       <% }) %>
+                    </div>
+                <% }else{%>
+                    <div class="container  d-flex  flex-column flex-column flex-sm-row">
+                        <h1 class="h2 mb-5">Your wishlist is empty</h1>
+                        <img src="/images/not-found.jpg" width="500" class="img-fluid" alt="">
+                      </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>

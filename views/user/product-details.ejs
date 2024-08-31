@@ -44,10 +44,11 @@
           </div>
 
           <div class="purchase-info my-4">
-            <input type="number" id="productCount" min="1" value="1" class="form-control d-inline-block me-2" />
+            <input type="number" id="productCount" min="1"  max="5" value="1" class="form-control d-inline-block me-2" />
             <button type="button" onclick="addToCart('<%= productDetails._id %>','<%= productDetails.price %>')" class="btn btn-dark me-2">
               Add to Cart  <i class="fas text-light fa-shopping-cart"></i>
             </button>
+            <button onclick="addToWishlist('<%= productDetails._id %>')" class="btn btn-danger">Add To Wishlist <i class="fa-solid fa-heart"></i></button>
           </div>
         </div>
       </div>

@@ -21,7 +21,6 @@
   outline: none;
   border: none;
   text-decoration: none;
-  text-transform: capitalize;
 }
 
 body {
@@ -35,9 +34,6 @@ section {
 .price {
   font-family: sans-serif;
 }
-i{
-  color: #000;
-}
 .btn-black {
   background-color: black !important;
   color: white !important;
@@ -46,8 +42,6 @@ i{
 html{
   scroll-behavior: smooth;
 }
-
-
 .header{
   position: fixed;
   top: 0;
@@ -59,6 +53,7 @@ html{
   padding: 1rem 9%;
   background: #fff;
   box-shadow: var(--box-shadow);
+  text-transform: capitalize;
 }
 .header .logo{
   font-size: 1.5625rem;
@@ -97,7 +92,7 @@ html{
   display: none;
 }
 .header .search-form{
-   position:absolute;
+  position:absolute;
   top: 110%; right: -110%;
   width: 31.25rem; /* Previously 50rem, now 500px */
   height: 3.125rem;
@@ -149,7 +144,7 @@ html{
   display: block;
   text-align: center;
   margin: 1rem;
-} */
+} 
 .header .btn{
   margin-top: 0.5rem;
   display: inline-block;
@@ -160,7 +155,7 @@ html{
   cursor: pointer;
   background: none;
 }
-.btn:hover{
+.header .btn:hover{
   background: var(--orange);
   color: #fff;
 }

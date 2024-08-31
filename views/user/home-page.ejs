@@ -89,7 +89,7 @@
 <!-- ========================================Product Display================================================= -->
 <div class="container product-card">
   <div class="row g-4 py-5">
-    <h2>New arrivals</h2>
+    <h2 class="h2 text-center">New arrivals</h2>
     <% products.forEach(product => { %>
     <div class="col-md-3">
       <div class="product-single-card">
@@ -115,8 +115,8 @@
             <a href="/product-details/<%= product._id %>" class="sideicons-btn">
               <i class="fa-solid fa-eye"></i>
             </a>
-            <button class="sideicons-btn">
-              <i class="fa-solid fa-heart"></i>
+            <button onclick="addToWishlist('<%= product._id %>')" class="sideicons-btn">
+              <i class="fa-solid fa-heart text-danger"></i>
             </button>
           </div>
         </div>

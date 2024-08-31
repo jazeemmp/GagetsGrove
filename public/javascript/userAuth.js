@@ -94,7 +94,6 @@ const checkPassword = () => {
   }
 };
 
-// Form Submission
 const signupSubmit = async (e) => {
   e.preventDefault();
 
@@ -125,6 +124,7 @@ const signupSubmit = async (e) => {
   }
 };
 
+
 const loginSubmit = async (e) => {
   e.preventDefault();
   const email = emailField.value;
@@ -138,10 +138,11 @@ const loginSubmit = async (e) => {
     } else if (data.nopassword) {
       showMessage(passMsg, "Password is wrong", "red");
     } else if (data.success) {
-      window.location.href = "/";
+      window.location.href = data.redirectTo || '/';
     }
   }
 };
+
 
 if (getOtpButton) {
   getOtpButton.addEventListener("click", getOtp);

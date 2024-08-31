@@ -1,4 +1,4 @@
-<section>
+<section class="vh-100" >
 
   <div class="card shadow-none p-4">
     <% if (results.length > 0) { %>
@@ -13,7 +13,7 @@
           <div class="col-md-6">
             <div class="info-main">
               <a href="/product-details/<%= product._id %>" class="h5  title"> <%= product.name %></a>
-              <p class="mt-4"><%= product.description %></p>
+              <p class="mt-4 text-truncate"><%= product.description %></p>
             </div>
           </div>
           <div class="col-12 col-md-3">
@@ -25,12 +25,12 @@
             </div> <!-- info-price-detail // -->
             <span class="text-success small"><span class="fas fa-shipping-fast me-1"></span>Free shipping</span>
             <div class="d-grid gap-2 mt-4">
-              <a class="btn btn-dark" href="/product-details/<%= product._id %>">
-                Details
-              </a>
-              <a href="#" class="btn btn-dark "><span class="fa fa-heart me-1"></span>
+              <button onclick="addToCart('<%= product._id %>','<%= product.discountedPrice %>')"  class="btn btn-dark">
+                Add to cart <i class="fas fa-shopping-cart"></i>
+              </button>
+              <button onclick="addToWishlist('<%= product._id %>')" class="btn btn btn-outline-danger btn-sm mt-2 "><span class="fa fa-heart me-1"></span>
                 Wishlist
-              </a>
+              </button>
             </div>
           </div>
         </div>

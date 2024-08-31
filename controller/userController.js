@@ -89,19 +89,22 @@ const postLogin = async (req, res) => {
     if (user) {
       const passwordMatch = await bcrypt.compare(password, user.password);
       if (passwordMatch) {
-        req.session.userLogedIn =true;
+        req.session.userLogedIn = true;
         req.session.user = user;
-        res.json({success:true})
+        const redirectTo = req.session.redirectTo || '/';
+        delete req.session.redirectTo; 
+        res.json({ success: true, redirectTo });
       } else {
-        res.json({nopassword:true});
+        res.json({ nopassword: true });
       }
     } else {
-      res.json({nouser:true});
+      res.json({ nouser: true });
     }
   } catch (error) {
     console.error(error);
   }
 };
+
 
 const getLogout = (req,res)=>{
     req.session.userLogedIn = false
