@@ -119,9 +119,9 @@ const signupSubmit = async (e) => {
   } else if(data & data.userExists){
     showMessage(emailMsg, "Email Already exists", "red");
   }
-  if(data.otpFaild){
-    showMessage(otpMsg,"Enter Valid Otp","red")
-  }
+  // if(data.otpFaild){
+  //   showMessage(otpMsg,"Enter Valid Otp","red")
+  // }
 };
 
 

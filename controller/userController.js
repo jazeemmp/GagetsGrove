@@ -51,10 +51,6 @@ const postSignup = async (req, res) => {
   try {
     const {userName,email,password,otp} = req.body;
     const isExisting = await UserDB.findOne({email:email})
-    if (otpStore[email]&& otpStore[email]!==otp) {
-      res.json({otpFaild:true})
-      return
-    }
     if(isExisting){
        return res.json({userExists:true})
     }else{
