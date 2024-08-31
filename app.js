@@ -26,11 +26,12 @@ app.use(session({
 }))
 //mongo
 app.use(session({
-    secret: 'secret',
+    secret: 'your-secret-key',
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge: 6000000 },
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI
+    })
   }));
 //Basic  middlewares
 app.use(ejsLayouts)
