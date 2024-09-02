@@ -11,7 +11,9 @@ const rePasswordField = document.getElementById("rePasswordField");
 const noPassMatch = document.getElementById("no-pass-match");
 const signupForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
-const signupBtnContainer = document.querySelector('.signup-btn-container')
+const signupBtnContainer = document.querySelector(".signup-btn-container");
+const passwordForm = document.getElementById("forgotPasswordForm");
+const resetPasswordForm = document.getElementById("resetPasswordForm");
 
 let debounceTimer;
 
@@ -26,13 +28,13 @@ const showMessage = (component, message, color) => {
   component.textContent = message;
 };
 
-const alertInvalid = ()=>{
+const alertInvalid = () => {
   console.log("click");
-  
-  if(signupSubmitBtn.disabled){
-    showMessage(otpMsg,"Please provide valid otp to register","red")
+
+  if (signupSubmitBtn.disabled) {
+    showMessage(otpMsg, "Please provide valid otp to register", "red");
   }
-}
+};
 
 // OTP Request
 const getOtp = async () => {
@@ -101,7 +103,7 @@ const signupSubmit = async (e) => {
   const email = emailField.value;
   const password = passwordField.value;
   const rePassword = rePasswordField.value;
-  const otp = otpField.value
+  const otp = otpField.value;
 
   if (password !== rePassword) {
     noPassMatch.style.color = "red";
@@ -114,17 +116,16 @@ const signupSubmit = async (e) => {
     password,
     otp,
   });
-  if(data.userExists){
+  if (data.userExists) {
     showMessage(emailMsg, "Email Already exists", "red");
   }
   if (data && data.success) {
     window.location.href = "/";
-  } 
+  }
   // if(data.otpFaild){
   //   showMessage(otpMsg,"Enter Valid Otp","red")
   // }
 };
-
 
 const loginSubmit = async (e) => {
   e.preventDefault();
@@ -139,8 +140,57 @@ const loginSubmit = async (e) => {
     } else if (data.nopassword) {
       showMessage(passMsg, "Password is wrong", "red");
     } else if (data.success) {
-      window.location.href = data.redirectTo || '/';
+      window.location.href = data.redirectTo || "/";
     }
+  }
+};
+
+const sendMail = async (e) => {
+  alertUser("Email sent successfully", "success");
+  e.preventDefault();
+  const email = document.getElementById("passwordEmail").value;
+  console.log(passwordEmail);
+  try {
+    const data = await makeRequest("/forgot-password", "post", { email });
+
+    if (data.userNotFound) {
+      alertUser("User Not Found", "error");
+    } else if (data.emailSend) {
+      console.log("succcesss");
+    } else {
+      alertUser("An unexpected error occurred", "error");
+    }
+  } catch (error) {
+    console.error(error);
+    alertUser("Something went wrong. Please try again.", "error");
+  }
+};
+
+const changePassword = async (e) => {
+  e.preventDefault();
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmPass = document.getElementById("confirmPassword")
+  const token = document.getElementById("token").value;
+  if (newPassword !== confirmPass) {
+    return showMessage(passErr,"Passwords do not match","red")
+  } else {
+    passErr.innerText = "";
+  }
+  
+  const response = await fetch(`/change-password/${token}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ password: newPassword }),
+  });
+
+  const data = await response.json();
+
+  if (data.success) {
+    window.location.href = "/login";
+  } else if (data.notValidToken) {
+    alertUser("Password reset token is invalid or has expired", "error");
   }
 };
 
@@ -167,4 +217,11 @@ if (signupForm) {
 
 if (loginForm) {
   loginForm.addEventListener("submit", loginSubmit);
+}
+
+if (passwordForm) {
+  passwordForm.addEventListener("submit", sendMail);
+}
+if (resetPasswordForm) {
+  resetPasswordForm.addEventListener("submit", changePassword);
 }

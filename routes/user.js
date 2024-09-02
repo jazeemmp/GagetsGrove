@@ -47,4 +47,10 @@ router.get('/wish-list', middle.isLogined, wishListController.getWishList);
 router.post('/add-to-wishlist', middle.ajaxisLogined, wishListController.postWishlist);
 router.get('/delete-wish-product/:id', wishListController.deleteWishProduct);
 
+//Forget password
+router.get('/forgot-password',userController.getForgotPassword)
+router.post('/forgot-password',userController.postForgotPassword)
+router.get('/change-password/:token',userController.getChangePassword)
+router.post('/change-password/:token',userController.postChangePassword)
+
 module.exports = router;

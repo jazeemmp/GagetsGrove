@@ -45,7 +45,7 @@ const makeRequest = async (url, method, body) => {
     return response.json();
   } catch (error) {
     console.error(error);
-    showMessage(otpMsg, "An error occurred. Please try again later.", "red");
+    alertUser("an error occured","error")
     return null;
   }
 };

@@ -8,8 +8,9 @@ const bcrypt = require("bcrypt");
 function calculateDiscountedPrice(originalPrice, discountPercentage) {
   const discountAmount = (originalPrice * discountPercentage) / 100;
   const discountedPrice = originalPrice - discountAmount;
-  return discountedPrice;
+  return Math.round(discountedPrice); // Round to nearest integer
 }
+
 
 const getHome = async (req, res) => {
   try {
